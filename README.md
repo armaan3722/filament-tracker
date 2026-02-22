@@ -36,3 +36,11 @@ Files
    - prints.csv (stores print name, date, and print id)
    - filamentUsed.csv (stores filament id and use for each print id)
    - allRolls.csv (stores current information about all rolls)
+
+Important information
+ - Printer purchased on Jan 4 - $500
+ - Calipers purchased on Feb 1
+ - Others purchased on Feb 9
+ - Everything else pre owned
+ - Solder measured by weight
+ - 2 inserts used on Feb 17
