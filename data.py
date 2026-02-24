@@ -8,4 +8,6 @@ def readData(csvPaths):
     
     return tuple(dataframes)
 
-#def writeData(csvPaths)
+def writeData(csvPaths, dataframes):
+    for path, df in zip(csvPaths, dataframes):
+        df.to_csv(path, index=False)
