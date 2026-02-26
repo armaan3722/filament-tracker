@@ -10,12 +10,6 @@ FILAMENT_HISTORY_PATH = './data/filament-usage.csv'
 CURRENT_FILAMENT_PATH = './data/all-rolls.csv'
 ALL_CSV_FILES = [PRINT_HISTORY_PATH, FILAMENT_HISTORY_PATH, CURRENT_FILAMENT_PATH]
 
-# Load csv files into dataframes
-printHistory, filamentHistory, currentFilament = csvUtils.readData(ALL_CSV_FILES)
-
-# Export csv files from dataframes
-csvUtils.writeData(ALL_CSV_FILES, [printHistory, filamentHistory, currentFilament])
-
 # Main program loop
 runLoop = True
 while runLoop:

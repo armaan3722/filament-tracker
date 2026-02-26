@@ -6,9 +6,8 @@ def printFilamentData(path):
     filamentData = csvUtils.readData([path])[0]
 
     # Print filament data or message
-    print(len(filamentData))
     if len(filamentData) > 0:
-        print(filamentData)
+        print(filamentData.to_string(index=False))
     else:
         print('There is no active filament')
 
@@ -21,7 +20,7 @@ def updateFilament(path):
     if updateType == 1:
         addRolls(path)
     elif updateType == 2:
-        print()
+        updateRolls(path)
     elif updateType == 3:
         print()
 
@@ -59,3 +58,13 @@ def addRolls(path):
     # Update dataframe and CSV file
     filamentData = csvUtils.addRow(newFilament, filamentData)
     csvUtils.writeData(['./data/allRolls.csv'], [filamentData])
+
+def updateRolls(path):
+    # Get filament information
+    allRolls = csvUtils.readData([path])[0]
+    simplifiedRollInformation = allRolls[['filamentID', 'colour', 'material', 'company', 'remainingAmount', 'state']]
+    
+    # Get roll to update
+    print('Which filament roll would you like to update, enter ID')
+    print(simplifiedRollInformation.to_string(index=False))
+    selectedRoll = int(input())
