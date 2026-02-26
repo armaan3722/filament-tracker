@@ -3,10 +3,11 @@ import pandas as pd
 
 def printFilamentData(path):
     # Get filament data
-    filamentData = csvUtils.readData([path])
+    filamentData = csvUtils.readData([path])[0]
 
     # Print filament data or message
-    if len(filamentData) > 1:
+    print(len(filamentData))
+    if len(filamentData) > 0:
         print(filamentData)
     else:
         print('There is no active filament')
@@ -54,7 +55,6 @@ def addRolls(path):
 
     # Compile information into a list
     newFilament = [len(filamentData), newColour, newMaterial, newCompany, newSize, newSize, None, newPrice, newDate, 'Waiting', None]
-    newFilament = ['one', 'two', 'three', 'four', 5, 6.0, '7', '8', '9', '10', 'eleven']
 
     # Update dataframe and CSV file
     filamentData = csvUtils.addRow(newFilament, filamentData)

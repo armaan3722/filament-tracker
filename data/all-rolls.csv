@@ -1,3 +1,2 @@
 filamentID,colour,material,company,startingAmount,remainingAmount,lastTimeDried,cost,datePurchased,state,dateFinished
-0,Orange,PLA,Bambu,1000,1000.0,,19.49,12-31-2025,Waiting,
-one,two,three,four,5,6.0,7.0,8.0,9,10,eleven
+0,Orange,PLA,Bambu,1000,1000,,0.0,12-31-2025,Waiting,
