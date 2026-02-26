@@ -28,7 +28,7 @@ while runLoop:
         # Print filament data
         io.printFilamentData(CURRENT_FILAMENT_PATH)
     elif action == 2:
-        io.actionTwo()
+        io.updateFilament(CURRENT_FILAMENT_PATH)
     elif action == 3:
         io.actionThree()
     elif action == 4:

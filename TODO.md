@@ -7,3 +7,6 @@ To do for version 0.1.0
  - Retire rolls of filament
  - Update time last dried for filament
    - View information on all active filament
+
+Bug fixes
+ - Not printing rows when viewing current filament
