@@ -22,7 +22,7 @@ def updateFilament(path):
     elif updateType == 2:
         updateRolls(path)
     elif updateType == 3:
-        print()
+        updateTimeDried(path)
 
 def actionThree():
     print('incomplete action 3')
@@ -85,4 +85,25 @@ def updateRolls(path):
     allRolls = csvUtils.changeCell(allRolls, 'filamentID', selectedRoll, 'state', updatedState)
 
     # Save data
+    csvUtils.writeData([path], [allRolls])
+
+def updateTimeDried(path):
+    # Get last time dried
+    allRolls = csvUtils.readData([path])[0]
+    allRolls['lastTimeDried'] = allRolls['lastTimeDried'].astype('string')
+    simplifiedRollInformation = csvUtils.getRow(allRolls[['filamentID', 'colour', 'material', 'company', 'remainingAmount', 'lastTimeDried', 'state']], 'state', 'Active')
+
+    # Get roll to update
+    print('Which roll would you like to update, enter ID number')
+    print(simplifiedRollInformation)
+    selectedRoll = int(input())
+
+    # Get time dried
+    print(f'When was that roll dried (MM-DD-YYYY)')
+    timeDried = input()
+
+    # Update table
+    allRolls = csvUtils.changeCell(allRolls, 'filamentID', selectedRoll, 'lastTimeDried', timeDried)
+
+    # Save table
     csvUtils.writeData([path], [allRolls])
