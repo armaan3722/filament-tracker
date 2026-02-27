@@ -24,8 +24,49 @@ def updateFilament(path):
     elif updateType == 3:
         updateTimeDried(path)
 
-def actionThree():
-    print('incomplete action 3')
+def addPrint(printPath, filamentPath, allPath):
+    # Get print information
+    print('What is the name of the print')
+    printName = input()
+    print('What date was it printed (MM-DD-YYYY)')
+    printDate = input()
+    print('How many different filaments were used')
+    numberOfColours = int(input())
+
+    # Get list of filament
+    prints, filament, allRolls = csvUtils.readData([printPath, filamentPath, allPath])
+    simplifiedRollInformation = csvUtils.getRow(allRolls, 'state', 'Active')[['filamentID', 'colour', 'material', 'company', 'remainingAmount', 'datePurchased']]
+
+    # Update general information
+    printID = len(prints)
+    prints = csvUtils.changeRow(prints, printID, [printDate, printID, printName])
+
+    # Save changes
+    csvUtils.writeData([printPath], [prints])
+
+    # Get filament usage information
+    i = 0
+    while i < numberOfColours:
+        # Get filament used
+        print(simplifiedRollInformation)
+        print('What is one filament used ID')
+        filamentUsedID = int(input())
+
+        # Get time and amount used
+        print('How much of this filament was used')
+        filamentUsedAmount = float(input())
+        print('How long did this filament take to print')
+        filamentTimePrinting = input()
+
+        # Update information
+        filament = csvUtils.changeRow(filament, len(filament) + i, [filamentUsedID, printID, filamentUsedAmount, filamentTimePrinting])
+        allRolls = csvUtils.changeCell(allRolls, 'filamentID', filamentUsedID, 'remainingAmount', int(csvUtils.getRow(allRolls, 'filamentID', filamentUsedID)['remainingAmount'][0]) - filamentUsedAmount)
+        
+        # Next iteration
+        i += 1
+    
+    # Write to CSV
+    csvUtils.writeData([filamentPath, allPath], [filament, allRolls])
 
 def endProgram():
     # Print message

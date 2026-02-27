@@ -22,6 +22,14 @@ def addRow(dataToAdd, dataframe):
 def getRow(dataframe, IDColumn, columnValue):
     return dataframe.loc[dataframe[IDColumn] == columnValue]
 
+def changeRow(dataframe, row, value):
+    dataframe.loc[row] = value
+    return dataframe
+
+def getCell(dataframe, columnToSearch, valueToSearchFor, columnToGetValue):
+    dataframe.loc[dataframe[columnToSearch] == valueToSearchFor, columnToGetValue]
+    return dataframe
+
 def changeCell(dataframe, columnToSearch, valueToSearchFor, columnToChange, valueToChangeTo):
     dataframe.loc[dataframe[columnToSearch] == valueToSearchFor, columnToChange] = valueToChangeTo
     return dataframe

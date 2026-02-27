@@ -1,3 +1,8 @@
 filamentID,colour,material,company,startingAmount,remainingAmount,lastTimeDried,cost,datePurchased,state,dateFinished
-0,Orange,PLA,Bambu,1000,1000,,0.0,12-31-2025,Finished,
-1,Green,PLA,Bambu,250,250,02-02-2026,0.0,12-31-2025,Active,
+0,Orange,PLA,Bambu,250,238,,0.0,12-31-2025,Active,
+1,Green,PLA,Bambu,250,250,,0.0,12-31-2025,Active,
+2,White,SupPLA,Bambu,250,250,,0.0,12-31-2025,Finished,
+3,Blue,PLA,Bambu,1000,1000,02-01-2026,19.49,12-31-2025,Active,
+4,Black,PETG,Bambu,1000,1000,02-24-2026,19.49,12-31-2025,Active,
+5,Black,PETG,Bambu,1000,1000,,19.49,12-31-2025,Waiting,
+6,White,ABS,Bambu,1000,1000,02-20-2026,19.49,12-31-2025,Active,

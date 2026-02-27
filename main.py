@@ -24,7 +24,7 @@ while runLoop:
     elif action == 2:
         io.updateFilament(CURRENT_FILAMENT_PATH)
     elif action == 3:
-        io.actionThree()
+        io.addPrint(PRINT_HISTORY_PATH, FILAMENT_HISTORY_PATH, CURRENT_FILAMENT_PATH)
     elif action == 4:
         # End program
         runLoop = io.endProgram()
