@@ -18,3 +18,10 @@ def writeData(csvPaths, dataframes):
 def addRow(dataToAdd, dataframe):
     dataframe.loc[len(dataframe)] = dataToAdd
     return dataframe
+
+def getRow(dataframe, IDColumn, columnValue):
+    return dataframe.loc[dataframe[IDColumn] == columnValue]
+
+def changeCell(dataframe, columnToSearch, valueToSearchFor, columnToChange, valueToChangeTo):
+    dataframe.loc[dataframe[columnToSearch] == valueToSearchFor, columnToChange] = valueToChangeTo
+    return dataframe

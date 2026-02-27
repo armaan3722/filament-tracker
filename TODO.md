@@ -3,7 +3,8 @@ To do for version 0.1.0
    - Write multiple csv files easily
  - Add entries to csv files for tracking filament usage
    - Add new rolls of filament to the list
- - Activate rolls of filament
- - Retire rolls of filament
+   - Activate rolls of filament
+   - Retire rolls of filament
  - Update time last dried for filament
    - View information on all active filament
+ - Better printing information onto command line

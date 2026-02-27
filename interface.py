@@ -57,7 +57,7 @@ def addRolls(path):
 
     # Update dataframe and CSV file
     filamentData = csvUtils.addRow(newFilament, filamentData)
-    csvUtils.writeData(['./data/allRolls.csv'], [filamentData])
+    csvUtils.writeData([path], [filamentData])
 
 def updateRolls(path):
     # Get filament information
@@ -68,3 +68,21 @@ def updateRolls(path):
     print('Which filament roll would you like to update, enter ID')
     print(simplifiedRollInformation.to_string(index=False))
     selectedRoll = int(input())
+
+    # Get value to modify to
+    print(f'Current state: {csvUtils.getRow(allRolls, 'filamentID', selectedRoll)['state']}')
+    print('What would you like to set the state to waiting(1), active(2), or finished(3)')
+    updatedState = int(input())
+
+    # Update row
+    if updatedState == 1:
+        updatedState = 'Waiting'
+    elif updatedState == 2:
+        updatedState = 'Active'
+    elif updatedState == 3:
+        updatedState = 'Finished'
+
+    allRolls = csvUtils.changeCell(allRolls, 'filamentID', selectedRoll, 'state', updatedState)
+
+    # Save data
+    csvUtils.writeData([path], [allRolls])
