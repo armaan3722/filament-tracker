@@ -7,6 +7,9 @@ To do for version 0.2.0
  - Add ability to create new categories, projects, stages, and collections
  - Add ability to view all of this information
 
+Bugs to fix
+ - Exiting after going through collection and project
+
 Plan
  - filamentUsage has filament id and print id
  - prints has print id and revision id

@@ -148,3 +148,52 @@ def updateTimeDried(path):
 
     # Save table
     csvUtils.writeData([path], [allRolls])
+
+def addProject(categoryPath, projectPath, statePath):
+    # Read csv data
+    allCategories, allProjects, allStates = csvUtils.readData([categoryPath, projectPath, statePath])
+
+    # Create lists
+    allDataframes = [allCategories, allProjects, allStates]
+    allPaths = [categoryPath, projectPath, statePath]
+    updateTypes = ['category', 'project', 'state']
+
+    # Update category
+    lastUpdate = None
+    i = 0
+    while i < 2:
+        # Get information
+        currentPath = allPaths[i]
+        currentDataframe = allDataframes[i]
+        currentUpdateType = updateTypes[i]
+
+        # Write information
+        print(currentDataframe)
+        print(f'Enter a {currentUpdateType} ID or type A to add a new {currentUpdateType}')
+        editType = input()
+
+        # Do update
+        if editType == 'A':
+            print(f'What is the name of the new {currentUpdateType}')
+            newUpdate = input()
+            currentDataframe = updateRow(currentDataframe, newUpdate, currentUpdateType, lastUpdate)
+            #currentDataframe = csvUtils.addRow([len(currentDataframe),newUpdate], currentDataframe)
+            csvUtils.writeData([currentPath], [currentDataframe])
+            break
+
+        # Update edit type
+        editType = int(editType)
+        lastUpdate = editType
+        allDataframes[i + 1] = csvUtils.getRow(allDataframes[i+1], f'{currentUpdateType}ID', editType)
+
+        # Update counter
+        i += 1
+
+def updateRow(dataframe, newUpdate, updateType, lastUpdate):
+    match updateType:
+        case 'category':
+            dataframe = csvUtils.addRow([len(dataframe),newUpdate], dataframe)
+        case 'project' | 'state':
+            dataframe = csvUtils.addRow([len(dataframe),lastUpdate,newUpdate], dataframe)
+    
+    return dataframe

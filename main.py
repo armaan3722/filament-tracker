@@ -33,7 +33,7 @@ while runLoop:
     elif action == 4:
         print()
     elif action == 5:
-        print()
+        io.addProject(CATEGORY_HISTORY_PATH, PROJECT_HISTORY_PATH, STATE_HISTORY_PATH)
     elif action == 6:
         # End program
         runLoop = io.endProgram()
