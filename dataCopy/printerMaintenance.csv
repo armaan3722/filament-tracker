@@ -1,3 +1,4 @@
-maintanenceEventID,printerID,date,actionType,action
-0,0,12-31-2025,3,AMS upgraded
-1,0,03-01-2026,1,Printer Recalibrated
+maintanenceEventID,printerID,date,action
+0,0,12-31-2025,Automatic Calibration
+1,0,12-31-2025,Firmware Update
+2,0,03-01-2026,Automatic Calibration

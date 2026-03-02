@@ -76,60 +76,24 @@ def editPrinter(printer, path):
     csvUtils.writeData([path], [printer])
 
 def updateMaintenance(printer, maintenance, maintenancePath):
-    # Get printer for event
-    print(printer)
+    # Get printer for maintenance
+    print(printer.to_string(index=False))
     print('\nEnter ID of printer for maintenance event')
     printerID = int(input())
 
-    # Get event type
-    print('Which event was done, maintenance(1), replacement(2), or upgrade(3)')
+    # Get maintenance type
+    print('Which maintenance was done, automatic calibration(1) or firmware update(2)')
     eventType = int(input())
-
-    # Get operation done
     match eventType:
         case 1:
-            # Maintenance event
-            print('What was done, hotend cleaned(1), build plate cleaned(2), printer recalibrated(3)')
-            action = int(input())
-            match action:
-                case 1:
-                    action = 'Hotend Cleaned'
-                case 2:
-                    action = 'Build Plate Cleaned'
-                case 3:
-                    action = 'Printer Recalibrated'
+            eventType = 'Automatic Calibration'
         case 2:
-            #Replacement event
-            print('What was replaced, hotend(1), or build plate(2)')
-            action = int(input())
-            match action:
-                case 1:
-                    action = 'Hotend replaced'
-                case 2:
-                    action = 'Build plate replaced'
-        case 3:
-            #Upgrade event
-            print('What was upgraded, hotend(1), build plate(2), or AMS(3)')
-            action = int(input())
-            match action:
-                case 1:
-                    action = 'Hotend upgraded'
-                case 2:
-                    action = 'Build plate upgraded'
-                case 3:
-                    action = 'AMS upgraded'
-    match eventType:
-        case 1:
-            eventType = 'Maintenance'
-        case 2:
-            eventType = 'Replacement'
-        case 3:
-            eventType = 'Upgrade'
+            eventType = 'Firmware Update'
 
     # Get date
-    print('What date did this happen')
+    print('What date did this maintenance event happen')
     eventDate = input()
         
     # Save to file
-    maintenance = csvUtils.addRow([len(maintenance),printerID,eventDate,eventType,action],maintenance)
+    maintenance = csvUtils.addRow([len(maintenance),printerID,eventDate,eventType],maintenance)
     csvUtils.writeData([maintenancePath], [maintenance])
