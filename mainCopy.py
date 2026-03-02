@@ -4,6 +4,7 @@ import interfaceCopy as io
 # Const variables
 PRINTER_PATH = './dataCopy/printer.csv'
 PRINTER_MAINTENANCE_PATH = './dataCopy/printerMaintenance.csv'
+PURCHASES_PATH = './dataCopy/purchases.csv'
 
 # Main loop
 runLoop = True
@@ -16,7 +17,7 @@ while runLoop:
     match action:
         case 1:
             print(1)
-            io.readPrinter(PRINTER_PATH, PRINTER_MAINTENANCE_PATH)
+            io.readPrinter(PRINTER_PATH, PRINTER_MAINTENANCE_PATH, PURCHASES_PATH)
         case 2:
             print(2)
         case 3:

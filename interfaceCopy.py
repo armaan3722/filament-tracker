@@ -3,9 +3,9 @@ import data as csvUtils
 import pandas as pd
 
 # Get printer information
-def readPrinter(printerPath, printerMaintenancePath):
+def readPrinter(printerPath, printerMaintenancePath, purchasesPath):
     # Get csv files
-    printer, printerMaintenance = csvUtils.readData([printerPath, printerMaintenancePath])
+    printer, printerMaintenance, purchases = csvUtils.readData([printerPath, printerMaintenancePath, purchasesPath])
 
     # Print dataframes
     print("Printers:")
@@ -19,7 +19,7 @@ def readPrinter(printerPath, printerMaintenancePath):
 
     match action:
         case 1:
-            addPrinter(printer, printerPath)
+            addPrinter(printer, printerPath, purchases, purchasesPath)
         case 2:
             editPrinter(printer, printerPath)
         case 3:
@@ -27,7 +27,7 @@ def readPrinter(printerPath, printerMaintenancePath):
         case 4:
             print('Returning to home page')
 
-def addPrinter(printer, path):
+def addPrinter(printer, path, purchases, purchasesPath):
     # Get new printer information
     print('What is the new printer company')
     newPrinterCompany = input()
@@ -39,12 +39,15 @@ def addPrinter(printer, path):
     newPrinterCost = input()
     print('What is the new printer date purchased')
     newPrinterDate = input()
+    print('What is the new printer date arrived')
+    newPrinterArrivalDate = input()
 
-    # Update dataframe
+    # Update dataframes
     printer = csvUtils.addRow([len(printer),newPrinterName,newPrinterCompany,newPrinterModel,newPrinterDate,newPrinterCost,0], printer)
+    purchases = csvUtils.addRow([len(purchases),'printer',len(printer)-1,newPrinterDate,newPrinterArrivalDate,newPrinterCost], purchases)
 
     # Save
-    csvUtils.writeData([path], [printer])
+    csvUtils.writeData([path, purchasesPath], [printer, purchases])
 
 def editPrinter(printer, path):
     # Get printer to edit
