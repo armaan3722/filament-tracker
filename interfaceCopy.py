@@ -196,13 +196,13 @@ def readBuildplate(buildplatePath, buildplateMaintenancePath):
 
     # Update
     print('Would you like to edit a buildplate(1), create maintenance event(2), or return to home page(3)')
-    action = input()
+    action = int(input())
 
     match action:
         case 1:
-            print(1)
+            editBuildplate(buildplate, buildplatePath)
         case 2:
-            print(2)
+            updateBuildplateMaintanence(buildplate, buildplateMaintenance, buildplateMaintenancePath)
         case 3:
             print('Returning to home page')
 
@@ -223,6 +223,47 @@ def addBuildplate(buildplate, buildplatePath, purchases, purchasesPath, purchase
     buildplate = csvUtils.addRow([len(buildplate),buildplateCompany,buildplateType], buildplate)
     purchases = csvUtils.addRow([purchaseID,'Buildplate',len(buildplate)-1,purchaseDate, arrivalDate, cost], purchases)
     csvUtils.writeData([buildplatePath, purchasesPath], [buildplate, purchases])
+
+def editBuildplate(buildplate, buildplatePath):
+    # Get buildplate to edit
+    print(buildplate.to_string(index=False))
+    print('Enter ID for buildplate to edit')
+    buildplateID = int(input())
+
+    # Get column to edit
+    print('Do you want to edit company(1), or type(2)')
+    editType = int(input())
+    print('What do you want to change that to')
+    newValue = input()
+    match editType:
+        case 1:
+            column = 'company'
+        case 2:
+            column = 'type'
+    
+    # Do edit
+    buildplate = csvUtils.changeCell(buildplate, 'buildplateID', buildplateID, column, newValue)
+    csvUtils.writeData([buildplatePath], [buildplate])
+
+def updateBuildplateMaintanence(buildplate, maintenance, maintenancePath):
+    # Get buildplate id
+    print(buildplate.to_string(index=False))
+    print('Enter ID of buildplate to edit')
+    buildplateID = int(input())
+
+    # Get maintenance type
+    print('What is the maintenance event, buildplate cleaned(1)')
+    eventType = int(input())
+    match eventType:
+        case 1:
+            eventType = 'Buildplate Cleaned'
+    
+    print('What day was maintenance done')
+    date = input()
+    
+    # Save update
+    maintenance = csvUtils.addRow([len(maintenance),buildplateID,date,eventType], maintenance)
+    csvUtils.writeData([maintenancePath], [maintenance])
 
 def viewPurchases(allPaths):
     # Read dataframe
