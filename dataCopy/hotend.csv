@@ -1,2 +1,3 @@
-hotendID,comapany,size,material
-0,Bambu,0.4,Brass
+hotendID,comapany,size,material,state
+0,Bambu,0.4,Brass,Active
+1,Bambu,0.4,Brass,Active

@@ -23,11 +23,11 @@ def readPrinter(printerPath, printerMaintenancePath, purchasesPath):
         case 2:
             editPrinter(printer, printerPath)
         case 3:
-            updateMaintenance(printer, printerMaintenance, printerMaintenancePath)
+            updatePrinterMaintenance(printer, printerMaintenance, printerMaintenancePath)
         case 4:
             print('Returning to home page')
 
-def addPrinter(printer, path, purchases, purchasesPath):
+def addPrinter(printer, path, purchases, purchasesPath, purchaseID):
     # Get new printer information
     print('What is the new printer company')
     newPrinterCompany = input()
@@ -44,7 +44,7 @@ def addPrinter(printer, path, purchases, purchasesPath):
 
     # Update dataframes
     printer = csvUtils.addRow([len(printer),newPrinterName,newPrinterCompany,newPrinterModel,0], printer)
-    purchases = csvUtils.addRow([len(purchases),'printer',len(printer)-1,newPrinterDate,newPrinterArrivalDate,newPrinterCost], purchases)
+    purchases = csvUtils.addRow([purchaseID,'printer',len(printer)-1,newPrinterDate,newPrinterArrivalDate,newPrinterCost], purchases)
 
     # Save
     csvUtils.writeData([path, purchasesPath], [printer, purchases])
@@ -74,7 +74,7 @@ def editPrinter(printer, path):
     printer = csvUtils.changeCell(printer, 'printerID', printerID, column, newValue)
     csvUtils.writeData([path], [printer])
 
-def updateMaintenance(printer, maintenance, maintenancePath):
+def updatePrinterMaintenance(printer, maintenance, maintenancePath):
     # Get printer for maintenance
     print(printer.to_string(index=False))
     print('\nEnter ID of printer for maintenance event')
@@ -121,7 +121,7 @@ def readHotend(hotendPath, hotendMaintenancePath, purchasesPath):
         case 4:
             print('Returning to home page')
 
-def addHotend(hotend, hotendPath, purchases, purchasesPath):
+def addHotend(hotend, hotendPath, purchases, purchasesPath, purchaseID):
     # Get hotend to add
     print('What is the new hotend company')
     newHotendCompany = input()
@@ -137,6 +137,33 @@ def addHotend(hotend, hotendPath, purchases, purchasesPath):
     newHotendCost = input()
 
     # Update dataframes
-    hotend = csvUtils.addRow([len(hotend),newHotendCompany,newHotendSize,newHotendMaterial], hotend)
-    purchases = csvUtils.addRow([len(purchases),'Hotend',len(hotend)-1,newHotendDate,newHotendArrivalDate,newHotendCost], purchases)
+    hotend = csvUtils.addRow([len(hotend),newHotendCompany,newHotendSize,newHotendMaterial,'Active'], hotend)
+    purchases = csvUtils.addRow([purchaseID,'Hotend',len(hotend)-1,newHotendDate,newHotendArrivalDate,newHotendCost], purchases)
     csvUtils.writeData([hotendPath, purchasesPath], [hotend, purchases])
+
+def addPurchases(allPaths):
+    # Read dataframes
+    printers, hotends, purchases = csvUtils.readData(allPaths)
+    purchaseID = len(purchases)
+
+    # Get purchases required
+    print('How many printers were purchased')
+    printersPurchased = int(input())
+    # print('How many AMS were purchased')
+    # amsPurchased = int(input())
+    print('How many hotends were purchased')
+    hotendsPurchased = int(input())
+    # print('How many buildplates were purchased')
+    # buildplatesPurchased = int(input())
+    # print('How many rolls of filament were purchased')
+    # filamentPurchased = int(input())
+
+    i = 0
+    while i < printersPurchased:
+        addPrinter(printers, allPaths[0], purchases, allPaths[2], purchaseID)
+        i += 1
+    
+    i = 0
+    while i < hotendsPurchased:
+        addHotend(hotends, allPaths[1], purchases, allPaths[2], purchaseID)
+        i += 1

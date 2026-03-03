@@ -8,11 +8,13 @@ HOTEND_PATH = './dataCopy/hotend.csv'
 HOTEND_MAINTENANCE_PATH = './dataCopy/hotendMaintenance.csv'
 PURCHASES_PATH = './dataCopy/purchases.csv'
 
+ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, PURCHASES_PATH]
+
 # Main loop
 runLoop = True
 while runLoop:
     # Start home screen
-    print('Would you like to view printer information(1), view hotend information(2), view build plate information(3), view AMS information(4), \nview filament information(5), view filament storage information(6), view non printed parts information(7),\nview project information(8), view print history(9), update filament usage(10), or end program(11)')
+    print('Would you like to view printer information(1), hotend information(2), build plate information(3), AMS information(4), \nfilament information(5), filament storage information(6), non printed parts information(7),project information(8), \nprint history(9), add a purchase(10), update filament usage(11), or end program(12)')
     action = int(input())
 
     # Run function
@@ -36,7 +38,9 @@ while runLoop:
         case 9:
             print(9)
         case 10:
-            print(10)
+            io.addPurchases(ALL_PURCHASE_PATHS)
         case 11:
+            print(11)
+        case 12:
             print('Ending program')
             runLoop = False
