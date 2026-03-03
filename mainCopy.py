@@ -4,6 +4,8 @@ import interfaceCopy as io
 # Const variables
 PRINTER_PATH = './dataCopy/printer.csv'
 PRINTER_MAINTENANCE_PATH = './dataCopy/printerMaintenance.csv'
+HOTEND_PATH = './dataCopy/hotend.csv'
+HOTEND_MAINTENANCE_PATH = './dataCopy/hotendMaintenance.csv'
 PURCHASES_PATH = './dataCopy/purchases.csv'
 
 # Main loop
@@ -18,7 +20,7 @@ while runLoop:
         case 1:
             io.readPrinter(PRINTER_PATH, PRINTER_MAINTENANCE_PATH, PURCHASES_PATH)
         case 2:
-            print(2)
+            io.readHotend(HOTEND_PATH, HOTEND_MAINTENANCE_PATH, PURCHASES_PATH)
         case 3:
             print(3)
         case 4:

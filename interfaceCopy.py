@@ -10,7 +10,7 @@ def readPrinter(printerPath, printerMaintenancePath, purchasesPath):
     # Print dataframes
     print("Printers:")
     print(printer.to_string(index=False))
-    print('\n\nPrinter maintenance history')
+    print('\n\nPrinter maintenance history:')
     print(printerMaintenance.to_string(index=False))
 
     # Update
@@ -96,3 +96,47 @@ def updateMaintenance(printer, maintenance, maintenancePath):
     # Save to file
     maintenance = csvUtils.addRow([len(maintenance),printerID,eventDate,eventType],maintenance)
     csvUtils.writeData([maintenancePath], [maintenance])
+
+def readHotend(hotendPath, hotendMaintenancePath, purchasesPath):
+    # Read csv files
+    hotend, hotendMaintenance, purchases = csvUtils.readData([hotendPath, hotendMaintenancePath, purchasesPath])
+
+    # Print information
+    print('Hotends:')
+    print(hotend.to_string(index=False))
+    print('\n\nHotend maintenance history:')
+    print(hotendMaintenance.to_string(index=False))
+
+    # Update
+    print('\n\nWould you like to add a hotend(1), edit a hotend(2), create a maintenance event(3), or return to home(4)')
+    action = int(input())
+
+    match action:
+        case 1:
+            addHotend(hotend, hotendPath, purchases, purchasesPath)
+        case 2:
+            print(2)
+        case 3:
+            print(3)
+        case 4:
+            print('Returning to home page')
+
+def addHotend(hotend, hotendPath, purchases, purchasesPath):
+    # Get hotend to add
+    print('What is the new hotend company')
+    newHotendCompany = input()
+    print('What is the new hotend size')
+    newHotendSize = input()
+    print('What is the new hotend material')
+    newHotendMaterial = input()
+    print('What is the date purchased')
+    newHotendDate = input()
+    print('What is the date arrived')
+    newHotendArrivalDate = input()
+    print('What is the new hotend cost')
+    newHotendCost = input()
+
+    # Update dataframes
+    hotend = csvUtils.addRow([len(hotend),newHotendCompany,newHotendSize,newHotendMaterial], hotend)
+    purchases = csvUtils.addRow([len(purchases),'Hotend',len(hotend)-1,newHotendDate,newHotendArrivalDate,newHotendCost], purchases)
+    csvUtils.writeData([hotendPath, purchasesPath], [hotend, purchases])
