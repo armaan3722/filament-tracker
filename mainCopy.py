@@ -10,7 +10,7 @@ BUILDPLATE_PATH = './dataCopy/buildplate.csv'
 BUILDPLATE_MAINTENANCE_PATH = './dataCopy/buildplateMaintenance.csv'
 PURCHASES_PATH = './dataCopy/purchases.csv'
 
-ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, PURCHASES_PATH]
+ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, PURCHASES_PATH]
 
 # Main loop
 runLoop = True

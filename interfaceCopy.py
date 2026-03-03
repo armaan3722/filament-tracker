@@ -206,9 +206,27 @@ def readBuildplate(buildplatePath, buildplateMaintenancePath):
         case 3:
             print('Returning to home page')
 
+def addBuildplate(buildplate, buildplatePath, purchases, purchasesPath, purchaseID):
+    # Get buildplate to add
+    print('What company is the buildplate from')
+    buildplateCompany = input()
+    print('What type of build plate is it')
+    buildplateType = input()
+    print('What is the date purchased')
+    purchaseDate = input()
+    print('What is the date arrived')
+    arrivalDate = input()
+    print('What is the cost')
+    cost = input()
+
+    # Add to csv files
+    buildplate = csvUtils.addRow([len(buildplate),buildplateCompany,buildplateType], buildplate)
+    purchases = csvUtils.addRow([purchaseID,'Buildplate',len(buildplate)-1,purchaseDate, arrivalDate, cost], purchases)
+    csvUtils.writeData([buildplatePath, purchasesPath], [buildplate, purchases])
+
 def viewPurchases(allPaths):
     # Read dataframe
-    purchases = csvUtils.readData([allPaths[2]])[0]
+    purchases = csvUtils.readData([allPaths[3]])[0]
 
     # Print purchase history
     print(purchases.to_string(index=False))
@@ -227,7 +245,7 @@ def viewPurchases(allPaths):
 
 def addPurchases(allPaths):
     # Read dataframes
-    printers, hotends, purchases = csvUtils.readData(allPaths)
+    printers, hotends, buildplates, purchases = csvUtils.readData(allPaths)
     purchaseID = len(purchases)
 
     # Get purchases required
@@ -237,17 +255,22 @@ def addPurchases(allPaths):
     # amsPurchased = int(input())
     print('How many hotends were purchased')
     hotendsPurchased = int(input())
-    # print('How many buildplates were purchased')
-    # buildplatesPurchased = int(input())
+    print('How many buildplates were purchased')
+    buildplatesPurchased = int(input())
     # print('How many rolls of filament were purchased')
     # filamentPurchased = int(input())
 
     i = 0
     while i < printersPurchased:
-        addPrinter(printers, allPaths[0], purchases, allPaths[2], purchaseID)
+        addPrinter(printers, allPaths[0], purchases, allPaths[3], purchaseID)
         i += 1
     
     i = 0
     while i < hotendsPurchased:
-        addHotend(hotends, allPaths[1], purchases, allPaths[2], purchaseID)
+        addHotend(hotends, allPaths[1], purchases, allPaths[3], purchaseID)
+        i += 1
+    
+    i = 0
+    while i < buildplatesPurchased:
+        addBuildplate(buildplates, allPaths[2], purchases, allPaths[3], purchaseID)
         i += 1
