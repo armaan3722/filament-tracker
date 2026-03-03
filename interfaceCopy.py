@@ -14,17 +14,15 @@ def readPrinter(printerPath, printerMaintenancePath, purchasesPath):
     print(printerMaintenance.to_string(index=False))
 
     # Update
-    print('\n\nWould you like to add a printer(1), edit printer information(2), create maintenance event(3), or go back to home page(4)')
+    print('\n\nWould you like to edit a printer(1), create maintenance event(2), or go back to home page(3)')
     action = int(input())
 
     match action:
         case 1:
-            addPrinter(printer, printerPath, purchases, purchasesPath)
-        case 2:
             editPrinter(printer, printerPath)
-        case 3:
+        case 2:
             updatePrinterMaintenance(printer, printerMaintenance, printerMaintenancePath)
-        case 4:
+        case 3:
             print('Returning to home page')
 
 def addPrinter(printer, path, purchases, purchasesPath, purchaseID):
@@ -44,7 +42,7 @@ def addPrinter(printer, path, purchases, purchasesPath, purchaseID):
 
     # Update dataframes
     printer = csvUtils.addRow([len(printer),newPrinterName,newPrinterCompany,newPrinterModel,0], printer)
-    purchases = csvUtils.addRow([purchaseID,'printer',len(printer)-1,newPrinterDate,newPrinterArrivalDate,newPrinterCost], purchases)
+    purchases = csvUtils.addRow([purchaseID,'Printer',len(printer)-1,newPrinterDate,newPrinterArrivalDate,newPrinterCost], purchases)
 
     # Save
     csvUtils.writeData([path, purchasesPath], [printer, purchases])
@@ -108,17 +106,15 @@ def readHotend(hotendPath, hotendMaintenancePath, purchasesPath):
     print(hotendMaintenance.to_string(index=False))
 
     # Update
-    print('\n\nWould you like to add a hotend(1), edit a hotend(2), create a maintenance event(3), or return to home(4)')
+    print('\n\nWould you like to edit a hotend(1), create a maintenance event(2), or return to home(3)')
     action = int(input())
 
     match action:
         case 1:
-            addHotend(hotend, hotendPath, purchases, purchasesPath)
+            print(1)
         case 2:
             print(2)
         case 3:
-            print(3)
-        case 4:
             print('Returning to home page')
 
 def addHotend(hotend, hotendPath, purchases, purchasesPath, purchaseID):
@@ -137,9 +133,28 @@ def addHotend(hotend, hotendPath, purchases, purchasesPath, purchaseID):
     newHotendCost = input()
 
     # Update dataframes
-    hotend = csvUtils.addRow([len(hotend),newHotendCompany,newHotendSize,newHotendMaterial,'Active'], hotend)
+    hotend = csvUtils.addRow([len(hotend),newHotendCompany,newHotendSize,newHotendMaterial,'Passive'], hotend)
     purchases = csvUtils.addRow([purchaseID,'Hotend',len(hotend)-1,newHotendDate,newHotendArrivalDate,newHotendCost], purchases)
     csvUtils.writeData([hotendPath, purchasesPath], [hotend, purchases])
+
+def viewPurchases(allPaths):
+    # Read dataframe
+    purchases = csvUtils.readData([allPaths[2]])[0]
+
+    # Print purchase history
+    print(purchases.to_string(index=False))
+
+    # Update
+    print('Would you like to add a purchase(1), edit a purchase(2), or return to home(3)')
+    action = int(input())
+
+    match action:
+        case 1:
+            addPurchases(allPaths)
+        case 2:
+            print(2)
+        case 3:
+            print('Returning to home')
 
 def addPurchases(allPaths):
     # Read dataframes
