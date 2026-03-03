@@ -3,9 +3,9 @@ import data as csvUtils
 import pandas as pd
 
 # Get printer information
-def readPrinter(printerPath, printerMaintenancePath, purchasesPath):
+def readPrinter(printerPath, printerMaintenancePath):
     # Get csv files
-    printer, printerMaintenance, purchases = csvUtils.readData([printerPath, printerMaintenancePath, purchasesPath])
+    printer, printerMaintenance = csvUtils.readData([printerPath, printerMaintenancePath])
 
     # Print dataframes
     print("Printers:")
@@ -95,9 +95,9 @@ def updatePrinterMaintenance(printer, maintenance, maintenancePath):
     maintenance = csvUtils.addRow([len(maintenance),printerID,eventDate,eventType],maintenance)
     csvUtils.writeData([maintenancePath], [maintenance])
 
-def readHotend(hotendPath, hotendMaintenancePath, purchasesPath):
+def readHotend(hotendPath, hotendMaintenancePath):
     # Read csv files
-    hotend, hotendMaintenance, purchases = csvUtils.readData([hotendPath, hotendMaintenancePath, purchasesPath])
+    hotend, hotendMaintenance = csvUtils.readData([hotendPath, hotendMaintenancePath])
 
     # Print information
     print('Hotends:')
@@ -136,6 +136,28 @@ def addHotend(hotend, hotendPath, purchases, purchasesPath, purchaseID):
     hotend = csvUtils.addRow([len(hotend),newHotendCompany,newHotendSize,newHotendMaterial,'Passive'], hotend)
     purchases = csvUtils.addRow([purchaseID,'Hotend',len(hotend)-1,newHotendDate,newHotendArrivalDate,newHotendCost], purchases)
     csvUtils.writeData([hotendPath, purchasesPath], [hotend, purchases])
+
+def readBuildplate(buildplatePath, buildplateMaintenancePath):
+    # Read csv files
+    buildplate, buildplateMaintenance = csvUtils.readData([buildplatePath, buildplateMaintenancePath])
+
+    # Print information
+    print('Buildplates:')
+    print(buildplate)
+    print('\n\nBuildplate maintenance history')
+    print(buildplateMaintenance)
+
+    # Update
+    print('Would you like to edit a buildplate(1), create maintenance event(2), or return to home page(3)')
+    action = input()
+
+    match action:
+        case 1:
+            print(1)
+        case 2:
+            print(2)
+        case 3:
+            print('Returning to home page')
 
 def viewPurchases(allPaths):
     # Read dataframe

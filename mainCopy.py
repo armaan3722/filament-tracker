@@ -6,6 +6,8 @@ PRINTER_PATH = './dataCopy/printer.csv'
 PRINTER_MAINTENANCE_PATH = './dataCopy/printerMaintenance.csv'
 HOTEND_PATH = './dataCopy/hotend.csv'
 HOTEND_MAINTENANCE_PATH = './dataCopy/hotendMaintenance.csv'
+BUILDPLATE_PATH = './dataCopy/buildplate.csv'
+BUILDPLATE_MAINTENANCE_PATH = './dataCopy/buildplateMaintenance.csv'
 PURCHASES_PATH = './dataCopy/purchases.csv'
 
 ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, PURCHASES_PATH]
@@ -20,11 +22,11 @@ while runLoop:
     # Run function
     match action:
         case 1:
-            io.readPrinter(PRINTER_PATH, PRINTER_MAINTENANCE_PATH, PURCHASES_PATH)
+            io.readPrinter(PRINTER_PATH, PRINTER_MAINTENANCE_PATH)
         case 2:
-            io.readHotend(HOTEND_PATH, HOTEND_MAINTENANCE_PATH, PURCHASES_PATH)
+            io.readHotend(HOTEND_PATH, HOTEND_MAINTENANCE_PATH)
         case 3:
-            print(3)
+            io.readBuildplate(BUILDPLATE_PATH, BUILDPLATE_MAINTENANCE_PATH)
         case 4:
             print(4)
         case 5:
