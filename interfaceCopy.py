@@ -111,7 +111,7 @@ def readHotend(hotendPath, hotendMaintenancePath):
 
     match action:
         case 1:
-            print(1)
+            editHotend(hotend, hotendPath)
         case 2:
             print(2)
         case 3:
@@ -137,15 +137,42 @@ def addHotend(hotend, hotendPath, purchases, purchasesPath, purchaseID):
     purchases = csvUtils.addRow([purchaseID,'Hotend',len(hotend)-1,newHotendDate,newHotendArrivalDate,newHotendCost], purchases)
     csvUtils.writeData([hotendPath, purchasesPath], [hotend, purchases])
 
+def editHotend(hotend, hotendPath):
+    # Get hotend to edit
+    print(hotend.to_string(index=False))
+    print('\nEnter ID of hotend to edit')
+    hotendID = int(input())
+
+    # Get edit to do
+    print(csvUtils.getRow(hotend, 'hotendID', hotendID))
+    print("Do you want to edit company(1), size(2), material(3), or state(4)")
+    editType = int(input())
+    print("\nWhat would you like to change it to")
+    newValue = input()
+
+    # Save edit
+    match editType:
+        case 1:
+            column = 'company'
+        case 2:
+            column = 'size'
+        case 3:
+            column = 'material'
+        case 4:
+            column = 'state'
+        
+    hotend = csvUtils.changeCell(hotend, 'hotendID', hotendID, column, newValue)
+    csvUtils.writeData([hotendPath], [hotend])
+
 def readBuildplate(buildplatePath, buildplateMaintenancePath):
     # Read csv files
     buildplate, buildplateMaintenance = csvUtils.readData([buildplatePath, buildplateMaintenancePath])
 
     # Print information
     print('Buildplates:')
-    print(buildplate)
+    print(buildplate.to_string(index=False))
     print('\n\nBuildplate maintenance history')
-    print(buildplateMaintenance)
+    print(buildplateMaintenance.to_string(index=False))
 
     # Update
     print('Would you like to edit a buildplate(1), create maintenance event(2), or return to home page(3)')
