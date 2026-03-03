@@ -113,7 +113,7 @@ def readHotend(hotendPath, hotendMaintenancePath):
         case 1:
             editHotend(hotend, hotendPath)
         case 2:
-            print(2)
+            updateHotendMaintenance(hotend, hotendMaintenance, hotendMaintenancePath)
         case 3:
             print('Returning to home page')
 
@@ -163,6 +163,26 @@ def editHotend(hotend, hotendPath):
         
     hotend = csvUtils.changeCell(hotend, 'hotendID', hotendID, column, newValue)
     csvUtils.writeData([hotendPath], [hotend])
+
+def updateHotendMaintenance(hotend, maintenance, maintenancePath):
+    # Get hotend for maintenance
+    print(hotend)
+    print('\nEnter ID of hotend for maintenance event')
+    hotendID = int(input())
+
+    # Get maintenance event
+    print('What is the maintenance event, hotend cleaning(1)')
+    eventType = int(input())
+    match eventType:
+        case 1:
+            eventType = 'Hotend cleaned'
+    
+    print("What is the date of maintenance")
+    date = input()
+
+    # Save to file
+    maintenance = csvUtils.addRow([len(maintenance),hotendID,date,eventType], maintenance)
+    csvUtils.writeData([maintenancePath], [maintenance])
 
 def readBuildplate(buildplatePath, buildplateMaintenancePath):
     # Read csv files
