@@ -10,13 +10,12 @@ PURCHASES_PATH = './dataCopy/purchases.csv'
 runLoop = True
 while runLoop:
     # Start home screen
-    print('Would you like to view printer information(1), view filament information(2), view filament storage information(3), view non printed parts information(4),\nview project information(5), view print history(6), update filament usage(7), or end program(8)')
+    print('Would you like to view printer information(1), view hotend information(2), view build plate information(3), view AMS information(4), \nview filament information(5), view filament storage information(6), view non printed parts information(7),\nview project information(8), view print history(9), update filament usage(10), or end program(11)')
     action = int(input())
 
     # Run function
     match action:
         case 1:
-            print(1)
             io.readPrinter(PRINTER_PATH, PRINTER_MAINTENANCE_PATH, PURCHASES_PATH)
         case 2:
             print(2)
@@ -31,5 +30,11 @@ while runLoop:
         case 7:
             print(7)
         case 8:
+            print(8)
+        case 9:
+            print(9)
+        case 10:
+            print(10)
+        case 11:
             print('Ending program')
             runLoop = False

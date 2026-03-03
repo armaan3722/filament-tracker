@@ -43,7 +43,7 @@ def addPrinter(printer, path, purchases, purchasesPath):
     newPrinterArrivalDate = input()
 
     # Update dataframes
-    printer = csvUtils.addRow([len(printer),newPrinterName,newPrinterCompany,newPrinterModel,newPrinterDate,newPrinterCost,0], printer)
+    printer = csvUtils.addRow([len(printer),newPrinterName,newPrinterCompany,newPrinterModel,0], printer)
     purchases = csvUtils.addRow([len(purchases),'printer',len(printer)-1,newPrinterDate,newPrinterArrivalDate,newPrinterCost], purchases)
 
     # Save
@@ -57,7 +57,7 @@ def editPrinter(printer, path):
 
     # Get what to edit
     print(csvUtils.getRow(printer, 'printerID', printerID))
-    print('Do you want to edit the name(1), company(2), model(3), date purchased(4), or cost(5)')
+    print('Do you want to edit the name(1), company(2), or model(3)')
     editType = int(input())
     print('What is the new value')
     newValue = input()
@@ -70,10 +70,6 @@ def editPrinter(printer, path):
             column = 'printerCompany'
         case 3:
             column = 'printerModel'
-        case 4:
-            column = 'printerDatePurchased'
-        case 5:
-            column = 'printerCost'
     
     printer = csvUtils.changeCell(printer, 'printerID', printerID, column, newValue)
     csvUtils.writeData([path], [printer])
