@@ -3,3 +3,4 @@ purchaseID,itemType,itemID,datePurchased,dateDelivered,cost
 0,Hotend,0,12-31-2025,01-15-2026,0
 0,Hotend,1,12-31-2025,01-15-2026,0
 0,Buildplate,0,12-31-2025,01-15-2026,0
+0,AMS,0,12-31-2025,01-15-2026,200

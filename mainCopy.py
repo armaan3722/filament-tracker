@@ -8,9 +8,11 @@ HOTEND_PATH = './dataCopy/hotend.csv'
 HOTEND_MAINTENANCE_PATH = './dataCopy/hotendMaintenance.csv'
 BUILDPLATE_PATH = './dataCopy/buildplate.csv'
 BUILDPLATE_MAINTENANCE_PATH = './dataCopy/buildplateMaintenance.csv'
+AMS_PATH = './dataCopy/ams.csv'
+AMS_MAINTENANCE_PATH = './dataCopy/amsMaintenance.csv'
 PURCHASES_PATH = './dataCopy/purchases.csv'
 
-ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, PURCHASES_PATH]
+ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, PURCHASES_PATH]
 
 # Main loop
 runLoop = True
@@ -28,7 +30,7 @@ while runLoop:
         case 3:
             io.readBuildplate(BUILDPLATE_PATH, BUILDPLATE_MAINTENANCE_PATH)
         case 4:
-            print(4)
+            io.readAMS(AMS_PATH, AMS_MAINTENANCE_PATH)
         case 5:
             print(5)
         case 6:

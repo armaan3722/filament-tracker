@@ -265,9 +265,81 @@ def updateBuildplateMaintanence(buildplate, maintenance, maintenancePath):
     maintenance = csvUtils.addRow([len(maintenance),buildplateID,date,eventType], maintenance)
     csvUtils.writeData([maintenancePath], [maintenance])
 
+def readAMS(amsPath, amsMaintenancePath):
+    # Get dataframes
+    ams, amsMaintenance = csvUtils.readData([amsPath, amsMaintenancePath])
+
+    # Print data
+    print('AMS')
+    print(ams.to_string(index=False))
+    print('\n\nAMS maintenance')
+    print(amsMaintenance.to_string(index=False))
+
+    # Get action
+    print('Would you like to edit an AMS(1), add a maintenance event(2), or return to home page(3)')
+    action = int(input())
+
+    match action:
+        case 1:
+            editAMS(ams, amsPath)
+        case 2:
+            updateAMSMaintenance(ams, amsMaintenance, amsMaintenancePath)
+        case 3:
+            print('Returning to home page')
+
+def addAMS(ams, amsPath, purchases, purchasesPath, purchaseID):
+    # Get AMS to add
+    print('What AMS model is added')
+    amsModel = input()
+    print('What date was this purchased')
+    purchaseDate = input()
+    print('What date did the ams arrive')
+    arrivalDate = input()
+    print('What did the AMS cost')
+    cost = input()
+
+    # Update dataframes
+    ams = csvUtils.addRow([len(ams),amsModel], ams)
+    purchases = csvUtils.addRow([purchaseID,'AMS',len(ams)-1,purchaseDate,arrivalDate,cost], purchases)
+    csvUtils.writeData([amsPath, purchasesPath], [ams, purchases])
+
+def editAMS(ams, amsPath):
+    # Get ams to edit
+    print(ams.to_string(index=False))
+    print('Enter ID of AMS to edit model')
+    amsID = int(input())
+
+    # Get edited value
+    print('What is the new AMS model')
+    newValue = input()
+
+    # Save
+    ams = csvUtils.changeCell(ams, 'amsID', amsID, 'amsModel', newValue)
+
+def updateAMSMaintenance(ams, maintenance, maintenancePath):
+    # Get ams to update
+    print(ams.to_string(index=False))
+    print('Enter ID of AMS for maintenance event')
+    amsID = int(input())
+
+    # Get maintenance update
+    print('What is the new maintenance event, desiccant changed(1)')
+    eventType = int(input())
+
+    match eventType:
+        case 1:
+            eventType = 'Desiccant changed'
+    
+    print('What date did this happen')
+    date = input()
+    
+    # Update
+    maintenance = csvUtils.addRow([len(maintenance),amsID,date,eventType], maintenance)
+    csvUtils.writeData([maintenancePath], [maintenance])
+
 def viewPurchases(allPaths):
     # Read dataframe
-    purchases = csvUtils.readData([allPaths[3]])[0]
+    purchases = csvUtils.readData([allPaths[-1]])[0]
 
     # Print purchase history
     print(purchases.to_string(index=False))
@@ -286,32 +358,35 @@ def viewPurchases(allPaths):
 
 def addPurchases(allPaths):
     # Read dataframes
-    printers, hotends, buildplates, purchases = csvUtils.readData(allPaths)
+    printers, hotends, buildplates, ams, purchases = csvUtils.readData(allPaths)
     purchaseID = len(purchases)
 
     # Get purchases required
     print('How many printers were purchased')
     printersPurchased = int(input())
-    # print('How many AMS were purchased')
-    # amsPurchased = int(input())
     print('How many hotends were purchased')
     hotendsPurchased = int(input())
     print('How many buildplates were purchased')
     buildplatesPurchased = int(input())
-    # print('How many rolls of filament were purchased')
-    # filamentPurchased = int(input())
+    print('How many AMS were purchased')
+    amsPurchased = int(input())
 
     i = 0
     while i < printersPurchased:
-        addPrinter(printers, allPaths[0], purchases, allPaths[3], purchaseID)
+        addPrinter(printers, allPaths[0], purchases, allPaths[-1], purchaseID)
         i += 1
     
     i = 0
     while i < hotendsPurchased:
-        addHotend(hotends, allPaths[1], purchases, allPaths[3], purchaseID)
+        addHotend(hotends, allPaths[1], purchases, allPaths[-1], purchaseID)
         i += 1
     
     i = 0
     while i < buildplatesPurchased:
-        addBuildplate(buildplates, allPaths[2], purchases, allPaths[3], purchaseID)
+        addBuildplate(buildplates, allPaths[2], purchases, allPaths[-1], purchaseID)
+        i += 1
+    
+    i = 0
+    while i < amsPurchased:
+        addAMS(ams, allPaths[3], purchases, allPaths[-1], purchaseID)
         i += 1
