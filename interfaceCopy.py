@@ -337,6 +337,26 @@ def updateAMSMaintenance(ams, maintenance, maintenancePath):
     maintenance = csvUtils.addRow([len(maintenance),amsID,date,eventType], maintenance)
     csvUtils.writeData([maintenancePath], [maintenance])
 
+def readFilament(filamentPath):
+    # Get filament information
+    filament = csvUtils.readData([filamentPath])
+
+    # Print data
+    print('Filament')
+    print(filament.to_string(index=False))
+
+    # Get action
+    print('\n\nWould you like to edit filament(1), add a drying event(2), or return to home(3)')
+    action = int(input())
+
+    match action:
+        case 1:
+            print()
+        case 2:
+            print()
+        case 3:
+            print('Returning to home page')
+
 def viewPurchases(allPaths):
     # Read dataframe
     purchases = csvUtils.readData([allPaths[-1]])[0]
