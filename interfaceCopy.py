@@ -339,7 +339,7 @@ def updateAMSMaintenance(ams, maintenance, maintenancePath):
 
 def readFilament(filamentPath):
     # Get filament information
-    filament = csvUtils.readData([filamentPath])
+    filament = csvUtils.readData([filamentPath])[0]
 
     # Print data
     print('Filament')
@@ -356,6 +356,30 @@ def readFilament(filamentPath):
             print()
         case 3:
             print('Returning to home page')
+
+def addFilament(filament, filamentPath, purchases, purchasesPath, purchaseID):
+    # Get information
+    print('What is the new filament company')
+    company = input()
+    print('What is the new filament colour')
+    colour = input()
+    print('What is the new filament material')
+    material = input()
+    print('What is the new filament diameter')
+    diameter = input()
+    print('What is the new filament starting amount')
+    startingAmount = input()
+    print('What is the date purchased')
+    datePurchased = input()
+    print('What is the date arrived')
+    arrivalDate = input()
+    print('What is the cost')
+    cost = input()
+
+    # Update dataframes
+    filament = csvUtils.addRow([len(filament),company,colour,material,diameter,startingAmount,startingAmount,'Waiting',None], filament)
+    purchases = csvUtils.addRow([purchaseID,'Filament',len(filament)-1,datePurchased,arrivalDate,cost], purchases)
+    csvUtils.writeData([filamentPath, purchasesPath], [filament, purchases])
 
 def viewPurchases(allPaths):
     # Read dataframe
@@ -378,8 +402,12 @@ def viewPurchases(allPaths):
 
 def addPurchases(allPaths):
     # Read dataframes
-    printers, hotends, buildplates, ams, purchases = csvUtils.readData(allPaths)
-    purchaseID = len(purchases)
+    printers, hotends, buildplates, ams, filament, purchases = csvUtils.readData(allPaths)
+
+    if len(purchases) == 0:
+        purchaseID = 0
+    else:
+        purchaseID = purchases.iloc[-1]['purchaseID'] + 1
 
     # Get purchases required
     print('How many printers were purchased')
@@ -390,6 +418,8 @@ def addPurchases(allPaths):
     buildplatesPurchased = int(input())
     print('How many AMS were purchased')
     amsPurchased = int(input())
+    print('How many filament were purchased')
+    filamentPurchased = int(input())
 
     i = 0
     while i < printersPurchased:
@@ -409,4 +439,9 @@ def addPurchases(allPaths):
     i = 0
     while i < amsPurchased:
         addAMS(ams, allPaths[3], purchases, allPaths[-1], purchaseID)
+        i += 1
+    
+    i = 0
+    while i < filamentPurchased:
+        addFilament(filament, allPaths[4], purchases, allPaths[-1], purchaseID)
         i += 1

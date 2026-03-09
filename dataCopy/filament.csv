@@ -1,1 +1,9 @@
 filamentID,filamentCompany,filamentColour,filamentMaterial,diameter,startingAmount,amountLeft,state,dateLastDried
+0,Bambu,Orange,PLA,1.75,250,250,Waiting,
+1,Bambu,Green,PLA,1.75,250,250,Waiting,
+2,Bambu,White,SupPLA,1.75,250,250,Waiting,
+3,Bambu,Cobalt Blue,PLA,1.75,1000,1000,Waiting,
+4,Bambu,Black,PETG,1.75,1000,1000,Waiting,
+5,Bambu,Black,PETG,1.75,1000,1000,Waiting,
+6,Bambu,White,ABS,1.75,1000,1000,Waiting,
+7,Bambu,White,ABS,1.75,1000,1000,Waiting,
