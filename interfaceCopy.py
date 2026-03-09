@@ -351,7 +351,7 @@ def readFilament(filamentPath):
 
     match action:
         case 1:
-            print()
+            editFilament(filament, filamentPath)
         case 2:
             print()
         case 3:
@@ -380,6 +380,36 @@ def addFilament(filament, filamentPath, purchases, purchasesPath, purchaseID):
     filament = csvUtils.addRow([len(filament),company,colour,material,diameter,startingAmount,startingAmount,'Waiting',None], filament)
     purchases = csvUtils.addRow([purchaseID,'Filament',len(filament)-1,datePurchased,arrivalDate,cost], purchases)
     csvUtils.writeData([filamentPath, purchasesPath], [filament, purchases])
+
+def editFilament(filament, filamentPath):
+    # Get filament to edit
+    print(filament.to_string(index=False))
+    print('Enter ID of filament to edit')
+    filamentID = int(input())
+
+    # Get value to edit
+    print('Do you want to edit company(1), colour(2), material(3), diameter(4), starting amount(5), or state(6)')
+    editType = int(input())
+    print('Enter new value')
+    newValue = input()
+
+    match editType:
+        case 1:
+            column = 'filamentCompany'
+        case 2:
+            column = 'filamentColour'
+        case 3:
+            column = 'filamentMaterial'
+        case 4:
+            column = 'diameter'
+        case 5:
+            column = 'startingAmount'
+        case 6:
+            column = 'state'
+    
+    # Edit
+    filament = csvUtils.changeCell(filament, 'filamentID', filamentID, column, newValue)
+    csvUtils.writeData([filamentPath], [filament])
 
 def viewPurchases(allPaths):
     # Read dataframe

@@ -19,7 +19,7 @@ ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, FILA
 runLoop = True
 while runLoop:
     # Start home screen
-    print('Would you like to view printer information(1), hotend information(2), build plate information(3), AMS information(4), \nfilament information(5), filament storage information(6), non printed parts information(7),project information(8), \nprint history(9), purchases(10), update filament usage(11), or end program(12)')
+    print('Would you like to view printer information(1), hotend information(2), build plate information(3), AMS information(4), \nfilament information(5), filament rolls information(6), filament storage information(7), non printed parts information(8), project information(9), \nprint history(10), purchases(11), update filament usage(12), or end program(13)')
     action = int(input())
 
     # Run function
@@ -43,9 +43,11 @@ while runLoop:
         case 9:
             print(9)
         case 10:
-            io.viewPurchases(ALL_PURCHASE_PATHS)
+            print(10)
         case 11:
-            print(11)
+            io.viewPurchases(ALL_PURCHASE_PATHS)
         case 12:
+            print(11)
+        case 13:
             print('Ending program')
             runLoop = False
