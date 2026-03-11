@@ -70,3 +70,7 @@ Important information
  - 2 inserts used on Feb 17
  - New spool purchased on Feb 13
  - Free abs on Feb 28
+ - New abs dried on mar 10
+ - Blue pla dried on jan 15, feb sometime
+ - Orange and green pla dried once each
+ - Black petg dried when fifth spool arrived

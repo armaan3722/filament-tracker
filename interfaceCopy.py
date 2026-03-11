@@ -435,7 +435,7 @@ def readFilamentDryers(dryerPath):
 
     match action:
         case 1:
-            print()
+            editDryer(dryers, dryerPath)
         case 2:
             print('Returning to home page')
 
@@ -464,6 +464,34 @@ def addDryer(dryers, dryerPath, purchases, purchasesPath, purchaseID):
     dryers = csvUtils.addRow([len(dryers),company,model,capacity,minTemp,maxTemp,0], dryers)
     purchases = csvUtils.addRow([purchaseID,'Filament Dryer',seller,len(dryers)-1,purchaseDate,arrivalDate,cost], purchases)
     csvUtils.writeData([dryerPath, purchasesPath], [dryers, purchases])
+
+def editDryer(dryers, dryerPath):
+    # Get dryer to edit
+    print(dryers.to_string(index=False))
+    print('Enter ID of filament dryer to edit')
+    dryerID = int(input())
+
+    # Get value to edit
+    print('Would you like to edit the company(1), model(2), capacity(3), min temperature(4), or max temperature(5)')
+    editType = int(input())
+    print('What is the new value')
+    newValue = input()
+
+    match editType:
+        case 1:
+            column = 'company'
+        case 2:
+            column = 'model'
+        case 3:
+            column = 'capacity'
+        case 4:
+            column = 'minTemp'
+        case 5:
+            column = 'maxTemp'
+    
+    # Save change
+    dryers = csvUtils.changeCell(dryers, 'dryerID', dryerID, column, newValue)
+    csvUtils.writeData([dryerPath], [dryers])
 
 def viewPurchases(allPaths):
     # Read dataframe
