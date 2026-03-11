@@ -11,15 +11,16 @@ BUILDPLATE_MAINTENANCE_PATH = './dataCopy/buildplateMaintenance.csv'
 AMS_PATH = './dataCopy/ams.csv'
 AMS_MAINTENANCE_PATH = './dataCopy/amsMaintenance.csv'
 FILAMENT_PATH = './dataCopy/filament.csv'
+FILAMENT_DRYER_PATH = './dataCopy/dryers.csv'
 PURCHASES_PATH = './dataCopy/purchases.csv'
 
-ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, FILAMENT_PATH, PURCHASES_PATH]
+ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, FILAMENT_PATH, FILAMENT_DRYER_PATH, PURCHASES_PATH]
 
 # Main loop
 runLoop = True
 while runLoop:
     # Start home screen
-    print('Would you like to view printer information(1), hotend information(2), build plate information(3), AMS information(4), \nfilament information(5), filament rolls information(6), filament storage information(7), non printed parts information(8), project information(9), \nprint history(10), purchases(11), update filament usage(12), or end program(13)')
+    print('Would you like to view printer information(1), hotend information(2), build plate information(3), AMS information(4), \nfilament information(5), filament dryer information(6), filament storage information(7), non printed parts information(8), project information(9), \nprint history(10), purchases(11), update filament usage(12), or end program(13)')
     action = int(input())
 
     # Run function
@@ -35,7 +36,7 @@ while runLoop:
         case 5:
             io.readFilament(FILAMENT_PATH)
         case 6:
-            print(6)
+            io.readFilamentDryers(FILAMENT_DRYER_PATH)
         case 7:
             print(7)
         case 8:

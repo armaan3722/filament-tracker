@@ -411,6 +411,50 @@ def editFilament(filament, filamentPath):
     filament = csvUtils.changeCell(filament, 'filamentID', filamentID, column, newValue)
     csvUtils.writeData([filamentPath], [filament])
 
+def readFilamentDryers(dryerPath):
+    # Get information
+    dryers = csvUtils.readData([dryerPath])[0]
+    
+    # Print information
+    print('Filament dryers')
+    print(dryers.to_string(index=False))
+
+    # Get action
+    print('\n\nWould you like to edit a filament dryer(1), or return to home page(2)')
+    action = int(input())
+
+    match action:
+        case 1:
+            print()
+        case 2:
+            print('Returning to home page')
+
+def addDryer(dryers, dryerPath, purchases, purchasesPath, purchaseID):
+    # Get information about dryer
+    print('What is the company for the filament dryer')
+    company = input()
+    print('What is the model of filament dryer')
+    model = input()
+    print('What is the capacity of the dryer')
+    capacity = input()
+    print('What is the min temperature')
+    minTemp = input()
+    print('What is the max temp')
+    maxTemp = input()
+    print('Where was it purchased from')
+    seller = input()
+    print('What is the date of purchase')
+    purchaseDate = input()
+    print('What is the date of arrival')
+    arrivalDate = input()
+    print('What is the cost')
+    cost = input()
+
+    # Update information
+    dryers = csvUtils.addRow([len(dryers),company,model,capacity,minTemp,maxTemp,0], dryers)
+    purchases = csvUtils.addRow([purchaseID,'Filament Dryer',seller,len(dryers)-1,purchaseDate,arrivalDate,cost], purchases)
+    csvUtils.writeData([dryerPath, purchasesPath], [dryers, purchases])
+
 def viewPurchases(allPaths):
     # Read dataframe
     purchases = csvUtils.readData([allPaths[-1]])[0]
@@ -432,7 +476,7 @@ def viewPurchases(allPaths):
 
 def addPurchases(allPaths):
     # Read dataframes
-    printers, hotends, buildplates, ams, filament, purchases = csvUtils.readData(allPaths)
+    printers, hotends, buildplates, ams, filament, dryers, purchases = csvUtils.readData(allPaths)
 
     if len(purchases) == 0:
         purchaseID = 0
@@ -450,6 +494,8 @@ def addPurchases(allPaths):
     amsPurchased = int(input())
     print('How many filament were purchased')
     filamentPurchased = int(input())
+    print('How many filament dryers were purchased')
+    dryersPurchased = int(input())
 
     i = 0
     while i < printersPurchased:
@@ -474,4 +520,9 @@ def addPurchases(allPaths):
     i = 0
     while i < filamentPurchased:
         addFilament(filament, allPaths[4], purchases, allPaths[-1], purchaseID)
+        i += 1
+    
+    i = 0
+    while i < dryersPurchased:
+        addDryer(dryers, allPaths[5], purchases, allPaths[-1], purchaseID)
         i += 1
