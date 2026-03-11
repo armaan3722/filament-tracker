@@ -33,6 +33,8 @@ def addPrinter(printer, path, purchases, purchasesPath, purchaseID):
     newPrinterModel = input()
     print('What is the new printer name')
     newPrinterName = input()
+    print('Where was it purchased from')
+    seller = input()
     print('What is the new printer cost')
     newPrinterCost = input()
     print('What is the new printer date purchased')
@@ -42,7 +44,7 @@ def addPrinter(printer, path, purchases, purchasesPath, purchaseID):
 
     # Update dataframes
     printer = csvUtils.addRow([len(printer),newPrinterName,newPrinterCompany,newPrinterModel,0], printer)
-    purchases = csvUtils.addRow([purchaseID,'Printer',len(printer)-1,newPrinterDate,newPrinterArrivalDate,newPrinterCost], purchases)
+    purchases = csvUtils.addRow([purchaseID,'Printer',seller,len(printer)-1,newPrinterDate,newPrinterArrivalDate,newPrinterCost], purchases)
 
     # Save
     csvUtils.writeData([path, purchasesPath], [printer, purchases])
@@ -125,6 +127,8 @@ def addHotend(hotend, hotendPath, purchases, purchasesPath, purchaseID):
     newHotendSize = input()
     print('What is the new hotend material')
     newHotendMaterial = input()
+    print('Where was it purchased from')
+    seller = input()
     print('What is the date purchased')
     newHotendDate = input()
     print('What is the date arrived')
@@ -134,7 +138,7 @@ def addHotend(hotend, hotendPath, purchases, purchasesPath, purchaseID):
 
     # Update dataframes
     hotend = csvUtils.addRow([len(hotend),newHotendCompany,newHotendSize,newHotendMaterial,'Passive'], hotend)
-    purchases = csvUtils.addRow([purchaseID,'Hotend',len(hotend)-1,newHotendDate,newHotendArrivalDate,newHotendCost], purchases)
+    purchases = csvUtils.addRow([purchaseID,'Hotend',seller,len(hotend)-1,newHotendDate,newHotendArrivalDate,newHotendCost], purchases)
     csvUtils.writeData([hotendPath, purchasesPath], [hotend, purchases])
 
 def editHotend(hotend, hotendPath):
@@ -212,6 +216,8 @@ def addBuildplate(buildplate, buildplatePath, purchases, purchasesPath, purchase
     buildplateCompany = input()
     print('What type of build plate is it')
     buildplateType = input()
+    print('Where was it purchased from')
+    seller = input()
     print('What is the date purchased')
     purchaseDate = input()
     print('What is the date arrived')
@@ -221,7 +227,7 @@ def addBuildplate(buildplate, buildplatePath, purchases, purchasesPath, purchase
 
     # Add to csv files
     buildplate = csvUtils.addRow([len(buildplate),buildplateCompany,buildplateType], buildplate)
-    purchases = csvUtils.addRow([purchaseID,'Buildplate',len(buildplate)-1,purchaseDate, arrivalDate, cost], purchases)
+    purchases = csvUtils.addRow([purchaseID,'Buildplate',seller,len(buildplate)-1,purchaseDate, arrivalDate, cost], purchases)
     csvUtils.writeData([buildplatePath, purchasesPath], [buildplate, purchases])
 
 def editBuildplate(buildplate, buildplatePath):
@@ -291,6 +297,8 @@ def addAMS(ams, amsPath, purchases, purchasesPath, purchaseID):
     # Get AMS to add
     print('What AMS model is added')
     amsModel = input()
+    print('Where was it purchased from')
+    seller = input()
     print('What date was this purchased')
     purchaseDate = input()
     print('What date did the ams arrive')
@@ -300,7 +308,7 @@ def addAMS(ams, amsPath, purchases, purchasesPath, purchaseID):
 
     # Update dataframes
     ams = csvUtils.addRow([len(ams),amsModel], ams)
-    purchases = csvUtils.addRow([purchaseID,'AMS',len(ams)-1,purchaseDate,arrivalDate,cost], purchases)
+    purchases = csvUtils.addRow([purchaseID,'AMS',seller,len(ams)-1,purchaseDate,arrivalDate,cost], purchases)
     csvUtils.writeData([amsPath, purchasesPath], [ams, purchases])
 
 def editAMS(ams, amsPath):
@@ -369,6 +377,8 @@ def addFilament(filament, filamentPath, purchases, purchasesPath, purchaseID):
     diameter = input()
     print('What is the new filament starting amount')
     startingAmount = input()
+    print('Where was it purchased from')
+    seller = input()
     print('What is the date purchased')
     datePurchased = input()
     print('What is the date arrived')
@@ -378,7 +388,7 @@ def addFilament(filament, filamentPath, purchases, purchasesPath, purchaseID):
 
     # Update dataframes
     filament = csvUtils.addRow([len(filament),company,colour,material,diameter,startingAmount,startingAmount,'Waiting',None], filament)
-    purchases = csvUtils.addRow([purchaseID,'Filament',len(filament)-1,datePurchased,arrivalDate,cost], purchases)
+    purchases = csvUtils.addRow([purchaseID,'Filament',seller,len(filament)-1,datePurchased,arrivalDate,cost], purchases)
     csvUtils.writeData([filamentPath, purchasesPath], [filament, purchases])
 
 def editFilament(filament, filamentPath):
