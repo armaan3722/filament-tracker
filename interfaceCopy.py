@@ -345,9 +345,9 @@ def updateAMSMaintenance(ams, maintenance, maintenancePath):
     maintenance = csvUtils.addRow([len(maintenance),amsID,date,eventType], maintenance)
     csvUtils.writeData([maintenancePath], [maintenance])
 
-def readFilament(filamentPath):
+def readFilament(filamentPath, dryerPath, dryerEventsPath):
     # Get filament information
-    filament = csvUtils.readData([filamentPath])[0]
+    filament, dryers, dryerEvents = csvUtils.readData([filamentPath, dryerPath, dryerEventsPath])
 
     # Print data
     print('Filament')
@@ -361,7 +361,7 @@ def readFilament(filamentPath):
         case 1:
             editFilament(filament, filamentPath)
         case 2:
-            print()
+            addDryingEvent(filament, filamentPath, dryers, dryerEvents, dryerEventsPath)
         case 3:
             print('Returning to home page')
 
@@ -421,13 +421,15 @@ def editFilament(filament, filamentPath):
     filament = csvUtils.changeCell(filament, 'filamentID', filamentID, column, newValue)
     csvUtils.writeData([filamentPath], [filament])
 
-def readFilamentDryers(dryerPath):
+def readFilamentDryers(dryerPath, dryerEventsPath):
     # Get information
-    dryers = csvUtils.readData([dryerPath])[0]
+    dryers, dryerEvents = csvUtils.readData([dryerPath, dryerEventsPath])
     
     # Print information
     print('Filament dryers')
     print(dryers.to_string(index=False))
+    print('\n\nFilament dryer usage history')
+    print(dryerEvents.to_string(index=False))
 
     # Get action
     print('\n\nWould you like to edit a filament dryer(1), or return to home page(2)')
@@ -461,7 +463,7 @@ def addDryer(dryers, dryerPath, purchases, purchasesPath, purchaseID):
     cost = input()
 
     # Update information
-    dryers = csvUtils.addRow([len(dryers),company,model,capacity,minTemp,maxTemp,0], dryers)
+    dryers = csvUtils.addRow([len(dryers),company,model,capacity,minTemp,maxTemp], dryers)
     purchases = csvUtils.addRow([purchaseID,'Filament Dryer',seller,len(dryers)-1,purchaseDate,arrivalDate,cost], purchases)
     csvUtils.writeData([dryerPath, purchasesPath], [dryers, purchases])
 
@@ -492,6 +494,33 @@ def editDryer(dryers, dryerPath):
     # Save change
     dryers = csvUtils.changeCell(dryers, 'dryerID', dryerID, column, newValue)
     csvUtils.writeData([dryerPath], [dryers])
+
+def addDryingEvent(filament, filamentPath, dryers, dryerEvents, dryerEventsPath):
+    # Get filament roll dried
+    print(filament.to_string(index=False))
+    print('Enter ID of filament roll dried')
+    filamentID = int(input())
+
+    # Get dryer used
+    print(dryers.to_string(index=False))
+    print('Enter ID of filament dryer used')
+    dryerID = int(input())
+    
+    # Get drying information
+    print('How long was the filament dried')
+    length = input()
+    print('What temperature was the filament dried at')
+    temp = input()
+    print('When was the filament dried')
+    date = input()
+
+    # Reformat
+    filament["dateLastDried"] = filament["dateLastDried"].astype(str)
+    
+    # Save to csv files
+    filament = csvUtils.changeCell(filament, 'filamentID', filamentID, 'dateLastDried', date)
+    dryerEvents = csvUtils.addRow([len(dryerEvents),filamentID,dryerID,temp,length,date], dryerEvents)
+    csvUtils.writeData([filamentPath, dryerEventsPath], [filament, dryerEvents])
 
 def viewPurchases(allPaths):
     # Read dataframe

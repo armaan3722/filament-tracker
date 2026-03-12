@@ -12,6 +12,7 @@ AMS_PATH = './dataCopy/ams.csv'
 AMS_MAINTENANCE_PATH = './dataCopy/amsMaintenance.csv'
 FILAMENT_PATH = './dataCopy/filament.csv'
 FILAMENT_DRYER_PATH = './dataCopy/dryers.csv'
+FILAMENT_DRYER_EVENTS_PATH = './dataCopy/dryerEvents.csv'
 PURCHASES_PATH = './dataCopy/purchases.csv'
 
 ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, FILAMENT_PATH, FILAMENT_DRYER_PATH, PURCHASES_PATH]
@@ -34,9 +35,9 @@ while runLoop:
         case 4:
             io.readAMS(AMS_PATH, AMS_MAINTENANCE_PATH)
         case 5:
-            io.readFilament(FILAMENT_PATH)
+            io.readFilament(FILAMENT_PATH, FILAMENT_DRYER_PATH, FILAMENT_DRYER_EVENTS_PATH)
         case 6:
-            io.readFilamentDryers(FILAMENT_DRYER_PATH)
+            io.readFilamentDryers(FILAMENT_DRYER_PATH, FILAMENT_DRYER_EVENTS_PATH)
         case 7:
             print(7)
         case 8:
