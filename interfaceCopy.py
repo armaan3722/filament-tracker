@@ -569,6 +569,28 @@ def editSpool(spools, spoolPath):
     spools = csvUtils.changeCell(spools, 'spoolID', spoolID, 'type', newValue)
     csvUtils.writeData([spoolPath], [spools])
 
+def addParts(parts, partsPath, purchases, purchasesPath, purchaseID):
+    # Get information about purchase
+    print("What is the part type")
+    partType = input()
+    print('What is the part spec')
+    partSpec = input()
+    print("What amount was purchased")
+    amountPurchased = input()
+    print('What was the date purchased')
+    datePurchased = input()
+    print('What was the date arrived')
+    dateArrived = input()
+    print('What is the cost')
+    cost = input()
+    print("Where was it purchased")
+    seller = input()
+
+    # Add information to csv
+    parts = csvUtils.addRow([len(parts),partType,partSpec,amountPurchased,amountPurchased], parts)
+    purchases = csvUtils.addRow([purchaseID,'Parts',seller,len(parts)-1,datePurchased,dateArrived,cost], purchases)
+    csvUtils.writeData([partsPath, purchasesPath], [parts, purchases])
+
 def viewPurchases(allPaths):
     # Read dataframe
     purchases = csvUtils.readData([allPaths[-1]])[0]
@@ -590,7 +612,7 @@ def viewPurchases(allPaths):
 
 def addPurchases(allPaths):
     # Read dataframes
-    printers, hotends, buildplates, ams, filament, dryers, spools, purchases = csvUtils.readData(allPaths)
+    printers, hotends, buildplates, ams, filament, dryers, spools, parts, purchases = csvUtils.readData(allPaths)
 
     if len(purchases) == 0:
         purchaseID = 0
@@ -612,6 +634,8 @@ def addPurchases(allPaths):
     dryersPurchased = int(input())
     print('How many spools were purchased')
     spoolsPurchased = int(input())
+    print('How many parts were purchased')
+    partsPurchased = int(input())
 
     i = 0
     while i < printersPurchased:
@@ -646,4 +670,9 @@ def addPurchases(allPaths):
     i = 0
     while i < spoolsPurchased:
         addSpool(spools, allPaths[6], purchases, allPaths[-1], purchaseID)
+        i += 1
+    
+    i = 0
+    while i < partsPurchased:
+        addParts(parts, allPaths[7], purchases, allPaths[-1], purchaseID)
         i += 1

@@ -14,15 +14,16 @@ FILAMENT_PATH = './dataCopy/filament.csv'
 FILAMENT_DRYER_PATH = './dataCopy/dryers.csv'
 FILAMENT_DRYER_EVENTS_PATH = './dataCopy/dryerEvents.csv'
 SPOOLS_PATH = './dataCopy/spools.csv'
+PARTS_PATH = './dataCopy/parts.csv'
 PURCHASES_PATH = './dataCopy/purchases.csv'
 
-ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, FILAMENT_PATH, FILAMENT_DRYER_PATH, SPOOLS_PATH, PURCHASES_PATH]
+ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, FILAMENT_PATH, FILAMENT_DRYER_PATH, SPOOLS_PATH, PARTS_PATH, PURCHASES_PATH]
 
 # Main loop
 runLoop = True
 while runLoop:
     # Start home screen
-    print('Would you like to view printer information(1), hotend information(2), build plate information(3), AMS information(4), \nfilament information(5), filament dryer information(6), reusable spools information(7), filament storage information(8), non printed parts information(9), project information(10), \nprint history(11), purchases(12), update filament usage(13), or end program(14)')
+    print('Would you like to view printer information(1), hotend information(2), build plate information(3), AMS information(4), \nfilament information(5), filament dryer information(6), reusable spools information(7), \nfilament storage information(8), non printed parts information(9), project information(10), \nprint history(11), purchases(12), update filament usage(13), or end program(14)')
     action = int(input())
 
     # Run function
