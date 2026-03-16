@@ -13,15 +13,16 @@ AMS_MAINTENANCE_PATH = './dataCopy/amsMaintenance.csv'
 FILAMENT_PATH = './dataCopy/filament.csv'
 FILAMENT_DRYER_PATH = './dataCopy/dryers.csv'
 FILAMENT_DRYER_EVENTS_PATH = './dataCopy/dryerEvents.csv'
+SPOOLS_PATH = './dataCopy/spools.csv'
 PURCHASES_PATH = './dataCopy/purchases.csv'
 
-ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, FILAMENT_PATH, FILAMENT_DRYER_PATH, PURCHASES_PATH]
+ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, FILAMENT_PATH, FILAMENT_DRYER_PATH, SPOOLS_PATH, PURCHASES_PATH]
 
 # Main loop
 runLoop = True
 while runLoop:
     # Start home screen
-    print('Would you like to view printer information(1), hotend information(2), build plate information(3), AMS information(4), \nfilament information(5), filament dryer information(6), filament storage information(7), non printed parts information(8), project information(9), \nprint history(10), purchases(11), update filament usage(12), or end program(13)')
+    print('Would you like to view printer information(1), hotend information(2), build plate information(3), AMS information(4), \nfilament information(5), filament dryer information(6), reusable spools information(7), filament storage information(8), non printed parts information(9), project information(10), \nprint history(11), purchases(12), update filament usage(13), or end program(14)')
     action = int(input())
 
     # Run function
@@ -39,7 +40,7 @@ while runLoop:
         case 6:
             io.readFilamentDryers(FILAMENT_DRYER_PATH, FILAMENT_DRYER_EVENTS_PATH)
         case 7:
-            print(7)
+            io.readSpools(SPOOLS_PATH)
         case 8:
             print(8)
         case 9:
@@ -47,9 +48,11 @@ while runLoop:
         case 10:
             print(10)
         case 11:
-            io.viewPurchases(ALL_PURCHASE_PATHS)
-        case 12:
             print(11)
+        case 12:
+            io.viewPurchases(ALL_PURCHASE_PATHS)
         case 13:
+            print(13)
+        case 14:
             print('Ending program')
             runLoop = False

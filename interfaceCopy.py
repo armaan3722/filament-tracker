@@ -522,6 +522,53 @@ def addDryingEvent(filament, filamentPath, dryers, dryerEvents, dryerEventsPath)
     dryerEvents = csvUtils.addRow([len(dryerEvents),filamentID,dryerID,temp,length,date], dryerEvents)
     csvUtils.writeData([filamentPath, dryerEventsPath], [filament, dryerEvents])
 
+def readSpools(spoolPath):
+    # Convert to csv
+    spools = csvUtils.readData([spoolPath])[0]
+    
+    # Print spool information
+    print('Reusable spools')
+    print(spools.to_string(index=False))
+
+    # Get action
+    print('\n\nWould you like to edit a spool(1) or return to home page(2)')
+    action = int(input())
+
+    match action:
+        case 1:
+            editSpool(spools, spoolPath)
+        case 2:
+            print("Returning to home page")
+
+def addSpool(spools, spoolPath, purchases, purchasePath, purchaseID):
+    # Get information about purchase
+    print('What is the type of spool')
+    spoolType = input()
+    print('What is the date purchased')
+    datePurchased = input()
+    print('What is the date arrived')
+    dateArrived = input()
+    print("What is the cost")
+    cost = input()
+
+    # Update information
+    spools = csvUtils.addRow([len(spools),spoolType], spools)
+    purchases = csvUtils.addRow([purchaseID,'Reusable spool','Bambu',len(spools)-1,datePurchased, dateArrived,cost], purchases)
+    csvUtils.writeData([spoolPath, purchasePath], [spools, purchases])
+
+def editSpool(spools, spoolPath):
+    # Get spool to edit
+    print("Enter ID of spool to edit")
+    spoolID = int(input())
+
+    # Get column to edit
+    print("What would you like to set the type to")
+    newValue = input()
+
+    # Modify
+    spools = csvUtils.changeCell(spools, 'spoolID', spoolID, 'type', newValue)
+    csvUtils.writeData([spoolPath], [spools])
+
 def viewPurchases(allPaths):
     # Read dataframe
     purchases = csvUtils.readData([allPaths[-1]])[0]
@@ -543,7 +590,7 @@ def viewPurchases(allPaths):
 
 def addPurchases(allPaths):
     # Read dataframes
-    printers, hotends, buildplates, ams, filament, dryers, purchases = csvUtils.readData(allPaths)
+    printers, hotends, buildplates, ams, filament, dryers, spools, purchases = csvUtils.readData(allPaths)
 
     if len(purchases) == 0:
         purchaseID = 0
@@ -563,6 +610,8 @@ def addPurchases(allPaths):
     filamentPurchased = int(input())
     print('How many filament dryers were purchased')
     dryersPurchased = int(input())
+    print('How many spools were purchased')
+    spoolsPurchased = int(input())
 
     i = 0
     while i < printersPurchased:
@@ -592,4 +641,9 @@ def addPurchases(allPaths):
     i = 0
     while i < dryersPurchased:
         addDryer(dryers, allPaths[5], purchases, allPaths[-1], purchaseID)
+        i += 1
+    
+    i = 0
+    while i < spoolsPurchased:
+        addSpool(spools, allPaths[6], purchases, allPaths[-1], purchaseID)
         i += 1
