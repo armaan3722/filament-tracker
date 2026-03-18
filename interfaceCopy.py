@@ -569,6 +569,24 @@ def editSpool(spools, spoolPath):
     spools = csvUtils.changeCell(spools, 'spoolID', spoolID, 'type', newValue)
     csvUtils.writeData([spoolPath], [spools])
 
+def readParts(partsPath):
+    # Get information from csv
+    parts = csvUtils.readData([partsPath])[0]
+
+    # Print information
+    print("Other parts information")
+    print(parts.to_string(index=False))
+
+    # Get next action
+    print('Would you like to edit a part(1), or return to home page(2)')
+    action = int(input())
+
+    match action:
+        case 1:
+            print(1)
+        case 2:
+            print('Returning to home page')
+
 def addParts(parts, partsPath, purchases, purchasesPath, purchaseID):
     # Get information about purchase
     print("What is the part type")

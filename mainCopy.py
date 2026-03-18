@@ -45,7 +45,7 @@ while runLoop:
         case 8:
             print(8)
         case 9:
-            print(9)
+            io.readParts(PARTS_PATH)
         case 10:
             print(10)
         case 11:
