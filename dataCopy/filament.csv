@@ -1,9 +1,9 @@
 filamentID,filamentCompany,filamentColour,filamentMaterial,diameter,startingAmount,amountLeft,state,dateLastDried
-0,Bambu,Orange,PLA,1.75,250,250,Active,
-1,Bambu,Green,PLA,1.75,250,250,Active,
-2,Bambu,White,SupPLA,1.75,250,250,Active,
-3,Bambu,Cobalt Blue,PLA,1.75,1000,1000,Active,01-15-2026
-4,Bambu,Black,PETG,1.75,1000,1000,Waiting,
-5,Bambu,Black,PETG,1.75,1000,1000,Waiting,
-6,Bambu,White,ABS,1.75,1000,1000,Waiting,
-7,Bambu,White,ABS,1.75,1000,1000,Waiting,
+0,Bambu,Orange,PLA,1.75,250,250,Active,02-15-2026
+1,Bambu,Green,PLA,1.75,250,250,Active,02-15-2026
+2,Bambu,White,SupPLA,1.75,250,250,Active,02-15-2026
+3,Bambu,Blue,PLA,1.75,1000,1000,Active,02-15-2026
+4,Bambu,Black,PETG HF,1.75,1000,1000,Active,
+5,Bambu,Black,PETG HF,1.75,1000,1000,Waiting,
+6,Bambu,White,ABS,1.75,1000,1000,Active,
+7,Bambu,White,ABS,1.75,1000,1000,Active,

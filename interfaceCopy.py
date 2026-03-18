@@ -583,7 +583,7 @@ def readParts(partsPath):
 
     match action:
         case 1:
-            print(1)
+            editParts(parts, partsPath)
         case 2:
             print('Returning to home page')
 
@@ -608,6 +608,30 @@ def addParts(parts, partsPath, purchases, purchasesPath, purchaseID):
     parts = csvUtils.addRow([len(parts),partType,partSpec,amountPurchased,amountPurchased], parts)
     purchases = csvUtils.addRow([purchaseID,'Parts',seller,len(parts)-1,datePurchased,dateArrived,cost], purchases)
     csvUtils.writeData([partsPath, purchasesPath], [parts, purchases])
+
+def editParts(parts, partsPath):
+    # Get ID of part to edit
+    print(parts.to_string(index=False))
+    print('Enter ID of part to edit')
+    partID = int(input())
+
+    # Get what to edit
+    print('Would you like to edit the type(1), spec(2), or starting quantity(3)')
+    editType = int(input())
+    print('What is the new value')
+    newValue = input()
+
+    match editType:
+        case 1:
+            column = 'partType'
+        case 2:
+            column = 'partSpec'
+        case 3:
+            column = 'startingAmount'
+    
+    # Save change
+    parts = csvUtils.changeCell(parts, 'partID', partID, column, newValue)
+    csvUtils.writeData([partsPath], [parts])
 
 def viewPurchases(allPaths):
     # Read dataframe
