@@ -2,20 +2,20 @@
 import interfaceCopy as io
 
 # Const variables
-PRINTER_PATH = './dataCopy/printer.csv'
-PRINTER_MAINTENANCE_PATH = './dataCopy/printerMaintenance.csv'
-HOTEND_PATH = './dataCopy/hotend.csv'
-HOTEND_MAINTENANCE_PATH = './dataCopy/hotendMaintenance.csv'
-BUILDPLATE_PATH = './dataCopy/buildplate.csv'
-BUILDPLATE_MAINTENANCE_PATH = './dataCopy/buildplateMaintenance.csv'
-AMS_PATH = './dataCopy/ams.csv'
-AMS_MAINTENANCE_PATH = './dataCopy/amsMaintenance.csv'
-FILAMENT_PATH = './dataCopy/filament.csv'
-FILAMENT_DRYER_PATH = './dataCopy/dryers.csv'
-FILAMENT_DRYER_EVENTS_PATH = './dataCopy/dryerEvents.csv'
-SPOOLS_PATH = './dataCopy/spools.csv'
-PARTS_PATH = './dataCopy/parts.csv'
-PURCHASES_PATH = './dataCopy/purchases.csv'
+PRINTER_PATH = './data/printer.csv'
+PRINTER_MAINTENANCE_PATH = './data/printerMaintenance.csv'
+HOTEND_PATH = './data/hotend.csv'
+HOTEND_MAINTENANCE_PATH = './data/hotendMaintenance.csv'
+BUILDPLATE_PATH = './data/buildplate.csv'
+BUILDPLATE_MAINTENANCE_PATH = './data/buildplateMaintenance.csv'
+AMS_PATH = './data/ams.csv'
+AMS_MAINTENANCE_PATH = './data/amsMaintenance.csv'
+FILAMENT_PATH = './data/filament.csv'
+FILAMENT_DRYER_PATH = './data/dryers.csv'
+FILAMENT_DRYER_EVENTS_PATH = './data/dryerEvents.csv'
+SPOOLS_PATH = './data/spools.csv'
+PARTS_PATH = './data/parts.csv'
+PURCHASES_PATH = './data/purchases.csv'
 
 ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, FILAMENT_PATH, FILAMENT_DRYER_PATH, SPOOLS_PATH, PARTS_PATH, PURCHASES_PATH]
 
