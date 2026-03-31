@@ -1,5 +1,5 @@
 purchaseID,itemType,seller,itemID,datePurchased,dateDelivered,cost
-0,Printer,Bambu,0,12-31-2025,01-15-2026,500.0
+0,Printer,Bambu,0,12-31-2025,01-15-2026,499.0
 0,Hotend,Bambu,0,12-31-2025,01-15-2026,0.0
 0,Hotend,Bambu,1,12-31-2025,01-15-2026,0.0
 0,Buildplate,Bambu,0,12-31-2025,01-15-2026,0.0
@@ -10,15 +10,21 @@ purchaseID,itemType,seller,itemID,datePurchased,dateDelivered,cost
 0,Reusable spool,Bambu,0,12-31-2025,01-15-2026,0.0
 0,Reusable spool,Bambu,1,12-31-2025,01-15-2026,0.0
 0,Reusable spool,Bambu,2,12-31-2025,01-15-2026,0.0
-1,Filament,Bambu,3,01-04-2026,01-10-2026,19.49
-1,Filament,Bambu,4,01-04-2026,01-10-2026,19.49
-1,Filament,Bambu,5,01-04-2026,01-10-2026,19.49
-1,Filament,Bambu,6,01-04-2026,01-10-2026,19.49
-1,Reusable spool,Bambu,3,01-04-2026,01-10-2026,7.99
-2,Filament,Bambu,7,02-28-2026,03-07-2026,0.0
-3,Filament Dryer,Amazon,0,01-10-2026,01-12-2026,50.0
-4,Reusable spool,Bambu,4,02-13-2026,02-20-2026,7.99
-5,Parts,Amazon,0,02-09-2026,02-12-2026,15
-5,Parts,Amazon,1,02-09-2026,02-12-2026,12
-5,Parts,Amazon,2,02-09-2026,02-12-2026,10.99
-5,Parts,Amazon,3,02-09-2026,02-12-2026,10
+1,Filament Dryer,Amazon,0,,,
+2,Filament,Bambu,3,01-04-2026,,19.49
+2,Filament,Bambu,4,01-04-2026,,19.49
+2,Filament,Bambu,5,01-04-2026,,19.49
+2,Filament,Bambu,6,01-04-2026,,19.49
+2,Reusable spool,Bambu,3,01-04-2026,,7.99
+3,Reusable spool,Bambu,4,02-13-2026,02-19-2026,14.99
+4,Filament,Bambu,7,02-28-2026,03-10-2026,0.0
+5,Filament,Bambu,8,03-26-2026,,15.74
+5,Filament,Bambu,9,03-26-2026,,15.74
+5,Filament,Bambu,10,03-26-2026,,15.74
+5,Filament,Bambu,11,03-26-2026,,15.74
+5,Reusable spool,Bambu,5,03-26-2026,,3.0
+5,Reusable spool,Bambu,6,03-26-2026,,3.0
+6,Parts,Amazon,0,02-09-2026,,11.59
+6,Parts,Amazon,1,02-09-2026,,12.09
+6,Parts,Amazon,2,02-09-2026,,10.49
+6,Parts,Amazon,3,02-09-2026,,10.99

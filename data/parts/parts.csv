@@ -1,5 +1,5 @@
 partID,partType,partSpec,startingAmount,currentAmount
-0,Insert,M3x5,50,50
-1,Screw,M3x6 Hex,100,100
-2,Bearing,608-2RS,20,20
-3,Washer,PTFE 5x10x2mm,30,30
+0,Inserts,M3x6,50,50
+1,Hex screws,M3x6,100,100
+2,PTFE washers,5x10x2mm,30,30
+3,Ball bearings,608-2RS,20,20

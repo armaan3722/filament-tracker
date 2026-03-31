@@ -1,1 +1,4 @@
-maintenanceEventID,amsID,date,action
+maintenanceEventID,amsID,date,action,firmwareVersion
+0,0,01-15-2026,Desiccant changed,
+1,0,01-15-2026,Firmware updated,00.00.06.75
+2,0,03-30-2026,Firmware updated,01.00.06.83

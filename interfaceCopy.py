@@ -83,18 +83,22 @@ def updatePrinterMaintenance(printer, maintenance, maintenancePath):
     # Get maintenance type
     print('Which maintenance was done, automatic calibration(1) or firmware update(2)')
     eventType = int(input())
+
+    firmwareVersion = None
     match eventType:
         case 1:
             eventType = 'Automatic Calibration'
         case 2:
             eventType = 'Firmware Update'
+            print('What version was it updated to')
+            firmwareVersion = input()
 
     # Get date
     print('What date did this maintenance event happen')
     eventDate = input()
         
     # Save to file
-    maintenance = csvUtils.addRow([len(maintenance),printerID,eventDate,eventType],maintenance)
+    maintenance = csvUtils.addRow([len(maintenance),printerID,eventDate,eventType,firmwareVersion],maintenance)
     csvUtils.writeData([maintenancePath], [maintenance])
 
 def readHotend(hotendPath, hotendMaintenancePath):
@@ -331,18 +335,23 @@ def updateAMSMaintenance(ams, maintenance, maintenancePath):
     amsID = int(input())
 
     # Get maintenance update
-    print('What is the new maintenance event, desiccant changed(1)')
+    print('What is the new maintenance event, desiccant changed(1) or firmware updated(2)')
     eventType = int(input())
 
     match eventType:
         case 1:
             eventType = 'Desiccant changed'
+            firmwareVersion = None
+        case 2:
+            eventType = 'Firmware updated'
+            print('What version was it updated to')
+            firmwareVersion = input()
     
     print('What date did this happen')
     date = input()
     
     # Update
-    maintenance = csvUtils.addRow([len(maintenance),amsID,date,eventType], maintenance)
+    maintenance = csvUtils.addRow([len(maintenance),amsID,date,eventType,firmwareVersion], maintenance)
     csvUtils.writeData([maintenancePath], [maintenance])
 
 def readFilament(filamentPath, dryerPath, dryerEventsPath):
