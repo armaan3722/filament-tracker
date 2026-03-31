@@ -657,7 +657,7 @@ def readProjects(projectsPath):
         case 1:
             addProject(projects, projectsPath)
         case 2:
-            print(2)
+            editProject(projects, projectsPath)
         case 3:
             print('Returning to home page')
 
@@ -668,6 +668,20 @@ def addProject(projects, projectsPath):
 
     # Update information
     projects = csvUtils.addRow([len(projects),name], projects)
+    csvUtils.writeData([projectsPath], [projects])
+
+def editProject(projects, projectsPath):
+    # Get project to edit
+    print(projects.to_string(index=False))
+    print("Enter ID of project to edit")
+    projectID = int(input())
+    
+    # Get new project name
+    print('Enter new project name')
+    name = input()
+
+    # Save data
+    projects = csvUtils.changeCell(projects, 'projectID', projectID, 'projectName', name)
     csvUtils.writeData([projectsPath], [projects])
 
 def viewPurchases(allPaths):
