@@ -18,6 +18,7 @@ PARTS_PATH = './data/parts/parts.csv'
 PURCHASES_PATH = './data/purchases/purchases.csv'
 
 PROJECTS_PATH = './data/printCategorization/projects.csv'
+CATEGORIES_PATH = './data/printCategorization/categories.csv'
 
 ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, FILAMENT_PATH, FILAMENT_DRYER_PATH, SPOOLS_PATH, PARTS_PATH, PURCHASES_PATH]
 
@@ -49,7 +50,7 @@ while runLoop:
         case 9:
             io.readParts(PARTS_PATH)
         case 10:
-            io.readProjects(PROJECTS_PATH)
+            io.readProjects(PROJECTS_PATH, CATEGORIES_PATH)
         case 11:
             print(11)
         case 12:

@@ -642,15 +642,16 @@ def editParts(parts, partsPath):
     parts = csvUtils.changeCell(parts, 'partID', partID, column, newValue)
     csvUtils.writeData([partsPath], [parts])
 
-def readProjects(projectsPath):
+def readProjects(projectsPath, categoriesPath):
     # Get dataframe
-    projects = csvUtils.readData([projectsPath])[0]
+    projects, categories = csvUtils.readData([projectsPath, categoriesPath])
 
     # Print dataframe
+    print('Projects:')
     print(projects.to_string(index=False))
 
     # Get action
-    print('Would you like to add a project(1), edit a project(2), or return to home page(3)')
+    print('\n\nWould you like to add a project(1), edit a project(2), add categories inside of a project(3), or return to home page(4)')
     action = int(input())
 
     match action:
@@ -659,6 +660,8 @@ def readProjects(projectsPath):
         case 2:
             editProject(projects, projectsPath)
         case 3:
+            readCategories(categories, categoriesPath)
+        case 4:
             print('Returning to home page')
 
 def addProject(projects, projectsPath):
@@ -683,6 +686,19 @@ def editProject(projects, projectsPath):
     # Save data
     projects = csvUtils.changeCell(projects, 'projectID', projectID, 'projectName', name)
     csvUtils.writeData([projectsPath], [projects])
+
+def readCategories(categories, categoriesPath):
+    # Print information
+    print('Categories:')
+    print(categories.to_string(index=False))
+    
+    # Get action
+    print('\n\nWould you like to add a category(1), edit a category(2), or return to home page(3)')
+    action = int(input())
+
+    match action:
+        case 3:
+            print('Returning to home page')
 
 def viewPurchases(allPaths):
     # Read dataframe
