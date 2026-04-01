@@ -651,7 +651,7 @@ def readProjects(projectsPath, categoriesPath):
     print(projects.to_string(index=False))
 
     # Get action
-    print('\n\nWould you like to add a project(1), edit a project(2), add categories inside of a project(3), or return to home page(4)')
+    print('\n\nWould you like to add a project(1), edit a project(2), view categories for a project(3), or return to home page(4)')
     action = int(input())
 
     match action:
@@ -699,8 +699,19 @@ def readCategories(categories, categoriesPath, projectID):
     action = int(input())
 
     match action:
+        case 1:
+            addCategories(categories, categoriesPath, projectID)
         case 3:
             print('Returning to home page')
+    
+def addCategories(categories, categoriesPath, projectID):
+    # Get category information
+    print('What is the name of the new category')
+    categoryName = input()
+
+    # Update information
+    categories = csvUtils.addRow([len(categories),categoryName,projectID,None,None], categories)
+    csvUtils.writeData([categoriesPath], [categories])
 
 def viewPurchases(allPaths):
     # Read dataframe
