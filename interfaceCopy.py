@@ -660,7 +660,9 @@ def readProjects(projectsPath, categoriesPath):
         case 2:
             editProject(projects, projectsPath)
         case 3:
-            readCategories(categories, categoriesPath)
+            print('Enter ID of project to view categories for')
+            projectID = int(input())
+            readCategories(categories, categoriesPath, projectID)
         case 4:
             print('Returning to home page')
 
@@ -687,10 +689,10 @@ def editProject(projects, projectsPath):
     projects = csvUtils.changeCell(projects, 'projectID', projectID, 'projectName', name)
     csvUtils.writeData([projectsPath], [projects])
 
-def readCategories(categories, categoriesPath):
+def readCategories(categories, categoriesPath, projectID):
     # Print information
     print('Categories:')
-    print(categories.to_string(index=False))
+    print(csvUtils.getRow(categories, 'projectID', projectID).to_string(index=False))
     
     # Get action
     print('\n\nWould you like to add a category(1), edit a category(2), or return to home page(3)')
