@@ -823,3 +823,27 @@ def addPurchases(allPaths):
     while i < partsPurchased:
         addParts(parts, allPaths[7], purchases, allPaths[-1], purchaseID)
         i += 1
+
+def addFilamentUsage(projectsPath, categoriesPath, collectionsPath):
+    # Get dataframes
+    projects, categories, collections = csvUtils.readData([projectsPath, categoriesPath, collectionsPath])
+    
+    # Get project information
+    print(projects)
+    print('Enter project ID of print')
+    projectID = input()
+
+    if projectID != '':
+        projectID = int(projectID)
+    else:
+        projectID = None
+
+    print(projectID)
+
+    # Get collection information, either pick a collection or create a new one
+    # Get a category for collection if needed
+    # Get the rest of the print job and filament usage information
+    # Update filament left and printer hours used
+
+    # Add code for creation and selection of configs later
+    # Add entering non printed parts usage later

@@ -19,6 +19,11 @@ PURCHASES_PATH = './data/purchases/purchases.csv'
 
 PROJECTS_PATH = './data/printCategorization/projects.csv'
 CATEGORIES_PATH = './data/printCategorization/categories.csv'
+COLLECTIONS_PATH = './data/printCategorization/collections.csv'
+PRINT_JOBS_PATH = './data/usage/printJobs.csv'
+FILAMENT_USED_PATH = './data/usage/filamentUsage.csv'
+PLATE_CONFIG_PATH = './data/printConfigs/plateConfigs.csv'
+FILAMENT_CONFIG_PATH = './data/printConfigs/filamentConfigs.csv'
 
 ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, FILAMENT_PATH, FILAMENT_DRYER_PATH, SPOOLS_PATH, PARTS_PATH, PURCHASES_PATH]
 
@@ -56,7 +61,7 @@ while runLoop:
         case 12:
             io.viewPurchases(ALL_PURCHASE_PATHS)
         case 13:
-            print(13)
+            io.addFilamentUsage(PROJECTS_PATH, CATEGORIES_PATH, COLLECTIONS_PATH)
         case 14:
             print('Ending program')
             runLoop = False

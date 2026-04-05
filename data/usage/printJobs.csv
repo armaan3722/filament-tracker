@@ -1,1 +1,1 @@
-testInformation,printID,printDate,printTime,printPreparationTime,printerID,amsID,hotendID,buildplateID,collectionID,batch,plateConfigID,printSuccessful,failureReason,filamentLost,repairPrint
+printID,printDate,printTime,printPreparationTime,printerID,amsID,hotendID,buildplateID,collectionID,batch,plateConfigID,printSuccessful,failureReason,filamentLost,repairPrint
