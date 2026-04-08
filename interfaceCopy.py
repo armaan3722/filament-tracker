@@ -824,9 +824,9 @@ def addPurchases(allPaths):
         addParts(parts, allPaths[7], purchases, allPaths[-1], purchaseID)
         i += 1
 
-def addFilamentUsage(projectsPath, categoriesPath, collectionsPath):
+def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPath):
     # Get dataframes
-    projects, categories, collections = csvUtils.readData([projectsPath, categoriesPath, collectionsPath])
+    projects, categories, collections, printJobs = csvUtils.readData([projectsPath, categoriesPath, collectionsPath, printJobsPath])
     
     # Get project information
     print(projects)
@@ -838,9 +838,46 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath):
     else:
         projectID = None
 
-    print(projectID)
-
     # Get collection information, either pick a collection or create a new one
+    print('Do you want to select a collection(1), or create a new collection(2)')
+    collectionAction = int(input())
+
+    if collectionAction == 1:
+        print(printJobs.to_string(index=False))
+        print('\n\n')
+        print(collections.to_string(index=False))
+        print('\n\nEnter collection ID')
+        collectionID = int(input())
+    else:
+        print('\n\nWhat is the new collection name')
+        collectionName = input()
+        print('Enter purpose')
+        purpose = input()
+        print('Enter stage')
+        stage = input()
+        print(categories.to_string(index=False))
+        print('Enter category ID')
+        categoryID = input()
+        print('Enter version')
+        version = input()
+        print('Enter revision')
+        revision = input()
+        print('Does this collection have configs (T/f)')
+        hasConfig = input()
+        print('What quantity does this collection produce')
+        quantityProduced = input()
+
+        testArray = [purpose,stage,categoryID,version,revision,hasConfig,quantityProduced]
+
+        i = 0
+        while i < len(testArray):
+            if testArray[i] == '':
+                testArray[i] = None
+            i += 1
+
+        collections = csvUtils.addRow([len(collections),collectionName,projectID,testArray[0],testArray[1],testArray[2],testArray[3],testArray[4],testArray[5],testArray[6]], collections)
+        csvUtils.writeData([collectionsPath], [collections])
+
     # Get a category for collection if needed
     # Get the rest of the print job and filament usage information
     # Update filament left and printer hours used
