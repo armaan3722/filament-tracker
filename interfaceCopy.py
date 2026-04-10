@@ -867,15 +867,23 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
         print('What quantity does this collection produce')
         quantityProduced = input()
 
-        testArray = [purpose,stage,categoryID,version,revision,hasConfig,quantityProduced]
+        # Changing value types
+        if hasConfig == 'T':
+            hasConfig = True
+        else:
+            hasConfig = False
+
+        # Handle null values
+        testArray = [collectionName,purpose,stage,categoryID,version,revision,hasConfig,quantityProduced]
 
         i = 0
         while i < len(testArray):
             if testArray[i] == '':
                 testArray[i] = None
             i += 1
-
-        collections = csvUtils.addRow([len(collections),collectionName,projectID,testArray[0],testArray[1],testArray[2],testArray[3],testArray[4],testArray[5],testArray[6]], collections)
+        
+        # Save data
+        collections = csvUtils.addRow([len(collections),collectionName,projectID,testArray[1],testArray[2],testArray[3],testArray[4],testArray[5],testArray[6],testArray[7]], collections)
         csvUtils.writeData([collectionsPath], [collections])
 
     # Get a category for collection if needed
