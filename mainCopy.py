@@ -61,7 +61,7 @@ while runLoop:
         case 12:
             io.viewPurchases(ALL_PURCHASE_PATHS)
         case 13:
-            io.addFilamentUsage(PROJECTS_PATH, CATEGORIES_PATH, COLLECTIONS_PATH, PRINT_JOBS_PATH)
+            io.addFilamentUsage(PROJECTS_PATH, CATEGORIES_PATH, COLLECTIONS_PATH, PRINT_JOBS_PATH, PRINTER_PATH, AMS_PATH, HOTEND_PATH, BUILDPLATE_PATH)
         case 14:
             print('Ending program')
             runLoop = False

@@ -824,9 +824,9 @@ def addPurchases(allPaths):
         addParts(parts, allPaths[7], purchases, allPaths[-1], purchaseID)
         i += 1
 
-def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPath):
+def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPath, printerPath, amsPath, hotendPath, buildplatePath):
     # Get dataframes
-    projects, categories, collections, printJobs = csvUtils.readData([projectsPath, categoriesPath, collectionsPath, printJobsPath])
+    projects, categories, collections, printJobs, printer, ams, hotend, buildplate = csvUtils.readData([projectsPath, categoriesPath, collectionsPath, printJobsPath, printerPath, amsPath, hotendPath, buildplatePath])
     
     # Get project information
     print(projects)
@@ -886,8 +886,28 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
         collections = csvUtils.addRow([len(collections),collectionName,projectID,testArray[1],testArray[2],testArray[3],testArray[4],testArray[5],testArray[6],testArray[7]], collections)
         csvUtils.writeData([collectionsPath], [collections])
 
-    # Get a category for collection if needed
     # Get the rest of the print job and filament usage information
+
+    # Print job information
+    print('Enter the date printed')
+    date = input()
+    print('Enter the length of print')
+    time = input()
+    print('Enter the time taken to prepare print')
+    prepTime = input()
+    print(printer.to_string(index=False))
+    print('Enter printer ID')
+    printerID = int(input())
+    print(ams.to_string(index=False))
+    print('Enter ams ID if applicable')
+    amsID = int(input())
+    print(hotend.to_string(index=False))
+    print('Enter hotend ID')
+    hotendID = int(input())
+    print(buildplate.to_string(index=False))
+    print('Enter buildplate ID')
+    buildplateID = int(input())
+
     # Update filament left and printer hours used
 
     # Add code for creation and selection of configs later
