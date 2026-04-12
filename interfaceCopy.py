@@ -883,6 +883,7 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
             i += 1
         
         # Save data
+        collectionID = len(collections)
         collections = csvUtils.addRow([len(collections),collectionName,projectID,testArray[1],testArray[2],testArray[3],testArray[4],testArray[5],testArray[6],testArray[7]], collections)
         csvUtils.writeData([collectionsPath], [collections])
 
@@ -909,6 +910,8 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
     buildplateID = int(input())
 
     # Update filament left and printer hours used
+    printJobs = csvUtils.addRow([len(printJobs),date,time,prepTime,printerID,amsID,hotendID,buildplateID,collectionID,None,None,None,None,None,None], printJobs)
+    csvUtils.writeData([printJobsPath], [printJobs])
 
     # Add code for creation and selection of configs later
     # Add entering non printed parts usage later
