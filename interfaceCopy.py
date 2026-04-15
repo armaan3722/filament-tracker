@@ -824,9 +824,9 @@ def addPurchases(allPaths):
         addParts(parts, allPaths[7], purchases, allPaths[-1], purchaseID)
         i += 1
 
-def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPath, printerPath, amsPath, hotendPath, buildplatePath):
+def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPath, printerPath, amsPath, hotendPath, buildplatePath, filamentPath, filamentUsedPath):
     # Get dataframes
-    projects, categories, collections, printJobs, printer, ams, hotend, buildplate = csvUtils.readData([projectsPath, categoriesPath, collectionsPath, printJobsPath, printerPath, amsPath, hotendPath, buildplatePath])
+    projects, categories, collections, printJobs, printer, ams, hotend, buildplate, filament, filamentUsed = csvUtils.readData([projectsPath, categoriesPath, collectionsPath, printJobsPath, printerPath, amsPath, hotendPath, buildplatePath, filamentPath, filamentUsedPath])
     
     # Get project information
     print(projects)
@@ -909,9 +909,27 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
     print('Enter buildplate ID')
     buildplateID = int(input())
 
+    # Get filament used
+    print('How many different spools of filament were used')
+    spoolsUsed = int(input())
+
+    i = 0
+    while i < spoolsUsed:
+        # Get information
+        print(filament.to_string(index=False))
+        print('Enter ID of filament used')
+        filamentID = int(input())
+        print('Enter amount of filament used in grams')
+        filamentAmountPrinted = input()
+
+        # Update information
+        filamentUsed = csvUtils.addRow([filamentID,filamentAmountPrinted,len(printJobs)], filamentUsed)
+
+        i += 1
+
     # Update filament left and printer hours used
     printJobs = csvUtils.addRow([len(printJobs),date,time,prepTime,printerID,amsID,hotendID,buildplateID,collectionID,None,None,None,None,None,None], printJobs)
-    csvUtils.writeData([printJobsPath], [printJobs])
+    csvUtils.writeData([printJobsPath, filamentUsedPath], [printJobs, filamentUsed])
 
     # Add code for creation and selection of configs later
     # Add entering non printed parts usage later
