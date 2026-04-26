@@ -37,3 +37,6 @@ Revision is small changes to project
 Iteration is copy of project
 Print is plate printed
 Filament is filament used
+
+
+Fix data.py getCell function to properly get cell, not row
