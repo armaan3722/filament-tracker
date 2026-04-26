@@ -1,2 +1,3 @@
 collectionID,collectionName,projectID,purpose,stage,categoryID,version,revision,hasConfig,quantityProduced
 0,,1,Commercial,Testing,1,1,0,False,
+1,Benchy,,Personal,,,,,False,

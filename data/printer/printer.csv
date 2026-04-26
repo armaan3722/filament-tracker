@@ -1,2 +1,2 @@
-printerID,printerName,printerCompany,printerModel,printerHoursUsed
-0,3D Printer,Bambu,P1S,0
+printerID,printerName,printerCompany,printerModel,printerSecondsUsed,printerSecondsInOperation
+0,3D Printer,Bambu,P1S,1800,431

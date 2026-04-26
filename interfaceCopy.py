@@ -43,7 +43,7 @@ def addPrinter(printer, path, purchases, purchasesPath, purchaseID):
     newPrinterArrivalDate = input()
 
     # Update dataframes
-    printer = csvUtils.addRow([len(printer),newPrinterName,newPrinterCompany,newPrinterModel,0], printer)
+    printer = csvUtils.addRow([len(printer),newPrinterName,newPrinterCompany,newPrinterModel,0,0], printer)
     purchases = csvUtils.addRow([purchaseID,'Printer',seller,len(printer)-1,newPrinterDate,newPrinterArrivalDate,newPrinterCost], purchases)
 
     # Save
@@ -931,17 +931,32 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
     printJobs = csvUtils.addRow([len(printJobs),date,time,prepTime,printerID,amsID,hotendID,buildplateID,collectionID,None,None,None,None,None,None], printJobs)
 
     # Non working line
-    printerHours = csvUtils.getCell(printer, 'printerID', printerID, 'printerHoursUsed')
+    printerSeconds = csvUtils.getCell(printer, 'printerID', printerID, 'printerSecondsUsed')
+    printerOperationSeconds = csvUtils.getCell(printer, 'printerID', printerID, 'printerSecondsInOperation')
     # Non working line
 
     arrayTime = time.split()
-    printerHours += (
-        int(arrayTime[0]) * 24 + 
-        int(arrayTime[1]) + 
-        int(arrayTime[2]) / 60 +
-        int(arrayTime[3]) / 3600
+    arrayPrepTime = prepTime.split()
+
+    printJobSeconds = (
+        int(arrayTime[0]) * 86400 + 
+        int(arrayTime[1]) * 3600 + 
+        int(arrayTime[2]) * 60 +
+        int(arrayTime[3])
     )
-    printer = csvUtils.changeCell(printer, 'printerID', printerID, 'printerHoursUsed', printerHours)
+
+    printJobPrepSeconds += (
+        int(arrayPrepTime[0]) * 86400 +
+        int(arrayPrepTime[1]) * 3600 + 
+        int(arrayPrepTime[2]) * 60 +
+        int(arrayPrepTime[3]) 
+    )
+
+    printerSeconds += (printJobSeconds - printJobPrepSeconds)
+    printerOperationSeconds += printJobSeconds
+
+    printer = csvUtils.changeCell(printer, 'printerID', printerID, 'printerSecondsUsed', printerSeconds)
+    printer = csvUtils.changeCell(printer, 'printerID', printerID, 'printerSecondsInOperation', printerOperationSeconds)
 
     csvUtils.writeData([printJobsPath, filamentUsedPath, printerPath], [printJobs, filamentUsed, printer])
 

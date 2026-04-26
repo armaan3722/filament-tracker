@@ -27,8 +27,7 @@ def changeRow(dataframe, row, value):
     return dataframe
 
 def getCell(dataframe, columnToSearch, valueToSearchFor, columnToGetValue):
-    dataframe.loc[dataframe[columnToSearch] == valueToSearchFor, columnToGetValue]
-    return dataframe
+    return dataframe.loc[dataframe[columnToSearch] == valueToSearchFor, columnToGetValue].loc[0]
 
 def changeCell(dataframe, columnToSearch, valueToSearchFor, columnToChange, valueToChangeTo):
     dataframe.loc[dataframe[columnToSearch] == valueToSearchFor, columnToChange] = valueToChangeTo

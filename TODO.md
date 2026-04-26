@@ -1,11 +1,11 @@
-To do for version 0.2.0
- - Add ability to input purpose of each print (personal, for research, for selling)
-   - Everything can be organized into categories (personal, comercial, etc)
-   - Can be further put into projects (throttle, phone stand, etc)
-   - Can be even further put into stages (research, production, etc)
-   - Can be even further put into collections of prints for multi plate prints
- - Add ability to create new categories, projects, stages, and collections
- - Add ability to view all of this information
+To do for v0.5.0
+ - Update filament used
+ - Creation and selection of configs
+ - Tracking non printed parts
+ - Tracking sales
+ - Purchasing tools
+ - Better data analysis
+ - Better input system
 
 Bugs to fix
  - Exiting after going through collection and project
@@ -37,6 +37,3 @@ Revision is small changes to project
 Iteration is copy of project
 Print is plate printed
 Filament is filament used
-
-
-Fix data.py getCell function to properly get cell, not row
