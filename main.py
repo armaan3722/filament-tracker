@@ -1,39 +1,71 @@
 # Import modules
-import pandas as pd
-import matplotlib.pyplot as plt
-import data as csvUtils
-import interface as io
+import equipment as equipment
+import materials as materials
+import projects as projects
+import purchase as purchase
+import usage as usage
 
-# CSV file paths
-PRINT_HISTORY_PATH = './data/prints.csv'
-FILAMENT_HISTORY_PATH = './data/filament-usage.csv'
-CURRENT_FILAMENT_PATH = './data/all-rolls.csv'
-CATEGORY_HISTORY_PATH = './data/categories.csv'
-PROJECT_HISTORY_PATH = './data/projects.csv'
-STATE_HISTORY_PATH = './data/states.csv'
-COLLECTION_HISTORY_PATH = './data/collections.csv'
-REVISION_HISTORY_PATH = './data/revisions.csv'
-ITERATION_HISTORY_PATH = './data/iterations.csv'
+# Const variables
+PRINTER_PATH = './data/printer/printer.csv'
+PRINTER_MAINTENANCE_PATH = './data/printer/printerMaintenance.csv'
+HOTEND_PATH = './data/hotend/hotend.csv'
+HOTEND_MAINTENANCE_PATH = './data/hotend/hotendMaintenance.csv'
+BUILDPLATE_PATH = './data/buildplate/buildplate.csv'
+BUILDPLATE_MAINTENANCE_PATH = './data/buildplate/buildplateMaintenance.csv'
+AMS_PATH = './data/ams/ams.csv'
+AMS_MAINTENANCE_PATH = './data/ams/amsMaintenance.csv'
+FILAMENT_PATH = './data/filament/filament.csv'
+FILAMENT_DRYER_PATH = './data/dryers/dryers.csv'
+FILAMENT_DRYER_EVENTS_PATH = './data/dryers/dryerEvents.csv'
+SPOOLS_PATH = './data/filament/spools.csv'
+PARTS_PATH = './data/parts/parts.csv'
+PURCHASES_PATH = './data/purchases/purchases.csv'
 
-# Main program loop
+PROJECTS_PATH = './data/printCategorization/projects.csv'
+CATEGORIES_PATH = './data/printCategorization/categories.csv'
+COLLECTIONS_PATH = './data/printCategorization/collections.csv'
+PRINT_JOBS_PATH = './data/usage/printJobs.csv'
+FILAMENT_USED_PATH = './data/usage/filamentUsed.csv'
+PLATE_CONFIG_PATH = './data/printConfigs/plateConfigs.csv'
+FILAMENT_CONFIG_PATH = './data/printConfigs/filamentConfigs.csv'
+
+ALL_PURCHASE_PATHS = [PRINTER_PATH, HOTEND_PATH, BUILDPLATE_PATH, AMS_PATH, FILAMENT_PATH, FILAMENT_DRYER_PATH, SPOOLS_PATH, PARTS_PATH, PURCHASES_PATH]
+
+# Main loop
 runLoop = True
 while runLoop:
-    # Start action iteration
-    print('Would you like to view current filament(1), update current filament(2), add a print(3), view current projects(4), add a project(5), or quit(6)?')
+    # Start home screen
+    print('Would you like to view printer information(1), hotend information(2), build plate information(3), AMS information(4), \nfilament information(5), filament dryer information(6), reusable spools information(7), \nfilament storage information(8), non printed parts information(9), project information(10), \nprint history(11), purchases(12), update filament usage(13), or end program(14)')
     action = int(input())
 
-    # Run correct function
-    if action == 1:
-        # Print filament data
-        io.printFilamentData(CURRENT_FILAMENT_PATH)
-    elif action == 2:
-        io.updateFilament(CURRENT_FILAMENT_PATH)
-    elif action == 3:
-        io.addPrint(PRINT_HISTORY_PATH, FILAMENT_HISTORY_PATH, CURRENT_FILAMENT_PATH)
-    elif action == 4:
-        print()
-    elif action == 5:
-        io.addProject(CATEGORY_HISTORY_PATH, PROJECT_HISTORY_PATH, STATE_HISTORY_PATH)
-    elif action == 6:
-        # End program
-        runLoop = io.endProgram()
+    # Run function
+    match action:
+        case 1:
+            equipment.readPrinter(PRINTER_PATH, PRINTER_MAINTENANCE_PATH)
+        case 2:
+            equipment.readHotend(HOTEND_PATH, HOTEND_MAINTENANCE_PATH)
+        case 3:
+            equipment.readBuildplate(BUILDPLATE_PATH, BUILDPLATE_MAINTENANCE_PATH)
+        case 4:
+            equipment.readAMS(AMS_PATH, AMS_MAINTENANCE_PATH)
+        case 5:
+            materials.readFilament(FILAMENT_PATH, FILAMENT_DRYER_PATH, FILAMENT_DRYER_EVENTS_PATH)
+        case 6:
+            materials.readFilamentDryers(FILAMENT_DRYER_PATH, FILAMENT_DRYER_EVENTS_PATH)
+        case 7:
+            materials.readSpools(SPOOLS_PATH)
+        case 8:
+            print(8)
+        case 9:
+            materials.readParts(PARTS_PATH)
+        case 10:
+            projects.readProjects(PROJECTS_PATH, CATEGORIES_PATH)
+        case 11:
+            print(11)
+        case 12:
+            purchase.viewPurchases(ALL_PURCHASE_PATHS)
+        case 13:
+            usage.addFilamentUsage(PROJECTS_PATH, CATEGORIES_PATH, COLLECTIONS_PATH, PRINT_JOBS_PATH, PRINTER_PATH, AMS_PATH, HOTEND_PATH, BUILDPLATE_PATH, FILAMENT_PATH, FILAMENT_USED_PATH)
+        case 14:
+            print('Ending program')
+            runLoop = False

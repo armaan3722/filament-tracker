@@ -1,3 +1,8 @@
+Version 0.5.0 - File organization - 04/27/2026
+ - Divided one large interface file into multiple smaller files
+ - Extra values added to csv files to track version firmare updated to for ams and printers
+ - Ability to input version updated to when adding maintenance event
+
 Version 0.4.0 - Parts tracking - 03/18/2026
  - Able to purchase, view, and edit any hardware parts
 
