@@ -920,20 +920,23 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
         print('Enter ID of filament used')
         filamentID = int(input())
         print('Enter amount of filament used in grams')
-        filamentAmountPrinted = input()
+        filamentAmountPrinted = float(input())
 
         # Update information
         filamentUsed = csvUtils.addRow([filamentID,filamentAmountPrinted,len(printJobs)], filamentUsed)
+
+        previousFilamentLeft = csvUtils.getCell(filament, 'filamentID', filamentID, 'amountLeft')
+        previousFilamentLeft -= filamentAmountPrinted
+        
+        filament = csvUtils.changeCell(filament, 'filamentID', filamentID, 'amountLeft', previousFilamentLeft)
 
         i += 1
 
     # Update filament left and printer hours used
     printJobs = csvUtils.addRow([len(printJobs),date,time,prepTime,printerID,amsID,hotendID,buildplateID,collectionID,None,None,None,None,None,None], printJobs)
 
-    # Non working line
     printerSeconds = csvUtils.getCell(printer, 'printerID', printerID, 'printerSecondsUsed')
     printerOperationSeconds = csvUtils.getCell(printer, 'printerID', printerID, 'printerSecondsInOperation')
-    # Non working line
 
     arrayTime = time.split()
     arrayPrepTime = prepTime.split()
@@ -945,7 +948,7 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
         int(arrayTime[3])
     )
 
-    printJobPrepSeconds += (
+    printJobPrepSeconds = (
         int(arrayPrepTime[0]) * 86400 +
         int(arrayPrepTime[1]) * 3600 + 
         int(arrayPrepTime[2]) * 60 +
@@ -958,7 +961,9 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
     printer = csvUtils.changeCell(printer, 'printerID', printerID, 'printerSecondsUsed', printerSeconds)
     printer = csvUtils.changeCell(printer, 'printerID', printerID, 'printerSecondsInOperation', printerOperationSeconds)
 
-    csvUtils.writeData([printJobsPath, filamentUsedPath, printerPath], [printJobs, filamentUsed, printer])
+    csvUtils.writeData([printJobsPath, filamentUsedPath, printerPath, filamentPath], [printJobs, filamentUsed, printer, filament])
 
     # Add code for creation and selection of configs later
     # Add entering non printed parts usage later
+
+# Divide into equipment, materials, purchasing, projects, usage

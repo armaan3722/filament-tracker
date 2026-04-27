@@ -1,3 +1,6 @@
 collectionID,collectionName,projectID,purpose,stage,categoryID,version,revision,hasConfig,quantityProduced
-0,,1,Commercial,Testing,1,1,0,False,
+0,,1.0,Commercial,Testing,1.0,1.0,0.0,False,
 1,Benchy,,Personal,,,,,False,
+2,Test,1.0,test,,,,,False,
+3,test,1.0,test,,,,,False,
+4,test,,test,,,,,False,

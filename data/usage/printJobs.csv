@@ -1,2 +1,4 @@
 printID,printDate,printTime,printPreparationTime,printerID,amsID,hotendID,buildplateID,collectionID,batch,plateConfigID,printSuccessful,failureReason,filamentLost,repairPrint
 0,01-15-2026,0 0 30 0,0 0 7 11,0,0,0,0,1,,,,,,
+1,date,0 0 10 0,0 0 5 0,0,0,0,0,1,,,,,,
+2,date,0 0 10 0,0 0 5 0,0,0,0,0,1,,,,,,

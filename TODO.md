@@ -1,11 +1,19 @@
 To do for v0.5.0
- - Update filament used
  - Creation and selection of configs
  - Tracking non printed parts
  - Tracking sales
  - Purchasing tools
  - Better data analysis
  - Better input system
+
+To do later
+ - Divide interface copy file into multiple different files
+   - Equipment
+   - Materials
+   - Purchasing
+   - Usage
+   - Projects
+ - Get rid of original main and interface
 
 Bugs to fix
  - Exiting after going through collection and project
