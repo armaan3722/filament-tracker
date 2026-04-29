@@ -141,6 +141,31 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
     csvUtils.writeData([printJobsPath, filamentUsedPath, printerPath, filamentPath], [printJobs, filamentUsed, printer, filament])
 
     # Add code for creation and selection of configs later
-    # Add entering non printed parts usage later
 
-# Divide into equipment, materials, purchasing, projects, usage
+# NON PRINTED PARTS
+def addParts(projectsPath, categoriesPath, collectionsPath):
+    # Get dataframes
+    projects, categories, collections = csvUtils.readData([projectsPath, categoriesPath, collectionsPath])
+
+    # Get project information
+    print(projects.to_string(index=False))
+    print('Enter project ID')
+    projectID = input()
+
+    if projectID != '':
+        projectID = int(projectID)
+    else:
+        projectID = None
+    
+    # Get collection
+    print('\n\nWould you like to select a collection(1) or create a new collection(2)')
+    collectionAction = int(input())
+
+    match collectionAction:
+        case 1:
+            print('\n\n' + collections.to_string(index=False))
+            print('Enter collection ID')
+            collectionID = int(input())
+        case 2:
+            print('\n\n')
+            print()
