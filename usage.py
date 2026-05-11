@@ -168,4 +168,37 @@ def addParts(projectsPath, categoriesPath, collectionsPath):
             collectionID = int(input())
         case 2:
             print('\n\n')
-            print()
+            print('Enter collection name')
+            collectionName = input()
+            print('\n')
+
+            print(categories.to_csv(index=False))
+            print('Enter category ID')
+            categoryID = int(input())
+            if categoryID == '': categoryID = None
+            print('\n')
+
+            print('Enter purpose of collection')
+            purpose = input()
+            if purpose == '': purpose = None
+            print('Enter stage of collection')
+            stage = input()
+            if stage == '': stage = None
+            print('\n')
+
+            print('Enter version')
+            version = int(input())
+            if version == '': version = None
+            print('Enter revision')
+            revision = int(input())
+            if revision == '': revision = None
+            print('\n')
+
+            print('Does this have a config (T/f)')
+            hasConfig = input()
+            if hasConfig == 'T':
+                hasConfig = True
+                print('What quantity does it produce')
+                quantityProduced = input()
+            else: 
+                hasConfig = False

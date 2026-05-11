@@ -1,6 +1,7 @@
 To do for v0.5.0
  - Creation and selection of configs
  - Tracking non printed parts
+ - Add naming individual print jobs
  - Tracking sales
  - Purchasing tools
  - Better data analysis
