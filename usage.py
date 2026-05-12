@@ -170,6 +170,7 @@ def addParts(projectsPath, categoriesPath, collectionsPath):
             print('\n\n')
             print('Enter collection name')
             collectionName = input()
+            if collectionName == '': collectionName = None
             print('\n')
 
             print(categories.to_csv(index=False))
@@ -202,3 +203,8 @@ def addParts(projectsPath, categoriesPath, collectionsPath):
                 quantityProduced = input()
             else: 
                 hasConfig = False
+                quantityProduced = None
+            
+            collectionID = len(collections)
+            collections = csvUtils.addRow([collectionID,collectionName,projectID,purpose,stage,categoryID,version,revision,hasConfig,quantityProduced], collections)
+            csvUtils.writeData([collectionsPath], [collections])
