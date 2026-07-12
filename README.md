@@ -59,18 +59,4 @@ Files
    - prints.csv (stores print name, date, and print id)
    - filamentUsed.csv (stores filament id and use for each print id)
    - allRolls.csv (stores current information about all rolls)
-   - projects.csv (stores project category, name, stage, and date created)
-
-Important information
- - Printer purchased on Dec 31 - $500
- - Calipers purchased on Feb 1
- - Others purchased on Feb 9
- - Everything else pre owned
- - Solder measured by weight
- - 2 inserts used on Feb 17
- - New spool purchased on Feb 13
- - Free abs on Feb 28
- - New abs dried on mar 10
- - Blue pla dried on jan 15, feb sometime
- - Orange and green pla dried once each
- - Black petg dried when fifth spool arrived
+   - projects.csv (stores project category, name, stage, and date created)git
