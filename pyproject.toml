@@ -1,10 +1,27 @@
 [project]
 name = "filament-tracker"
-version = "0.4.0"
+version = "0.4.0.dev1"
 description = "Add your description here"
 readme = "README.md"
+authors = [
+    { name = "Armaan Sandhu", email = "103614886+armaan3722@users.noreply.github.com"}
+]
 requires-python = ">=3.13"
 dependencies = [
     "matplotlib>=3.11.0",
     "pandas>=3.0.3",
+]
+
+[project.scripts]
+filament-tracker = "filament_tracker.main:main"
+
+[build-system]
+requires = ["uv_build>=0.12.1,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pandas-stubs>=3.0.5.260730",
+    "ruff>=0.16.1",
+    "ty>=0.0.67",
 ]

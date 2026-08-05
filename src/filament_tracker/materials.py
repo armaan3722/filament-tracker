@@ -1,4 +1,4 @@
-import csvUtils as csvUtils
+import filament_tracker.csvUtils as csvUtils
 
 # FILAMENT
 def readFilament(filamentPath, dryerPath, dryerEventsPath):

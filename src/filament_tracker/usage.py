@@ -1,4 +1,4 @@
-import csvUtils as csvUtils
+import filament_tracker.csvUtils as csvUtils
 
 # FILAMENT USAGE
 def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPath, printerPath, amsPath, hotendPath, buildplatePath, filamentPath, filamentUsedPath):
