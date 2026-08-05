@@ -61,7 +61,7 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
         
         # Save data
         collectionID = len(collections)
-        collections = csvUtils.addRow([len(collections),collectionName,projectID,testArray[1],testArray[2],testArray[3],testArray[4],testArray[5],testArray[6],testArray[7]], collections)
+        collections = csvUtils.addRow([len(collections), collectionName, projectID, testArray[1], testArray[2], testArray[3], testArray[4], testArray[5], testArray[6], testArray[7]], collections)
         csvUtils.writeData([collectionsPath], [collections])
 
     # Get the rest of the print job and filament usage information
@@ -100,7 +100,7 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
         filamentAmountPrinted = float(input())
 
         # Update information
-        filamentUsed = csvUtils.addRow([filamentID,filamentAmountPrinted,len(printJobs)], filamentUsed)
+        filamentUsed = csvUtils.addRow([filamentID, filamentAmountPrinted, len(printJobs)], filamentUsed)
 
         previousFilamentLeft = csvUtils.getCell(filament, 'filamentID', filamentID, 'amountLeft')
         previousFilamentLeft -= filamentAmountPrinted
@@ -110,7 +110,7 @@ def addFilamentUsage(projectsPath, categoriesPath, collectionsPath, printJobsPat
         i += 1
 
     # Update filament left and printer hours used
-    printJobs = csvUtils.addRow([len(printJobs),date,time,prepTime,printerID,amsID,hotendID,buildplateID,collectionID,None,None,None,None,None,None], printJobs)
+    printJobs = csvUtils.addRow([len(printJobs), date, time, prepTime, printerID, amsID, hotendID, buildplateID, collectionID, None, None, None, None, None, None], printJobs)
 
     printerSeconds = csvUtils.getCell(printer, 'printerID', printerID, 'printerSecondsUsed')
     printerOperationSeconds = csvUtils.getCell(printer, 'printerID', printerID, 'printerSecondsInOperation')
@@ -206,5 +206,5 @@ def addParts(projectsPath, categoriesPath, collectionsPath):
                 quantityProduced = None
             
             collectionID = len(collections)
-            collections = csvUtils.addRow([collectionID,collectionName,projectID,purpose,stage,categoryID,version,revision,hasConfig,quantityProduced], collections)
+            collections = csvUtils.addRow([collectionID, collectionName, projectID, purpose, stage, categoryID, version, revision, hasConfig, quantityProduced], collections)
             csvUtils.writeData([collectionsPath], [collections])

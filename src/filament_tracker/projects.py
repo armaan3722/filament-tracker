@@ -31,7 +31,7 @@ def addProject(projects, projectsPath):
     name = input()
 
     # Update information
-    projects = csvUtils.addRow([len(projects),name], projects)
+    projects = csvUtils.addRow([len(projects), name], projects)
     csvUtils.writeData([projectsPath], [projects])
 
 def editProject(projects, projectsPath):
@@ -72,7 +72,7 @@ def addCategories(categories, categoriesPath, projectID):
     categoryName = input()
 
     # Update information
-    categories = csvUtils.addRow([len(categories),categoryName,projectID,None,None], categories)
+    categories = csvUtils.addRow([len(categories), categoryName, projectID, None, None], categories)
     csvUtils.writeData([categoriesPath], [categories])
 
 def editCategories(categories, categoryPath):

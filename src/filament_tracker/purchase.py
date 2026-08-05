@@ -1,5 +1,5 @@
 import csvUtils as csvUtils
-import pandas as pd
+
 
 def viewPurchases(allPaths):
     # Read dataframe
@@ -105,8 +105,8 @@ def addPrinter(printer, path, purchases, purchasesPath, purchaseID):
     newPrinterArrivalDate = input()
 
     # Update dataframes
-    printer = csvUtils.addRow([len(printer),newPrinterName,newPrinterCompany,newPrinterModel,0,0], printer)
-    purchases = csvUtils.addRow([purchaseID,'Printer',seller,len(printer)-1,newPrinterDate,newPrinterArrivalDate,newPrinterCost], purchases)
+    printer = csvUtils.addRow([len(printer), newPrinterName, newPrinterCompany, newPrinterModel, 0, 0], printer)
+    purchases = csvUtils.addRow([purchaseID, 'Printer', seller, len(printer) - 1, newPrinterDate, newPrinterArrivalDate, newPrinterCost], purchases)
 
     # Save
     csvUtils.writeData([path, purchasesPath], [printer, purchases])
@@ -129,8 +129,8 @@ def addHotend(hotend, hotendPath, purchases, purchasesPath, purchaseID):
     newHotendCost = input()
 
     # Update dataframes
-    hotend = csvUtils.addRow([len(hotend),newHotendCompany,newHotendSize,newHotendMaterial,'Passive'], hotend)
-    purchases = csvUtils.addRow([purchaseID,'Hotend',seller,len(hotend)-1,newHotendDate,newHotendArrivalDate,newHotendCost], purchases)
+    hotend = csvUtils.addRow([len(hotend), newHotendCompany, newHotendSize, newHotendMaterial, 'Passive'], hotend)
+    purchases = csvUtils.addRow([purchaseID, 'Hotend', seller, len(hotend) - 1, newHotendDate, newHotendArrivalDate, newHotendCost], purchases)
     csvUtils.writeData([hotendPath, purchasesPath], [hotend, purchases])
 
 def addBuildplate(buildplate, buildplatePath, purchases, purchasesPath, purchaseID):
@@ -149,8 +149,8 @@ def addBuildplate(buildplate, buildplatePath, purchases, purchasesPath, purchase
     cost = input()
 
     # Add to csv files
-    buildplate = csvUtils.addRow([len(buildplate),buildplateCompany,buildplateType], buildplate)
-    purchases = csvUtils.addRow([purchaseID,'Buildplate',seller,len(buildplate)-1,purchaseDate, arrivalDate, cost], purchases)
+    buildplate = csvUtils.addRow([len(buildplate), buildplateCompany, buildplateType], buildplate)
+    purchases = csvUtils.addRow([purchaseID, 'Buildplate', seller, len(buildplate) - 1, purchaseDate, arrivalDate, cost], purchases)
     csvUtils.writeData([buildplatePath, purchasesPath], [buildplate, purchases])
 
 
@@ -168,8 +168,8 @@ def addAMS(ams, amsPath, purchases, purchasesPath, purchaseID):
     cost = input()
 
     # Update dataframes
-    ams = csvUtils.addRow([len(ams),amsModel], ams)
-    purchases = csvUtils.addRow([purchaseID,'AMS',seller,len(ams)-1,purchaseDate,arrivalDate,cost], purchases)
+    ams = csvUtils.addRow([len(ams), amsModel], ams)
+    purchases = csvUtils.addRow([purchaseID, 'AMS', seller, len(ams) - 1, purchaseDate, arrivalDate, cost], purchases)
     csvUtils.writeData([amsPath, purchasesPath], [ams, purchases])
 
 def addFilament(filament, filamentPath, purchases, purchasesPath, purchaseID):
@@ -194,8 +194,8 @@ def addFilament(filament, filamentPath, purchases, purchasesPath, purchaseID):
     cost = input()
 
     # Update dataframes
-    filament = csvUtils.addRow([len(filament),company,colour,material,diameter,startingAmount,startingAmount,'Waiting',None], filament)
-    purchases = csvUtils.addRow([purchaseID,'Filament',seller,len(filament)-1,datePurchased,arrivalDate,cost], purchases)
+    filament = csvUtils.addRow([len(filament), company, colour, material, diameter, startingAmount, startingAmount, 'Waiting', None], filament)
+    purchases = csvUtils.addRow([purchaseID, 'Filament', seller, len(filament) - 1, datePurchased, arrivalDate, cost], purchases)
     csvUtils.writeData([filamentPath, purchasesPath], [filament, purchases])
 
 def addDryer(dryers, dryerPath, purchases, purchasesPath, purchaseID):
@@ -220,8 +220,8 @@ def addDryer(dryers, dryerPath, purchases, purchasesPath, purchaseID):
     cost = input()
 
     # Update information
-    dryers = csvUtils.addRow([len(dryers),company,model,capacity,minTemp,maxTemp], dryers)
-    purchases = csvUtils.addRow([purchaseID,'Filament Dryer',seller,len(dryers)-1,purchaseDate,arrivalDate,cost], purchases)
+    dryers = csvUtils.addRow([len(dryers), company, model, capacity, minTemp, maxTemp], dryers)
+    purchases = csvUtils.addRow([purchaseID, 'Filament Dryer', seller, len(dryers) - 1, purchaseDate, arrivalDate, cost], purchases)
     csvUtils.writeData([dryerPath, purchasesPath], [dryers, purchases])
 
 
@@ -237,8 +237,8 @@ def addSpool(spools, spoolPath, purchases, purchasePath, purchaseID):
     cost = input()
 
     # Update information
-    spools = csvUtils.addRow([len(spools),spoolType], spools)
-    purchases = csvUtils.addRow([purchaseID,'Reusable spool','Bambu',len(spools)-1,datePurchased, dateArrived,cost], purchases)
+    spools = csvUtils.addRow([len(spools), spoolType], spools)
+    purchases = csvUtils.addRow([purchaseID, 'Reusable spool', 'Bambu', len(spools) - 1, datePurchased, dateArrived, cost], purchases)
     csvUtils.writeData([spoolPath, purchasePath], [spools, purchases])
 
 def addParts(parts, partsPath, purchases, purchasesPath, purchaseID):
@@ -259,6 +259,6 @@ def addParts(parts, partsPath, purchases, purchasesPath, purchaseID):
     seller = input()
 
     # Add information to csv
-    parts = csvUtils.addRow([len(parts),partType,partSpec,amountPurchased,amountPurchased], parts)
-    purchases = csvUtils.addRow([purchaseID,'Parts',seller,len(parts)-1,datePurchased,dateArrived,cost], purchases)
+    parts = csvUtils.addRow([len(parts), partType, partSpec, amountPurchased, amountPurchased], parts)
+    purchases = csvUtils.addRow([purchaseID, 'Parts', seller, len(parts) - 1, datePurchased, dateArrived, cost], purchases)
     csvUtils.writeData([partsPath, purchasesPath], [parts, purchases])

@@ -75,7 +75,7 @@ def addDryingEvent(filament, filamentPath, dryers, dryerEvents, dryerEventsPath)
     
     # Save to csv files
     filament = csvUtils.changeCell(filament, 'filamentID', filamentID, 'dateLastDried', date)
-    dryerEvents = csvUtils.addRow([len(dryerEvents),filamentID,dryerID,temp,length,date], dryerEvents)
+    dryerEvents = csvUtils.addRow([len(dryerEvents), filamentID, dryerID, temp, length, date], dryerEvents)
     csvUtils.writeData([filamentPath, dryerEventsPath], [filament, dryerEvents])
 
 # REUSABLE SPOOLS

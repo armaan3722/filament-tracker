@@ -1,5 +1,5 @@
 import csvUtils as csvUtils
-import pandas as pd
+
 
 # PRINTER
 def readPrinter(printerPath, printerMaintenancePath):
@@ -73,7 +73,7 @@ def updatePrinterMaintenance(printer, maintenance, maintenancePath):
     eventDate = input()
         
     # Save to file
-    maintenance = csvUtils.addRow([len(maintenance),printerID,eventDate,eventType,firmwareVersion],maintenance)
+    maintenance = csvUtils.addRow([len(maintenance), printerID, eventDate, eventType, firmwareVersion], maintenance)
     csvUtils.writeData([maintenancePath], [maintenance])
 
 
@@ -144,7 +144,7 @@ def updateHotendMaintenance(hotend, maintenance, maintenancePath):
     date = input()
 
     # Save to file
-    maintenance = csvUtils.addRow([len(maintenance),hotendID,date,eventType], maintenance)
+    maintenance = csvUtils.addRow([len(maintenance), hotendID, date, eventType], maintenance)
     csvUtils.writeData([maintenancePath], [maintenance])
 
 
@@ -209,7 +209,7 @@ def updateBuildplateMaintanence(buildplate, maintenance, maintenancePath):
     date = input()
     
     # Save update
-    maintenance = csvUtils.addRow([len(maintenance),buildplateID,date,eventType], maintenance)
+    maintenance = csvUtils.addRow([len(maintenance), buildplateID, date, eventType], maintenance)
     csvUtils.writeData([maintenancePath], [maintenance])
 
 
@@ -272,7 +272,7 @@ def updateAMSMaintenance(ams, maintenance, maintenancePath):
     date = input()
     
     # Update
-    maintenance = csvUtils.addRow([len(maintenance),amsID,date,eventType,firmwareVersion], maintenance)
+    maintenance = csvUtils.addRow([len(maintenance), amsID, date, eventType, firmwareVersion], maintenance)
     csvUtils.writeData([maintenancePath], [maintenance])
 
 # DRYERS
