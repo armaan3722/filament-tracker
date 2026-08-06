@@ -1,4 +1,8 @@
 # Import modules
+from pathlib import Path
+
+from platformdirs import PlatformDirs
+
 from filament_tracker import equipment, materials, projects, purchase, usage
 
 # Const variables
@@ -36,6 +40,38 @@ ALL_PURCHASE_PATHS = [
     PARTS_PATH,
     PURCHASES_PATH,
 ]
+
+# List all file names
+user_data_file_names = {
+    "printer": "printer.csv",
+    "printer_maintenance": "printer_maintenance.csv",
+    "hotend": "hotend.csv",
+    "hotend_maintenance": "hotend_maintenance.csv",
+    "buildplate": "buildplate.csv",
+    "buildplate_maintenance": "buildplate_maintenance.csv",
+    "ams": "ams.csv",
+    "ams_maintenance": "ams_maintenance.csv",
+    "filament": "filament.csv",
+    "filament_dryer": "filament_dryer.csv",
+    "filament_dryer_events": "filament_dryer_events.csv",
+    "spools": "spools.csv",
+    "parts": "parts.csv",
+    "purchases": "purchases.csv",
+    "projects": "projects.csv",
+    "categories": "categories.csv",
+    "collections": "collections.csv",
+    "print_jobs": "print_jobs.csv",
+    "filament_used": "filament_used.csv",
+    "plate_configs": "plate_configs.csv",
+    "filament_configs": "filament_configs.csv",
+}
+
+user_data_file_paths = {}
+dirs = PlatformDirs("filament-tracker", appauthor=False)
+data_dir = dirs.user_data_path
+
+for key, value in user_data_file_names.items():
+    user_data_file_paths[key] = data_dir / value
 
 
 # Main loop
