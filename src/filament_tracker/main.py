@@ -49,16 +49,16 @@ dev_user_data_dir = os.getenv("DEV_USER_DATA_DIR")
 
 # List all file names
 user_data_file_names = {
-    "printer": "printer.csv",
+    "printers": "printers.csv",
     "printer_maintenance": "printer_maintenance.csv",
-    "hotend": "hotend.csv",
+    "hotends": "hotends.csv",
     "hotend_maintenance": "hotend_maintenance.csv",
-    "buildplate": "buildplate.csv",
+    "buildplates": "buildplates.csv",
     "buildplate_maintenance": "buildplate_maintenance.csv",
     "ams": "ams.csv",
     "ams_maintenance": "ams_maintenance.csv",
     "filament": "filament.csv",
-    "filament_dryer": "filament_dryer.csv",
+    "filament_dryers": "filament_dryers.csv",
     "filament_dryer_events": "filament_dryer_events.csv",
     "spools": "spools.csv",
     "parts": "parts.csv",
@@ -71,6 +71,11 @@ user_data_file_names = {
     "plate_configs": "plate_configs.csv",
     "filament_configs": "filament_configs.csv",
 }
+
+# todo 1: make empty directories with default if something doesn't exist
+# todo 2: transition from data to dev_data
+# todo 3: using new file paths
+# todo 4: json metadata
 
 # Create empty dictionary and platformdirs object
 user_data_file_paths = {}
