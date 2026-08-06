@@ -1,6 +1,8 @@
 # Import modules
+import os
 from pathlib import Path
 
+from dotenv import load_dotenv
 from platformdirs import PlatformDirs
 
 from filament_tracker import equipment, materials, projects, purchase, usage
@@ -41,6 +43,10 @@ ALL_PURCHASE_PATHS = [
     PURCHASES_PATH,
 ]
 
+# Load environment variables
+load_dotenv()
+dev_user_data_dir = os.getenv("DEV_USER_DATA_DIR")
+
 # List all file names
 user_data_file_names = {
     "printer": "printer.csv",
@@ -66,9 +72,15 @@ user_data_file_names = {
     "filament_configs": "filament_configs.csv",
 }
 
+# Create empty dictionary and platformdirs object
 user_data_file_paths = {}
 dirs = PlatformDirs("filament-tracker", appauthor=False)
-data_dir = dirs.user_data_path
+
+# Get path based on environment variables
+if dev_user_data_dir:
+    data_dir = Path(dev_user_data_dir)
+else:
+    data_dir = dirs.user_data_path
 
 for key, value in user_data_file_names.items():
     user_data_file_paths[key] = data_dir / value
