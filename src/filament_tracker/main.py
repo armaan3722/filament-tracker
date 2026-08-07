@@ -1,7 +1,9 @@
 # Import modules
 import os
+from importlib.resources import files
 from pathlib import Path
 
+import pandas as pd
 from dotenv import load_dotenv
 from platformdirs import PlatformDirs
 
@@ -72,10 +74,9 @@ user_data_file_names = {
     "filament_configs": "filament_configs.csv",
 }
 
-# todo 1: make empty directories with default if something doesn't exist
-# todo 2: transition from data to dev_data
-# todo 3: using new file paths
-# todo 4: json metadata
+# todo 1: transition from data to dev_data
+# todo 2: using new file paths
+# todo 3: json metadata
 
 # Create empty dictionary and platformdirs object
 user_data_file_paths = {}
@@ -89,6 +90,14 @@ else:
 
 for key, value in user_data_file_names.items():
     user_data_file_paths[key] = data_dir / value
+
+# Check if directory exists, and add default files if needed
+for value in user_data_file_paths.values():
+    if not value.exists():
+        default_path = files("filament_tracker") / "default_data" / value.name
+        data_dir.mkdir(parents=True, exist_ok=True)
+
+        pd.read_csv(str(default_path)).to_csv(data_dir / value.name, index=False)
 
 
 # Main loop
