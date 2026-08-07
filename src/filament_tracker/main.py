@@ -9,42 +9,6 @@ from platformdirs import PlatformDirs
 
 from filament_tracker import equipment, materials, projects, purchase, usage
 
-# Const variables
-PRINTER_PATH = "../../data/printer/printer.csv"
-PRINTER_MAINTENANCE_PATH = "../../data/printer/printerMaintenance.csv"
-HOTEND_PATH = "../../data/hotend/hotend.csv"
-HOTEND_MAINTENANCE_PATH = "../../data/hotend/hotendMaintenance.csv"
-BUILDPLATE_PATH = "../../data/buildplate/buildplate.csv"
-BUILDPLATE_MAINTENANCE_PATH = "../../data/buildplate/buildplateMaintenance.csv"
-AMS_PATH = "../../data/ams/ams.csv"
-AMS_MAINTENANCE_PATH = "../../data/ams/amsMaintenance.csv"
-FILAMENT_PATH = "../../data/filament/filament.csv"
-FILAMENT_DRYER_PATH = "../../data/dryers/dryers.csv"
-FILAMENT_DRYER_EVENTS_PATH = "../../data/dryers/dryerEvents.csv"
-SPOOLS_PATH = "../../data/filament/spools.csv"
-PARTS_PATH = "../../data/parts/parts.csv"
-PURCHASES_PATH = "../../data/purchases/purchases.csv"
-
-PROJECTS_PATH = "../../data/printCategorization/projects.csv"
-CATEGORIES_PATH = "../../data/printCategorization/categories.csv"
-COLLECTIONS_PATH = "../../data/printCategorization/collections.csv"
-PRINT_JOBS_PATH = "../../data/usage/printJobs.csv"
-FILAMENT_USED_PATH = "../../data/usage/filamentUsed.csv"
-PLATE_CONFIG_PATH = "../../data/printConfigs/plateConfigs.csv"
-FILAMENT_CONFIG_PATH = "../../data/printConfigs/filamentConfigs.csv"
-
-ALL_PURCHASE_PATHS = [
-    PRINTER_PATH,
-    HOTEND_PATH,
-    BUILDPLATE_PATH,
-    AMS_PATH,
-    FILAMENT_PATH,
-    FILAMENT_DRYER_PATH,
-    SPOOLS_PATH,
-    PARTS_PATH,
-    PURCHASES_PATH,
-]
-
 # Load environment variables
 load_dotenv()
 dev_user_data_dir = os.getenv("DEV_USER_DATA_DIR")
@@ -74,9 +38,7 @@ user_data_file_names = {
     "filament_configs": "filament_configs.csv",
 }
 
-# todo 1: transition from data to dev_data
-# todo 2: using new file paths
-# todo 3: json metadata
+# todo: json metadata
 
 # Create empty dictionary and platformdirs object
 user_data_file_paths = {}
@@ -88,15 +50,18 @@ if dev_user_data_dir:
 else:
     data_dir = dirs.user_data_path
 
+# Get full path including file name from dir
 for key, value in user_data_file_names.items():
     user_data_file_paths[key] = data_dir / value
 
 # Check if directory exists, and add default files if needed
 for value in user_data_file_paths.values():
     if not value.exists():
+        # Get path of default files, and make dir for user data files
         default_path = files("filament_tracker") / "default_data" / value.name
         data_dir.mkdir(parents=True, exist_ok=True)
 
+        # Read default file and write to user data dir
         pd.read_csv(str(default_path)).to_csv(data_dir / value.name, index=False)
 
 
@@ -113,45 +78,73 @@ def main():
         # Run function
         match action:
             case 1:
-                equipment.readPrinter(PRINTER_PATH, PRINTER_MAINTENANCE_PATH)
+                equipment.readPrinter(
+                    user_data_file_paths["printers"],
+                    user_data_file_paths["printer_maintenance"],
+                )
             case 2:
-                equipment.readHotend(HOTEND_PATH, HOTEND_MAINTENANCE_PATH)
+                equipment.readHotend(
+                    user_data_file_paths["hotends"],
+                    user_data_file_paths["hotend_maintenance"],
+                )
             case 3:
-                equipment.readBuildplate(BUILDPLATE_PATH, BUILDPLATE_MAINTENANCE_PATH)
+                equipment.readBuildplate(
+                    user_data_file_paths["buildplates"],
+                    user_data_file_paths["buildplate_maintenance"],
+                )
             case 4:
-                equipment.readAMS(AMS_PATH, AMS_MAINTENANCE_PATH)
+                equipment.readAMS(
+                    user_data_file_paths["ams"], user_data_file_paths["ams_maintenance"]
+                )
             case 5:
                 materials.readFilament(
-                    FILAMENT_PATH, FILAMENT_DRYER_PATH, FILAMENT_DRYER_EVENTS_PATH
+                    user_data_file_paths["filament"],
+                    user_data_file_paths["filament_dryers"],
+                    user_data_file_paths["filament_dryer_events"],
                 )
             case 6:
                 equipment.readFilamentDryers(
-                    FILAMENT_DRYER_PATH, FILAMENT_DRYER_EVENTS_PATH
+                    user_data_file_paths["filament_dryers"],
+                    user_data_file_paths["filament_dryer_events"],
                 )
             case 7:
-                materials.readSpools(SPOOLS_PATH)
+                materials.readSpools(user_data_file_paths["spools"])
             case 8:
                 print(8)
             case 9:
-                materials.readParts(PARTS_PATH)
+                materials.readParts(user_data_file_paths["parts"])
             case 10:
-                projects.readProjects(PROJECTS_PATH, CATEGORIES_PATH)
+                projects.readProjects(
+                    user_data_file_paths["projects"], user_data_file_paths["categories"]
+                )
             case 11:
                 print(11)
             case 12:
-                purchase.viewPurchases(ALL_PURCHASE_PATHS)
+                purchase.viewPurchases(
+                    [
+                        user_data_file_paths["printers"],
+                        user_data_file_paths["hotends"],
+                        user_data_file_paths["buildplates"],
+                        user_data_file_paths["ams"],
+                        user_data_file_paths["filament"],
+                        user_data_file_paths["filament_dryers"],
+                        user_data_file_paths["spools"],
+                        user_data_file_paths["parts"],
+                        user_data_file_paths["purchases"],
+                    ]
+                )
             case 13:
                 usage.addFilamentUsage(
-                    PROJECTS_PATH,
-                    CATEGORIES_PATH,
-                    COLLECTIONS_PATH,
-                    PRINT_JOBS_PATH,
-                    PRINTER_PATH,
-                    AMS_PATH,
-                    HOTEND_PATH,
-                    BUILDPLATE_PATH,
-                    FILAMENT_PATH,
-                    FILAMENT_USED_PATH,
+                    user_data_file_paths["projects"],
+                    user_data_file_paths["categories"],
+                    user_data_file_paths["collections"],
+                    user_data_file_paths["print_jobs"],
+                    user_data_file_paths["printers"],
+                    user_data_file_paths["ams"],
+                    user_data_file_paths["hotends"],
+                    user_data_file_paths["buildplates"],
+                    user_data_file_paths["filament"],
+                    user_data_file_paths["filament_used"],
                 )
             case 14:
                 print("Ending program")
