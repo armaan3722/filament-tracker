@@ -51,7 +51,7 @@ def edit_project(projects, projects_path):
 
     # Save data
     projects = csv_utils.change_cell(
-        projects, "projectID", project_id, "projectName", name
+        projects, "project_id", project_id, "project_name", name
     )
     csv_utils.write_data([projects_path], [projects])
 
@@ -60,7 +60,9 @@ def edit_project(projects, projects_path):
 def read_categories(categories, categories_path, project_id):
     # Print information
     print("Categories:")
-    print(csv_utils.get_row(categories, "projectID", project_id).to_string(index=False))
+    print(
+        csv_utils.get_row(categories, "project_id", project_id).to_string(index=False)
+    )
 
     # Get action
     print(
@@ -102,14 +104,14 @@ def edit_categories(categories, category_path):
 
     match edit_type:
         case 1:
-            column = "categoryName"
+            column = "category_name"
         case 2:
-            column = "bestVersion"
+            column = "best_version"
         case 3:
-            column = "bestRevision"
+            column = "best_revision"
 
     # Save change
     categories = csv_utils.change_cell(
-        categories, "categoryID", category_id, column, new_value
+        categories, "category_id", category_id, column, new_value
     )
     csv_utils.write_data([category_path], [categories])

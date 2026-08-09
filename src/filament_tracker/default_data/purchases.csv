@@ -1,1 +1,1 @@
-purchaseID,itemType,seller,itemID,datePurchased,dateDelivered,cost
+purchase_id,item_type,seller,item_id,date_purchased,date_delivered,cost

@@ -38,7 +38,7 @@ def edit_printer(printer, path):
     printer_id = int(input())
 
     # Get what to edit
-    print(csv_utils.get_row(printer, "printerID", printer_id))
+    print(csv_utils.get_row(printer, "printer_id", printer_id))
     print("Do you want to edit the name(1), company(2), or model(3)")
     edit_type = int(input())
     print("What is the new value")
@@ -47,13 +47,15 @@ def edit_printer(printer, path):
     # Save edit
     match edit_type:
         case 1:
-            column = "printerName"
+            column = "printer_name"
         case 2:
-            column = "printerCompany"
+            column = "printer_company"
         case 3:
-            column = "printerModel"
+            column = "printer_model"
 
-    printer = csv_utils.change_cell(printer, "printerID", printer_id, column, new_value)
+    printer = csv_utils.change_cell(
+        printer, "printer_id", printer_id, column, new_value
+    )
     csv_utils.write_data([path], [printer])
 
 
@@ -125,7 +127,7 @@ def edit_hotend(hotend, hotend_path):
     hotend_id = int(input())
 
     # Get edit to do
-    print(csv_utils.get_row(hotend, "hotendID", hotend_id))
+    print(csv_utils.get_row(hotend, "hotend_id", hotend_id))
     print("Do you want to edit company(1), size(2), material(3), or state(4)")
     edit_type = int(input())
     print("\nWhat would you like to change it to")
@@ -142,7 +144,7 @@ def edit_hotend(hotend, hotend_path):
         case 4:
             column = "state"
 
-    hotend = csv_utils.change_cell(hotend, "hotendID", hotend_id, column, new_value)
+    hotend = csv_utils.change_cell(hotend, "hotend_id", hotend_id, column, new_value)
     csv_utils.write_data([hotend_path], [hotend])
 
 
@@ -218,7 +220,7 @@ def edit_buildplate(buildplate, buildplate_path):
 
     # Do edit
     buildplate = csv_utils.change_cell(
-        buildplate, "buildplateID", buildplate_id, column, new_value
+        buildplate, "buildplate_id", buildplate_id, column, new_value
     )
     csv_utils.write_data([buildplate_path], [buildplate])
 
@@ -283,7 +285,7 @@ def edit_ams(ams, ams_path):
     new_value = input()
 
     # Save
-    ams = csv_utils.change_cell(ams, "amsID", ams_id, "amsModel", new_value)
+    ams = csv_utils.change_cell(ams, "ams_id", ams_id, "ams_model", new_value)
 
 
 def update_ams_maintenance(ams, maintenance, maintenance_path):
@@ -361,10 +363,10 @@ def edit_dryer(dryers, dryer_path):
         case 3:
             column = "capacity"
         case 4:
-            column = "minTemp"
+            column = "min_temp"
         case 5:
-            column = "maxTemp"
+            column = "max_temp"
 
     # Save change
-    dryers = csv_utils.change_cell(dryers, "dryerID", dryer_id, column, new_value)
+    dryers = csv_utils.change_cell(dryers, "dryer_id", dryer_id, column, new_value)
     csv_utils.write_data([dryer_path], [dryers])

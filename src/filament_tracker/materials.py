@@ -45,21 +45,21 @@ def edit_filament(filament, filament_path):
 
     match edit_type:
         case 1:
-            column = "filamentCompany"
+            column = "filament_company"
         case 2:
-            column = "filamentColour"
+            column = "filament_colour"
         case 3:
-            column = "filamentMaterial"
+            column = "filament_material"
         case 4:
             column = "diameter"
         case 5:
-            column = "startingAmount"
+            column = "starting_amount"
         case 6:
             column = "state"
 
     # Edit
     filament = csv_utils.change_cell(
-        filament, "filamentID", filament_id, column, new_value
+        filament, "filament_id", filament_id, column, new_value
     )
     csv_utils.write_data([filament_path], [filament])
 
@@ -84,11 +84,11 @@ def add_drying_event(filament, filament_path, dryers, dryer_events, dryer_events
     date = input()
 
     # Reformat
-    filament["dateLastDried"] = filament["dateLastDried"].astype(str)
+    filament["date_last_dried"] = filament["date_last_dried"].astype(str)
 
     # Save to csv files
     filament = csv_utils.change_cell(
-        filament, "filamentID", filament_id, "dateLastDried", date
+        filament, "filament_id", filament_id, "date_last_dried", date
     )
     dryer_events = csv_utils.add_row(
         [len(dryer_events), filament_id, dryer_id, temp, length, date], dryer_events
@@ -126,7 +126,7 @@ def edit_spool(spools, spool_path):
     new_value = input()
 
     # Modify
-    spools = csv_utils.change_cell(spools, "spoolID", spool_id, "type", new_value)
+    spools = csv_utils.change_cell(spools, "spool_id", spool_id, "type", new_value)
     csv_utils.write_data([spool_path], [spools])
 
 
@@ -164,12 +164,12 @@ def edit_parts(parts, parts_path):
 
     match edit_type:
         case 1:
-            column = "partType"
+            column = "part_type"
         case 2:
-            column = "partSpec"
+            column = "part_spec"
         case 3:
-            column = "startingAmount"
+            column = "starting_amount"
 
     # Save change
-    parts = csv_utils.change_cell(parts, "partID", part_id, column, new_value)
+    parts = csv_utils.change_cell(parts, "part_id", part_id, column, new_value)
     csv_utils.write_data([parts_path], [parts])

@@ -1,4 +1,4 @@
-maintanenceEventID,printerID,date,action,firmwareVersion
+maintanence_event_id,printer_id,date,action,firmware_version
 0,0,01-15-2026,Automatic Calibration,
 1,0,03-01-2026,Automatic Calibration,
 2,0,03-30-2026,Automatic Calibration,

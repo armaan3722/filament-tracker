@@ -164,12 +164,12 @@ def add_filament_usage(
         )
 
         previous_filament_left = csv_utils.get_cell(
-            filament, "filamentID", filament_id, "amountLeft"
+            filament, "filament_id", filament_id, "amount_left"
         )
         previous_filament_left -= filament_amount_printed
 
         filament = csv_utils.change_cell(
-            filament, "filamentID", filament_id, "amountLeft", previous_filament_left
+            filament, "filament_id", filament_id, "amount_left", previous_filament_left
         )
 
         i += 1
@@ -197,10 +197,10 @@ def add_filament_usage(
     )
 
     printer_seconds = csv_utils.get_cell(
-        printer, "printerID", printer_id, "printerSecondsUsed"
+        printer, "printer_id", printer_id, "printer_seconds_used"
     )
     printer_operation_seconds = csv_utils.get_cell(
-        printer, "printerID", printer_id, "printerSecondsInOperation"
+        printer, "printer_id", printer_id, "printer_seconds_in_operation"
     )
 
     array_time = time.split()
@@ -224,13 +224,13 @@ def add_filament_usage(
     printer_operation_seconds += print_job_seconds
 
     printer = csv_utils.change_cell(
-        printer, "printerID", printer_id, "printerSecondsUsed", printer_seconds
+        printer, "printer_id", printer_id, "printer_seconds_used", printer_seconds
     )
     printer = csv_utils.change_cell(
         printer,
-        "printerID",
+        "printer_id",
         printer_id,
-        "printerSecondsInOperation",
+        "printer_seconds_in_operation",
         printer_operation_seconds,
     )
 

@@ -1,1 +1,1 @@
-filamentID,filamentCompany,filamentColour,filamentMaterial,diameter,startingAmount,amountLeft,state,dateLastDried
+filament_id,filament_company,filament_colour,filament_material,diameter,starting_amount,amount_left,state,date_last_dried
