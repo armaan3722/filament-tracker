@@ -1,47 +1,51 @@
 import pandas as pd
 
 
-def readData(csvPaths):
+def read_data(csv_paths):
     # Empty dataframes object
     dataframes = []
 
     # Read multiple CSV files
-    for path in csvPaths:
+    for path in csv_paths:
         dataframes.append(pd.read_csv(path))
 
     # Output as a tuple of dataframes
     return tuple(dataframes)
 
 
-def writeData(csvPaths, dataframes):
-    for path, df in zip(csvPaths, dataframes):
+def write_data(csv_paths, dataframes):
+    for path, df in zip(csv_paths, dataframes):
         df.to_csv(path, index=False)
 
 
-def addRow(dataToAdd, dataframe):
-    dataframe.loc[len(dataframe)] = dataToAdd
+def add_row(data_to_add, dataframe):
+    dataframe.loc[len(dataframe)] = data_to_add
     return dataframe
 
 
-def getRow(dataframe, IDColumn, columnValue):
-    return dataframe.loc[dataframe[IDColumn] == columnValue]
+def get_row(dataframe, id_column, column_value):
+    return dataframe.loc[dataframe[id_column] == column_value]
 
 
-def changeRow(dataframe, row, value):
+def change_row(dataframe, row, value):
     dataframe.loc[row] = value
     return dataframe
 
 
-def getCell(dataframe, columnToSearch, valueToSearchFor, columnToGetValue):
+def get_cell(dataframe, column_to_search, value_to_search_for, column_to_get_value):
     return dataframe.loc[
-        dataframe[columnToSearch] == valueToSearchFor, columnToGetValue
+        dataframe[column_to_search] == value_to_search_for, column_to_get_value
     ].iloc[0]
 
 
-def changeCell(
-    dataframe, columnToSearch, valueToSearchFor, columnToChange, valueToChangeTo
+def change_cell(
+    dataframe,
+    column_to_search,
+    value_to_search_for,
+    column_to_change,
+    value_to_change_to,
 ):
-    dataframe.loc[dataframe[columnToSearch] == valueToSearchFor, columnToChange] = (
-        valueToChangeTo
-    )
+    dataframe.loc[
+        dataframe[column_to_search] == value_to_search_for, column_to_change
+    ] = value_to_change_to
     return dataframe

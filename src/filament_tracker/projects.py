@@ -2,9 +2,9 @@ from filament_tracker import csv_utils
 
 
 # PROJECTS
-def readProjects(projectsPath, categoriesPath):
+def read_projects(projects_path, categories_path):
     # Get dataframe
-    projects, categories = csv_utils.readData([projectsPath, categoriesPath])
+    projects, categories = csv_utils.read_data([projects_path, categories_path])
 
     # Print dataframe
     print("Projects:")
@@ -18,49 +18,49 @@ def readProjects(projectsPath, categoriesPath):
 
     match action:
         case 1:
-            addProject(projects, projectsPath)
+            add_project(projects, projects_path)
         case 2:
-            editProject(projects, projectsPath)
+            edit_project(projects, projects_path)
         case 3:
             print("Enter ID of project to view categories for")
-            projectID = int(input())
-            readCategories(categories, categoriesPath, projectID)
+            project_id = int(input())
+            read_categories(categories, categories_path, project_id)
         case 4:
             print("Returning to home page")
 
 
-def addProject(projects, projectsPath):
+def add_project(projects, projects_path):
     # Get information about new project
     print("What is the new project name")
     name = input()
 
     # Update information
-    projects = csv_utils.addRow([len(projects), name], projects)
-    csv_utils.writeData([projectsPath], [projects])
+    projects = csv_utils.add_row([len(projects), name], projects)
+    csv_utils.write_data([projects_path], [projects])
 
 
-def editProject(projects, projectsPath):
+def edit_project(projects, projects_path):
     # Get project to edit
     print(projects.to_string(index=False))
     print("Enter ID of project to edit")
-    projectID = int(input())
+    project_id = int(input())
 
     # Get new project name
     print("Enter new project name")
     name = input()
 
     # Save data
-    projects = csv_utils.changeCell(
-        projects, "projectID", projectID, "projectName", name
+    projects = csv_utils.change_cell(
+        projects, "projectID", project_id, "projectName", name
     )
-    csv_utils.writeData([projectsPath], [projects])
+    csv_utils.write_data([projects_path], [projects])
 
 
 # CATEGORIES
-def readCategories(categories, categoriesPath, projectID):
+def read_categories(categories, categories_path, project_id):
     # Print information
     print("Categories:")
-    print(csv_utils.getRow(categories, "projectID", projectID).to_string(index=False))
+    print(csv_utils.get_row(categories, "projectID", project_id).to_string(index=False))
 
     # Get action
     print(
@@ -70,37 +70,37 @@ def readCategories(categories, categoriesPath, projectID):
 
     match action:
         case 1:
-            addCategories(categories, categoriesPath, projectID)
+            add_categories(categories, categories_path, project_id)
         case 2:
-            editCategories(categories, categoriesPath)
+            edit_categories(categories, categories_path)
         case 3:
             print("Returning to home page")
 
 
-def addCategories(categories, categoriesPath, projectID):
+def add_categories(categories, categories_path, project_id):
     # Get category information
     print("What is the name of the new category")
-    categoryName = input()
+    category_name = input()
 
     # Update information
-    categories = csv_utils.addRow(
-        [len(categories), categoryName, projectID, None, None], categories
+    categories = csv_utils.add_row(
+        [len(categories), category_name, project_id, None, None], categories
     )
-    csv_utils.writeData([categoriesPath], [categories])
+    csv_utils.write_data([categories_path], [categories])
 
 
-def editCategories(categories, categoryPath):
+def edit_categories(categories, category_path):
     # Get category to edit
     print("Enter ID of category to edit")
-    categoryID = int(input())
+    category_id = int(input())
 
     # Get edit value
     print("Would you like to edit the name(1), best version(2), or best revision(3)")
-    editType = int(input())
+    edit_type = int(input())
     print("Enter new value")
-    newValue = input()
+    new_value = input()
 
-    match editType:
+    match edit_type:
         case 1:
             column = "categoryName"
         case 2:
@@ -109,7 +109,7 @@ def editCategories(categories, categoryPath):
             column = "bestRevision"
 
     # Save change
-    categories = csv_utils.changeCell(
-        categories, "categoryID", categoryID, column, newValue
+    categories = csv_utils.change_cell(
+        categories, "categoryID", category_id, column, new_value
     )
-    csv_utils.writeData([categoryPath], [categories])
+    csv_utils.write_data([category_path], [categories])

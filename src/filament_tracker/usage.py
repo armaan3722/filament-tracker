@@ -2,126 +2,126 @@ from filament_tracker import csv_utils
 
 
 # FILAMENT USAGE
-def addFilamentUsage(
-    projectsPath,
-    categoriesPath,
-    collectionsPath,
-    printJobsPath,
-    printerPath,
-    amsPath,
-    hotendPath,
-    buildplatePath,
-    filamentPath,
-    filamentUsedPath,
+def add_filament_usage(
+    projects_path,
+    categories_path,
+    collections_path,
+    print_jobs_path,
+    printer_path,
+    ams_path,
+    hotend_path,
+    buildplate_path,
+    filament_path,
+    filament_used_path,
 ):
     # Get dataframes
     (
         projects,
         categories,
         collections,
-        printJobs,
+        print_jobs,
         printer,
         ams,
         hotend,
         buildplate,
         filament,
-        filamentUsed,
-    ) = csv_utils.readData(
+        filament_used,
+    ) = csv_utils.read_data(
         [
-            projectsPath,
-            categoriesPath,
-            collectionsPath,
-            printJobsPath,
-            printerPath,
-            amsPath,
-            hotendPath,
-            buildplatePath,
-            filamentPath,
-            filamentUsedPath,
+            projects_path,
+            categories_path,
+            collections_path,
+            print_jobs_path,
+            printer_path,
+            ams_path,
+            hotend_path,
+            buildplate_path,
+            filament_path,
+            filament_used_path,
         ]
     )
 
     # Get project information
     print(projects)
     print("Enter project ID of print")
-    projectID = input()
+    project_id = input()
 
-    if projectID != "":
-        projectID = int(projectID)
+    if project_id != "":
+        project_id = int(project_id)
     else:
-        projectID = None
+        project_id = None
 
     # Get collection information, either pick a collection or create a new one
     print("Do you want to select a collection(1), or create a new collection(2)")
-    collectionAction = int(input())
+    collection_action = int(input())
 
-    if collectionAction == 1:
-        print(printJobs.to_string(index=False))
+    if collection_action == 1:
+        print(print_jobs.to_string(index=False))
         print("\n\n")
         print(collections.to_string(index=False))
         print("\n\nEnter collection ID")
-        collectionID = int(input())
+        collection_id = int(input())
     else:
         print("\n\nWhat is the new collection name")
-        collectionName = input()
+        collection_name = input()
         print("Enter purpose")
         purpose = input()
         print("Enter stage")
         stage = input()
         print(categories.to_string(index=False))
         print("Enter category ID")
-        categoryID = input()
+        category_id = input()
         print("Enter version")
         version = input()
         print("Enter revision")
         revision = input()
         print("Does this collection have configs (T/f)")
-        hasConfig = input()
+        has_config = input()
         print("What quantity does this collection produce")
-        quantityProduced = input()
+        quantity_produced = input()
 
         # Changing value types
-        if hasConfig == "T":
-            hasConfig = True
+        if has_config == "T":
+            has_config = True
         else:
-            hasConfig = False
+            has_config = False
 
         # Handle null values
-        testArray = [
-            collectionName,
+        test_array = [
+            collection_name,
             purpose,
             stage,
-            categoryID,
+            category_id,
             version,
             revision,
-            hasConfig,
-            quantityProduced,
+            has_config,
+            quantity_produced,
         ]
 
         i = 0
-        while i < len(testArray):
-            if testArray[i] == "":
-                testArray[i] = None
+        while i < len(test_array):
+            if test_array[i] == "":
+                test_array[i] = None
             i += 1
 
         # Save data
-        collectionID = len(collections)
-        collections = csv_utils.addRow(
+        collection_id = len(collections)
+        collections = csv_utils.add_row(
             [
                 len(collections),
-                collectionName,
-                projectID,
-                testArray[1],
-                testArray[2],
-                testArray[3],
-                testArray[4],
-                testArray[5],
-                testArray[6],
-                testArray[7],
+                collection_name,
+                project_id,
+                test_array[1],
+                test_array[2],
+                test_array[3],
+                test_array[4],
+                test_array[5],
+                test_array[6],
+                test_array[7],
             ],
             collections,
         )
-        csv_utils.writeData([collectionsPath], [collections])
+        csv_utils.write_data([collections_path], [collections])
 
     # Get the rest of the print job and filament usage information
 
@@ -131,61 +131,61 @@ def addFilamentUsage(
     print("Enter the length of print")
     time = input()
     print("Enter the time taken to prepare print")
-    prepTime = input()
+    prep_time = input()
     print(printer.to_string(index=False))
     print("Enter printer ID")
-    printerID = int(input())
+    printer_id = int(input())
     print(ams.to_string(index=False))
     print("Enter ams ID if applicable")
-    amsID = int(input())
+    ams_id = int(input())
     print(hotend.to_string(index=False))
     print("Enter hotend ID")
-    hotendID = int(input())
+    hotend_id = int(input())
     print(buildplate.to_string(index=False))
     print("Enter buildplate ID")
-    buildplateID = int(input())
+    buildplate_id = int(input())
 
     # Get filament used
     print("How many different spools of filament were used")
-    spoolsUsed = int(input())
+    spools_used = int(input())
 
     i = 0
-    while i < spoolsUsed:
+    while i < spools_used:
         # Get information
         print(filament.to_string(index=False))
         print("Enter ID of filament used")
-        filamentID = int(input())
+        filament_id = int(input())
         print("Enter amount of filament used in grams")
-        filamentAmountPrinted = float(input())
+        filament_amount_printed = float(input())
 
         # Update information
-        filamentUsed = csv_utils.addRow(
-            [filamentID, filamentAmountPrinted, len(printJobs)], filamentUsed
+        filament_used = csv_utils.add_row(
+            [filament_id, filament_amount_printed, len(print_jobs)], filament_used
         )
 
-        previousFilamentLeft = csv_utils.getCell(
-            filament, "filamentID", filamentID, "amountLeft"
+        previous_filament_left = csv_utils.get_cell(
+            filament, "filamentID", filament_id, "amountLeft"
         )
-        previousFilamentLeft -= filamentAmountPrinted
+        previous_filament_left -= filament_amount_printed
 
-        filament = csv_utils.changeCell(
-            filament, "filamentID", filamentID, "amountLeft", previousFilamentLeft
+        filament = csv_utils.change_cell(
+            filament, "filamentID", filament_id, "amountLeft", previous_filament_left
         )
 
         i += 1
 
     # Update filament left and printer hours used
-    printJobs = csv_utils.addRow(
+    print_jobs = csv_utils.add_row(
         [
-            len(printJobs),
+            len(print_jobs),
             date,
             time,
-            prepTime,
-            printerID,
-            amsID,
-            hotendID,
-            buildplateID,
-            collectionID,
+            prep_time,
+            printer_id,
+            ams_id,
+            hotend_id,
+            buildplate_id,
+            collection_id,
             None,
             None,
             None,
@@ -193,94 +193,94 @@ def addFilamentUsage(
             None,
             None,
         ],
-        printJobs,
+        print_jobs,
     )
 
-    printerSeconds = csv_utils.getCell(
-        printer, "printerID", printerID, "printerSecondsUsed"
+    printer_seconds = csv_utils.get_cell(
+        printer, "printerID", printer_id, "printerSecondsUsed"
     )
-    printerOperationSeconds = csv_utils.getCell(
-        printer, "printerID", printerID, "printerSecondsInOperation"
-    )
-
-    arrayTime = time.split()
-    arrayPrepTime = prepTime.split()
-
-    printJobSeconds = (
-        int(arrayTime[0]) * 86400
-        + int(arrayTime[1]) * 3600
-        + int(arrayTime[2]) * 60
-        + int(arrayTime[3])
+    printer_operation_seconds = csv_utils.get_cell(
+        printer, "printerID", printer_id, "printerSecondsInOperation"
     )
 
-    printJobPrepSeconds = (
-        int(arrayPrepTime[0]) * 86400
-        + int(arrayPrepTime[1]) * 3600
-        + int(arrayPrepTime[2]) * 60
-        + int(arrayPrepTime[3])
+    array_time = time.split()
+    array_prep_time = prep_time.split()
+
+    print_job_seconds = (
+        int(array_time[0]) * 86400
+        + int(array_time[1]) * 3600
+        + int(array_time[2]) * 60
+        + int(array_time[3])
     )
 
-    printerSeconds += printJobSeconds - printJobPrepSeconds
-    printerOperationSeconds += printJobSeconds
-
-    printer = csv_utils.changeCell(
-        printer, "printerID", printerID, "printerSecondsUsed", printerSeconds
+    print_job_prep_seconds = (
+        int(array_prep_time[0]) * 86400
+        + int(array_prep_time[1]) * 3600
+        + int(array_prep_time[2]) * 60
+        + int(array_prep_time[3])
     )
-    printer = csv_utils.changeCell(
+
+    printer_seconds += print_job_seconds - print_job_prep_seconds
+    printer_operation_seconds += print_job_seconds
+
+    printer = csv_utils.change_cell(
+        printer, "printerID", printer_id, "printerSecondsUsed", printer_seconds
+    )
+    printer = csv_utils.change_cell(
         printer,
         "printerID",
-        printerID,
+        printer_id,
         "printerSecondsInOperation",
-        printerOperationSeconds,
+        printer_operation_seconds,
     )
 
-    csv_utils.writeData(
-        [printJobsPath, filamentUsedPath, printerPath, filamentPath],
-        [printJobs, filamentUsed, printer, filament],
+    csv_utils.write_data(
+        [print_jobs_path, filament_used_path, printer_path, filament_path],
+        [print_jobs, filament_used, printer, filament],
     )
 
     # Add code for creation and selection of configs later
 
 
 # NON PRINTED PARTS
-def addParts(projectsPath, categoriesPath, collectionsPath):
+def add_parts(projects_path, categories_path, collections_path):
     # Get dataframes
-    projects, categories, collections = csv_utils.readData(
-        [projectsPath, categoriesPath, collectionsPath]
+    projects, categories, collections = csv_utils.read_data(
+        [projects_path, categories_path, collections_path]
     )
 
     # Get project information
     print(projects.to_string(index=False))
     print("Enter project ID")
-    projectID = input()
+    project_id = input()
 
-    if projectID != "":
-        projectID = int(projectID)
+    if project_id != "":
+        project_id = int(project_id)
     else:
-        projectID = None
+        project_id = None
 
     # Get collection
     print("\n\nWould you like to select a collection(1) or create a new collection(2)")
-    collectionAction = int(input())
+    collection_action = int(input())
 
-    match collectionAction:
+    match collection_action:
         case 1:
             print("\n\n" + collections.to_string(index=False))
             print("Enter collection ID")
-            collectionID = int(input())
+            collection_id = int(input())
         case 2:
             print("\n\n")
             print("Enter collection name")
-            collectionName = input()
-            if collectionName == "":
-                collectionName = None
+            collection_name = input()
+            if collection_name == "":
+                collection_name = None
             print("\n")
 
             print(categories.to_csv(index=False))
             print("Enter category ID")
-            categoryID = int(input())
-            if categoryID == "":
-                categoryID = None
+            category_id = int(input())
+            if category_id == "":
+                category_id = None
             print("\n")
 
             print("Enter purpose of collection")
@@ -304,29 +304,29 @@ def addParts(projectsPath, categoriesPath, collectionsPath):
             print("\n")
 
             print("Does this have a config (T/f)")
-            hasConfig = input()
-            if hasConfig == "T":
-                hasConfig = True
+            has_config = input()
+            if has_config == "T":
+                has_config = True
                 print("What quantity does it produce")
-                quantityProduced = input()
+                quantity_produced = input()
             else:
-                hasConfig = False
-                quantityProduced = None
+                has_config = False
+                quantity_produced = None
 
-            collectionID = len(collections)
-            collections = csv_utils.addRow(
+            collection_id = len(collections)
+            collections = csv_utils.add_row(
                 [
-                    collectionID,
-                    collectionName,
-                    projectID,
+                    collection_id,
+                    collection_name,
+                    project_id,
                     purpose,
                     stage,
-                    categoryID,
+                    category_id,
                     version,
                     revision,
-                    hasConfig,
-                    quantityProduced,
+                    has_config,
+                    quantity_produced,
                 ],
                 collections,
             )
-            csv_utils.writeData([collectionsPath], [collections])
+            csv_utils.write_data([collections_path], [collections])

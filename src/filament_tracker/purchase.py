@@ -1,9 +1,9 @@
 from filament_tracker import csv_utils
 
 
-def viewPurchases(allPaths):
+def view_purchases(all_paths):
     # Read dataframe
-    purchases = csv_utils.readData([allPaths[-1]])[0]
+    purchases = csv_utils.read_data([all_paths[-1]])[0]
 
     # Print purchase history
     print(purchases.to_string(index=False))
@@ -16,216 +16,222 @@ def viewPurchases(allPaths):
 
     match action:
         case 1:
-            addPurchases(allPaths)
+            add_purchases(all_paths)
         case 2:
             print(2)
         case 3:
             print("Returning to home")
 
 
-def addPurchases(allPaths):
+def add_purchases(all_paths):
     # Read dataframes
     printers, hotends, buildplates, ams, filament, dryers, spools, parts, purchases = (
-        csv_utils.readData(allPaths)
+        csv_utils.read_data(all_paths)
     )
 
     if len(purchases) == 0:
-        purchaseID = 0
+        purchase_id = 0
     else:
-        purchaseID = purchases.iloc[-1]["purchaseID"] + 1
+        purchase_id = purchases.iloc[-1]["purchaseID"] + 1
 
     # Get purchases required
     print("How many printers were purchased")
-    printersPurchased = int(input())
+    printers_purchased = int(input())
     print("How many hotends were purchased")
-    hotendsPurchased = int(input())
+    hotends_purchased = int(input())
     print("How many buildplates were purchased")
-    buildplatesPurchased = int(input())
+    buildplates_purchased = int(input())
     print("How many AMS were purchased")
-    amsPurchased = int(input())
+    ams_purchased = int(input())
     print("How many filament were purchased")
-    filamentPurchased = int(input())
+    filament_purchased = int(input())
     print("How many filament dryers were purchased")
-    dryersPurchased = int(input())
+    dryers_purchased = int(input())
     print("How many spools were purchased")
-    spoolsPurchased = int(input())
+    spools_purchased = int(input())
     print("How many parts were purchased")
-    partsPurchased = int(input())
+    parts_purchased = int(input())
 
     i = 0
-    while i < printersPurchased:
-        addPrinter(printers, allPaths[0], purchases, allPaths[-1], purchaseID)
+    while i < printers_purchased:
+        add_printer(printers, all_paths[0], purchases, all_paths[-1], purchase_id)
         i += 1
 
     i = 0
-    while i < hotendsPurchased:
-        addHotend(hotends, allPaths[1], purchases, allPaths[-1], purchaseID)
+    while i < hotends_purchased:
+        add_hotend(hotends, all_paths[1], purchases, all_paths[-1], purchase_id)
         i += 1
 
     i = 0
-    while i < buildplatesPurchased:
-        addBuildplate(buildplates, allPaths[2], purchases, allPaths[-1], purchaseID)
+    while i < buildplates_purchased:
+        add_buildplate(buildplates, all_paths[2], purchases, all_paths[-1], purchase_id)
         i += 1
 
     i = 0
-    while i < amsPurchased:
-        addAMS(ams, allPaths[3], purchases, allPaths[-1], purchaseID)
+    while i < ams_purchased:
+        add_ams(ams, all_paths[3], purchases, all_paths[-1], purchase_id)
         i += 1
 
     i = 0
-    while i < filamentPurchased:
-        addFilament(filament, allPaths[4], purchases, allPaths[-1], purchaseID)
+    while i < filament_purchased:
+        add_filament(filament, all_paths[4], purchases, all_paths[-1], purchase_id)
         i += 1
 
     i = 0
-    while i < dryersPurchased:
-        addDryer(dryers, allPaths[5], purchases, allPaths[-1], purchaseID)
+    while i < dryers_purchased:
+        add_dryer(dryers, all_paths[5], purchases, all_paths[-1], purchase_id)
         i += 1
 
     i = 0
-    while i < spoolsPurchased:
-        addSpool(spools, allPaths[6], purchases, allPaths[-1], purchaseID)
+    while i < spools_purchased:
+        add_spool(spools, all_paths[6], purchases, all_paths[-1], purchase_id)
         i += 1
 
     i = 0
-    while i < partsPurchased:
-        addParts(parts, allPaths[7], purchases, allPaths[-1], purchaseID)
+    while i < parts_purchased:
+        add_parts(parts, all_paths[7], purchases, all_paths[-1], purchase_id)
         i += 1
 
 
-def addPrinter(printer, path, purchases, purchasesPath, purchaseID):
+def add_printer(printer, path, purchases, purchases_path, purchase_id):
     # Get new printer information
     print("What is the new printer company")
-    newPrinterCompany = input()
+    new_printer_company = input()
     print("What is the new printer model")
-    newPrinterModel = input()
+    new_printer_model = input()
     print("What is the new printer name")
-    newPrinterName = input()
+    new_printer_name = input()
     print("Where was it purchased from")
     seller = input()
     print("What is the new printer cost")
-    newPrinterCost = input()
+    new_printer_cost = input()
     print("What is the new printer date purchased")
-    newPrinterDate = input()
+    new_printer_date = input()
     print("What is the new printer date arrived")
-    newPrinterArrivalDate = input()
+    new_printer_arrival_date = input()
 
     # Update dataframes
-    printer = csv_utils.addRow(
-        [len(printer), newPrinterName, newPrinterCompany, newPrinterModel, 0, 0],
+    printer = csv_utils.add_row(
+        [len(printer), new_printer_name, new_printer_company, new_printer_model, 0, 0],
         printer,
     )
-    purchases = csv_utils.addRow(
+    purchases = csv_utils.add_row(
         [
-            purchaseID,
+            purchase_id,
             "Printer",
             seller,
             len(printer) - 1,
-            newPrinterDate,
-            newPrinterArrivalDate,
-            newPrinterCost,
+            new_printer_date,
+            new_printer_arrival_date,
+            new_printer_cost,
         ],
         purchases,
     )
 
     # Save
-    csv_utils.writeData([path, purchasesPath], [printer, purchases])
+    csv_utils.write_data([path, purchases_path], [printer, purchases])
 
 
-def addHotend(hotend, hotendPath, purchases, purchasesPath, purchaseID):
+def add_hotend(hotend, hotend_path, purchases, purchases_path, purchase_id):
     # Get hotend to add
     print("What is the new hotend company")
-    newHotendCompany = input()
+    new_hotend_company = input()
     print("What is the new hotend size")
-    newHotendSize = input()
+    new_hotend_size = input()
     print("What is the new hotend material")
-    newHotendMaterial = input()
+    new_hotend_material = input()
     print("Where was it purchased from")
     seller = input()
     print("What is the date purchased")
-    newHotendDate = input()
+    new_hotend_date = input()
     print("What is the date arrived")
-    newHotendArrivalDate = input()
+    new_hotend_arrival_date = input()
     print("What is the new hotend cost")
-    newHotendCost = input()
+    new_hotend_cost = input()
 
     # Update dataframes
-    hotend = csv_utils.addRow(
-        [len(hotend), newHotendCompany, newHotendSize, newHotendMaterial, "Passive"],
+    hotend = csv_utils.add_row(
+        [
+            len(hotend),
+            new_hotend_company,
+            new_hotend_size,
+            new_hotend_material,
+            "Passive",
+        ],
         hotend,
     )
-    purchases = csv_utils.addRow(
+    purchases = csv_utils.add_row(
         [
-            purchaseID,
+            purchase_id,
             "Hotend",
             seller,
             len(hotend) - 1,
-            newHotendDate,
-            newHotendArrivalDate,
-            newHotendCost,
+            new_hotend_date,
+            new_hotend_arrival_date,
+            new_hotend_cost,
         ],
         purchases,
     )
-    csv_utils.writeData([hotendPath, purchasesPath], [hotend, purchases])
+    csv_utils.write_data([hotend_path, purchases_path], [hotend, purchases])
 
 
-def addBuildplate(buildplate, buildplatePath, purchases, purchasesPath, purchaseID):
+def add_buildplate(buildplate, buildplate_path, purchases, purchases_path, purchase_id):
     # Get buildplate to add
     print("What company is the buildplate from")
-    buildplateCompany = input()
+    buildplate_company = input()
     print("What type of build plate is it")
-    buildplateType = input()
+    buildplate_type = input()
     print("Where was it purchased from")
     seller = input()
     print("What is the date purchased")
-    purchaseDate = input()
+    purchase_date = input()
     print("What is the date arrived")
-    arrivalDate = input()
+    arrival_date = input()
     print("What is the cost")
     cost = input()
 
     # Add to csv files
-    buildplate = csv_utils.addRow(
-        [len(buildplate), buildplateCompany, buildplateType], buildplate
+    buildplate = csv_utils.add_row(
+        [len(buildplate), buildplate_company, buildplate_type], buildplate
     )
-    purchases = csv_utils.addRow(
+    purchases = csv_utils.add_row(
         [
-            purchaseID,
+            purchase_id,
             "Buildplate",
             seller,
             len(buildplate) - 1,
-            purchaseDate,
-            arrivalDate,
+            purchase_date,
+            arrival_date,
             cost,
         ],
         purchases,
     )
-    csv_utils.writeData([buildplatePath, purchasesPath], [buildplate, purchases])
+    csv_utils.write_data([buildplate_path, purchases_path], [buildplate, purchases])
 
 
-def addAMS(ams, amsPath, purchases, purchasesPath, purchaseID):
+def add_ams(ams, ams_path, purchases, purchases_path, purchase_id):
     # Get AMS to add
     print("What AMS model is added")
-    amsModel = input()
+    ams_model = input()
     print("Where was it purchased from")
     seller = input()
     print("What date was this purchased")
-    purchaseDate = input()
+    purchase_date = input()
     print("What date did the ams arrive")
-    arrivalDate = input()
+    arrival_date = input()
     print("What did the AMS cost")
     cost = input()
 
     # Update dataframes
-    ams = csv_utils.addRow([len(ams), amsModel], ams)
-    purchases = csv_utils.addRow(
-        [purchaseID, "AMS", seller, len(ams) - 1, purchaseDate, arrivalDate, cost],
+    ams = csv_utils.add_row([len(ams), ams_model], ams)
+    purchases = csv_utils.add_row(
+        [purchase_id, "AMS", seller, len(ams) - 1, purchase_date, arrival_date, cost],
         purchases,
     )
-    csv_utils.writeData([amsPath, purchasesPath], [ams, purchases])
+    csv_utils.write_data([ams_path, purchases_path], [ams, purchases])
 
 
-def addFilament(filament, filamentPath, purchases, purchasesPath, purchaseID):
+def add_filament(filament, filament_path, purchases, purchases_path, purchase_id):
     # Get information
     print("What is the new filament company")
     company = input()
@@ -236,47 +242,47 @@ def addFilament(filament, filamentPath, purchases, purchasesPath, purchaseID):
     print("What is the new filament diameter")
     diameter = input()
     print("What is the new filament starting amount")
-    startingAmount = input()
+    starting_amount = input()
     print("Where was it purchased from")
     seller = input()
     print("What is the date purchased")
-    datePurchased = input()
+    date_purchased = input()
     print("What is the date arrived")
-    arrivalDate = input()
+    arrival_date = input()
     print("What is the cost")
     cost = input()
 
     # Update dataframes
-    filament = csv_utils.addRow(
+    filament = csv_utils.add_row(
         [
             len(filament),
             company,
             colour,
             material,
             diameter,
-            startingAmount,
-            startingAmount,
+            starting_amount,
+            starting_amount,
             "Waiting",
             None,
         ],
         filament,
     )
-    purchases = csv_utils.addRow(
+    purchases = csv_utils.add_row(
         [
-            purchaseID,
+            purchase_id,
             "Filament",
             seller,
             len(filament) - 1,
-            datePurchased,
-            arrivalDate,
+            date_purchased,
+            arrival_date,
             cost,
         ],
         purchases,
     )
-    csv_utils.writeData([filamentPath, purchasesPath], [filament, purchases])
+    csv_utils.write_data([filament_path, purchases_path], [filament, purchases])
 
 
-def addDryer(dryers, dryerPath, purchases, purchasesPath, purchaseID):
+def add_dryer(dryers, dryer_path, purchases, purchases_path, purchase_id):
     # Get information about dryer
     print("What is the company for the filament dryer")
     company = input()
@@ -285,88 +291,96 @@ def addDryer(dryers, dryerPath, purchases, purchasesPath, purchaseID):
     print("What is the capacity of the dryer")
     capacity = input()
     print("What is the min temperature")
-    minTemp = input()
+    min_temp = input()
     print("What is the max temp")
-    maxTemp = input()
+    max_temp = input()
     print("Where was it purchased from")
     seller = input()
     print("What is the date of purchase")
-    purchaseDate = input()
+    purchase_date = input()
     print("What is the date of arrival")
-    arrivalDate = input()
+    arrival_date = input()
     print("What is the cost")
     cost = input()
 
     # Update information
-    dryers = csv_utils.addRow(
-        [len(dryers), company, model, capacity, minTemp, maxTemp], dryers
+    dryers = csv_utils.add_row(
+        [len(dryers), company, model, capacity, min_temp, max_temp], dryers
     )
-    purchases = csv_utils.addRow(
+    purchases = csv_utils.add_row(
         [
-            purchaseID,
+            purchase_id,
             "Filament Dryer",
             seller,
             len(dryers) - 1,
-            purchaseDate,
-            arrivalDate,
+            purchase_date,
+            arrival_date,
             cost,
         ],
         purchases,
     )
-    csv_utils.writeData([dryerPath, purchasesPath], [dryers, purchases])
+    csv_utils.write_data([dryer_path, purchases_path], [dryers, purchases])
 
 
-def addSpool(spools, spoolPath, purchases, purchasePath, purchaseID):
+def add_spool(spools, spool_path, purchases, purchase_path, purchase_id):
     # Get information about purchase
     print("What is the type of spool")
-    spoolType = input()
+    spool_type = input()
     print("What is the date purchased")
-    datePurchased = input()
+    date_purchased = input()
     print("What is the date arrived")
-    dateArrived = input()
+    date_arrived = input()
     print("What is the cost")
     cost = input()
 
     # Update information
-    spools = csv_utils.addRow([len(spools), spoolType], spools)
-    purchases = csv_utils.addRow(
+    spools = csv_utils.add_row([len(spools), spool_type], spools)
+    purchases = csv_utils.add_row(
         [
-            purchaseID,
+            purchase_id,
             "Reusable spool",
             "Bambu",
             len(spools) - 1,
-            datePurchased,
-            dateArrived,
+            date_purchased,
+            date_arrived,
             cost,
         ],
         purchases,
     )
-    csv_utils.writeData([spoolPath, purchasePath], [spools, purchases])
+    csv_utils.write_data([spool_path, purchase_path], [spools, purchases])
 
 
-def addParts(parts, partsPath, purchases, purchasesPath, purchaseID):
+def add_parts(parts, parts_path, purchases, purchases_path, purchase_id):
     # Get information about purchase
     print("What is the part type")
-    partType = input()
+    part_type = input()
     print("What is the part spec")
-    partSpec = input()
+    part_spec = input()
     print("What amount was purchased")
-    amountPurchased = input()
+    amount_purchased = input()
     print("What was the date purchased")
-    datePurchased = input()
+    date_purchased = input()
     print("What was the date arrived")
-    dateArrived = input()
+    date_arrived = input()
     print("What is the cost")
     cost = input()
     print("Where was it purchased")
     seller = input()
 
     # Add information to csv
-    parts = csv_utils.addRow(
-        [len(parts), partType, partSpec, amountPurchased, amountPurchased], parts
+    parts = csv_utils.add_row(
+        [len(parts), part_type, part_spec, amount_purchased, amount_purchased], parts
     )
-    purchases = csv_utils.addRow(
-        [purchaseID, "Parts", seller, len(parts) - 1, datePurchased, dateArrived, cost],
+    purchases = csv_utils.add_row(
+        [
+            purchase_id,
+            "Parts",
+            seller,
+            len(parts) - 1,
+            date_purchased,
+            date_arrived,
+            cost,
+        ],
         purchases,
     )
-    csv_utils.writeData([partsPath, purchasesPath], [parts, purchases])
+    csv_utils.write_data([parts_path, purchases_path], [parts, purchases])

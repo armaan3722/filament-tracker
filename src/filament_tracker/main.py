@@ -67,8 +67,8 @@ for value in user_data_file_paths.values():
 
 # Main loop
 def main():
-    runLoop = True
-    while runLoop:
+    run_loop = True
+    while run_loop:
         # Start home screen
         print(
             "Would you like to view printer information(1), hotend information(2), build plate information(3), AMS information(4), \nfilament information(5), filament dryer information(6), reusable spools information(7), \nfilament storage information(8), non printed parts information(9), project information(10), \nprint history(11), purchases(12), update filament usage(13), or end program(14)"
@@ -78,49 +78,49 @@ def main():
         # Run function
         match action:
             case 1:
-                equipment.readPrinter(
+                equipment.read_printer(
                     user_data_file_paths["printers"],
                     user_data_file_paths["printer_maintenance"],
                 )
             case 2:
-                equipment.readHotend(
+                equipment.read_hotend(
                     user_data_file_paths["hotends"],
                     user_data_file_paths["hotend_maintenance"],
                 )
             case 3:
-                equipment.readBuildplate(
+                equipment.read_buildplate(
                     user_data_file_paths["buildplates"],
                     user_data_file_paths["buildplate_maintenance"],
                 )
             case 4:
-                equipment.readAMS(
+                equipment.read_ams(
                     user_data_file_paths["ams"], user_data_file_paths["ams_maintenance"]
                 )
             case 5:
-                materials.readFilament(
+                materials.read_filament(
                     user_data_file_paths["filament"],
                     user_data_file_paths["filament_dryers"],
                     user_data_file_paths["filament_dryer_events"],
                 )
             case 6:
-                equipment.readFilamentDryers(
+                equipment.read_filament_dryers(
                     user_data_file_paths["filament_dryers"],
                     user_data_file_paths["filament_dryer_events"],
                 )
             case 7:
-                materials.readSpools(user_data_file_paths["spools"])
+                materials.read_spools(user_data_file_paths["spools"])
             case 8:
                 print(8)
             case 9:
-                materials.readParts(user_data_file_paths["parts"])
+                materials.read_parts(user_data_file_paths["parts"])
             case 10:
-                projects.readProjects(
+                projects.read_projects(
                     user_data_file_paths["projects"], user_data_file_paths["categories"]
                 )
             case 11:
                 print(11)
             case 12:
-                purchase.viewPurchases(
+                purchase.view_purchases(
                     [
                         user_data_file_paths["printers"],
                         user_data_file_paths["hotends"],
@@ -134,7 +134,7 @@ def main():
                     ]
                 )
             case 13:
-                usage.addFilamentUsage(
+                usage.add_filament_usage(
                     user_data_file_paths["projects"],
                     user_data_file_paths["categories"],
                     user_data_file_paths["collections"],
@@ -148,4 +148,4 @@ def main():
                 )
             case 14:
                 print("Ending program")
-                runLoop = False
+                run_loop = False
