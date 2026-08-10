@@ -1,19 +1,21 @@
+from pathlib import Path
+
 from filament_tracker import csv_utils
 
 
 # FILAMENT USAGE
 def add_filament_usage(
-    projects_path,
-    categories_path,
-    collections_path,
-    print_jobs_path,
-    printer_path,
-    ams_path,
-    hotend_path,
-    buildplate_path,
-    filament_path,
-    filament_used_path,
-):
+    projects_path: str | Path,
+    categories_path: str | Path,
+    collections_path: str | Path,
+    print_jobs_path: str | Path,
+    printer_path: str | Path,
+    ams_path: str | Path,
+    hotend_path: str | Path,
+    buildplate_path: str | Path,
+    filament_path: str | Path,
+    filament_used_path: str | Path,
+) -> None:
     # Get dataframes
     (
         projects,
@@ -243,7 +245,9 @@ def add_filament_usage(
 
 
 # NON PRINTED PARTS
-def add_parts(projects_path, categories_path, collections_path):
+def add_parts(
+    projects_path: str | Path, categories_path: str | Path, collections_path: str | Path
+) -> None:
     # Get dataframes
     projects, categories, collections = csv_utils.read_data(
         [projects_path, categories_path, collections_path]

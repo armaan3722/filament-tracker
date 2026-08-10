@@ -1,8 +1,14 @@
+from pathlib import Path
+
+import pandas as pd
+
 from filament_tracker import csv_utils
 
 
 # PRINTER
-def read_printer(printer_path, printer_maintenance_path):
+def read_printer(
+    printer_path: str | Path, printer_maintenance_path: str | Path
+) -> None:
     # Get csv files
     printer, printer_maintenance = csv_utils.read_data(
         [printer_path, printer_maintenance_path]
@@ -31,7 +37,7 @@ def read_printer(printer_path, printer_maintenance_path):
             print("Returning to home page")
 
 
-def edit_printer(printer, path):
+def edit_printer(printer: pd.DataFrame, path: str | Path) -> None:
     # Get printer to edit
     print(printer.to_string(index=False))
     print("\nEnter ID of printer to edit")
@@ -59,7 +65,9 @@ def edit_printer(printer, path):
     csv_utils.write_data([path], [printer])
 
 
-def update_printer_maintenance(printer, maintenance, maintenance_path):
+def update_printer_maintenance(
+    printer: pd.DataFrame, maintenance: pd.DataFrame, maintenance_path: str | Path
+) -> None:
     # Get printer for maintenance
     print(printer.to_string(index=False))
     print("\nEnter ID of printer for maintenance event")
@@ -69,7 +77,7 @@ def update_printer_maintenance(printer, maintenance, maintenance_path):
     print("Which maintenance was done, automatic calibration(1) or firmware update(2)")
     event_type = int(input())
 
-    firmware_version = None
+    firmware_version: str | None = None
     match event_type:
         case 1:
             event_type = "Automatic Calibration"
@@ -91,7 +99,7 @@ def update_printer_maintenance(printer, maintenance, maintenance_path):
 
 
 # HOTEND
-def read_hotend(hotend_path, hotend_maintenance_path):
+def read_hotend(hotend_path: str | Path, hotend_maintenance_path: str | Path) -> None:
     # Read csv files
     hotend, hotend_maintenance = csv_utils.read_data(
         [hotend_path, hotend_maintenance_path]
@@ -120,7 +128,7 @@ def read_hotend(hotend_path, hotend_maintenance_path):
             print("Returning to home page")
 
 
-def edit_hotend(hotend, hotend_path):
+def edit_hotend(hotend: pd.DataFrame, hotend_path: str | Path) -> None:
     # Get hotend to edit
     print(hotend.to_string(index=False))
     print("\nEnter ID of hotend to edit")
@@ -148,7 +156,9 @@ def edit_hotend(hotend, hotend_path):
     csv_utils.write_data([hotend_path], [hotend])
 
 
-def update_hotend_maintenance(hotend, maintenance, maintenance_path):
+def update_hotend_maintenance(
+    hotend: pd.DataFrame, maintenance: pd.DataFrame, maintenance_path: str | Path
+) -> None:
     # Get hotend for maintenance
     print(hotend)
     print("\nEnter ID of hotend for maintenance event")
@@ -172,7 +182,9 @@ def update_hotend_maintenance(hotend, maintenance, maintenance_path):
 
 
 # BUILDPLATE
-def read_buildplate(buildplate_path, buildplate_maintenance_path):
+def read_buildplate(
+    buildplate_path: str | Path, buildplate_maintenance_path: str | Path
+) -> None:
     # Read csv files
     buildplate, buildplate_maintenance = csv_utils.read_data(
         [buildplate_path, buildplate_maintenance_path]
@@ -201,7 +213,7 @@ def read_buildplate(buildplate_path, buildplate_maintenance_path):
             print("Returning to home page")
 
 
-def edit_buildplate(buildplate, buildplate_path):
+def edit_buildplate(buildplate: pd.DataFrame, buildplate_path: str | Path) -> None:
     # Get buildplate to edit
     print(buildplate.to_string(index=False))
     print("Enter ID for buildplate to edit")
@@ -225,7 +237,9 @@ def edit_buildplate(buildplate, buildplate_path):
     csv_utils.write_data([buildplate_path], [buildplate])
 
 
-def update_buildplate_maintenance(buildplate, maintenance, maintenance_path):
+def update_buildplate_maintenance(
+    buildplate: pd.DataFrame, maintenance: pd.DataFrame, maintenance_path: str | Path
+) -> None:
     # Get buildplate id
     print(buildplate.to_string(index=False))
     print("Enter ID of buildplate to edit")
@@ -249,7 +263,7 @@ def update_buildplate_maintenance(buildplate, maintenance, maintenance_path):
 
 
 # AMS
-def read_ams(ams_path, ams_maintenance_path):
+def read_ams(ams_path: str | Path, ams_maintenance_path: str | Path) -> None:
     # Get dataframes
     ams, ams_maintenance = csv_utils.read_data([ams_path, ams_maintenance_path])
 
@@ -274,7 +288,7 @@ def read_ams(ams_path, ams_maintenance_path):
             print("Returning to home page")
 
 
-def edit_ams(ams, ams_path):
+def edit_ams(ams: pd.DataFrame, ams_path: str | Path) -> None:
     # Get ams to edit
     print(ams.to_string(index=False))
     print("Enter ID of AMS to edit model")
@@ -288,7 +302,9 @@ def edit_ams(ams, ams_path):
     ams = csv_utils.change_cell(ams, "ams_id", ams_id, "ams_model", new_value)
 
 
-def update_ams_maintenance(ams, maintenance, maintenance_path):
+def update_ams_maintenance(
+    ams: pd.DataFrame, maintenance: pd.DataFrame, maintenance_path: str | Path
+) -> None:
     # Get ams to update
     print(ams.to_string(index=False))
     print("Enter ID of AMS for maintenance event")
@@ -303,7 +319,7 @@ def update_ams_maintenance(ams, maintenance, maintenance_path):
     match event_type:
         case 1:
             event_type = "Desiccant changed"
-            firmware_version = None
+            firmware_version: str | None = None
         case 2:
             event_type = "Firmware updated"
             print("What version was it updated to")
@@ -320,7 +336,7 @@ def update_ams_maintenance(ams, maintenance, maintenance_path):
 
 
 # DRYERS
-def read_filament_dryers(dryer_path, dryer_events_path):
+def read_filament_dryers(dryer_path: str | Path, dryer_events_path: str | Path) -> None:
     # Get information
     dryers, dryer_events = csv_utils.read_data([dryer_path, dryer_events_path])
 
@@ -341,7 +357,7 @@ def read_filament_dryers(dryer_path, dryer_events_path):
             print("Returning to home page")
 
 
-def edit_dryer(dryers, dryer_path):
+def edit_dryer(dryers: pd.DataFrame, dryer_path: str | Path) -> None:
     # Get dryer to edit
     print(dryers.to_string(index=False))
     print("Enter ID of filament dryer to edit")

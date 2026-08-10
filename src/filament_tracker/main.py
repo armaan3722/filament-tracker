@@ -4,6 +4,7 @@ import os
 from importlib.metadata import version
 from importlib.resources import files
 from pathlib import Path
+from typing import Any
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -42,7 +43,7 @@ user_data_file_names = {
 }
 
 # Create empty dictionary and platformdirs object
-user_data_file_paths = {}
+user_data_file_paths: dict[str, Path] = {}
 dirs = PlatformDirs("filament-tracker", appauthor=False)
 
 # Constants for the newest program, data, and metadata versions
@@ -51,14 +52,18 @@ NEWEST_DATA_VERSION = 1
 NEWEST_METADATA_VERSION = 1
 
 
-# Get paths of all data files
-def get_paths():
+def get_data_dir() -> Path:
     # Get path based on environment variables
     if dev_user_data_dir:
         data_dir = Path(dev_user_data_dir)
     else:
         data_dir = dirs.user_data_path
 
+    return data_dir
+
+
+# Get paths of all data files
+def get_paths(data_dir: Path) -> None:
     # Get full path including file name from dir
     for key, value in user_data_file_names.items():
         user_data_file_paths[key] = data_dir / value
@@ -73,12 +78,9 @@ def get_paths():
             # Read default file and write to user data dir
             pd.read_csv(str(default_path)).to_csv(data_dir / value.name, index=False)
 
-    # Get json metadata
-    get_metadata(data_dir)
-
 
 # Get metadata
-def get_metadata(data_dir):
+def get_metadata(data_dir: Path) -> None:
     # Get path to metadata file
     metadata_path = data_dir / "metadata.json"
 
@@ -92,7 +94,7 @@ def get_metadata(data_dir):
         with open(str(default_path), "r") as f:
             metadata = json.load(f)
 
-        with open(metadata_path, "w") as f:
+        with open(metadata_path, "w", encoding="utf-8") as f:
             json.dump(metadata, f, indent=4)
 
     else:
@@ -104,7 +106,7 @@ def get_metadata(data_dir):
 
 
 # Check if migration steps are required, and do the correct ones
-def check_for_migration(metadata, metadata_path):
+def check_for_migration(metadata: dict[str, Any], metadata_path: Path) -> None:
     write_required = False
 
     if parse(metadata["version"]) != parse(NEWEST_VERSION):
@@ -120,13 +122,16 @@ def check_for_migration(metadata, metadata_path):
         write_required = True
 
     if write_required:
-        with open(metadata_path, "w") as f:
+        with open(metadata_path, "w", encoding="utf-8") as f:
             json.dump(metadata, f, indent=4)
 
 
 # Main loop
-def main():
-    get_paths()
+def main() -> None:
+    data_dir = get_data_dir()
+    get_paths(data_dir)
+    get_metadata(data_dir)
+
     run_loop = True
     while run_loop:
         # Start home screen

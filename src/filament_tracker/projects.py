@@ -1,8 +1,12 @@
+from pathlib import Path
+
+import pandas as pd
+
 from filament_tracker import csv_utils
 
 
 # PROJECTS
-def read_projects(projects_path, categories_path):
+def read_projects(projects_path: str | Path, categories_path: str | Path) -> None:
     # Get dataframe
     projects, categories = csv_utils.read_data([projects_path, categories_path])
 
@@ -29,7 +33,7 @@ def read_projects(projects_path, categories_path):
             print("Returning to home page")
 
 
-def add_project(projects, projects_path):
+def add_project(projects: pd.DataFrame, projects_path: str | Path) -> None:
     # Get information about new project
     print("What is the new project name")
     name = input()
@@ -39,7 +43,7 @@ def add_project(projects, projects_path):
     csv_utils.write_data([projects_path], [projects])
 
 
-def edit_project(projects, projects_path):
+def edit_project(projects: pd.DataFrame, projects_path: str | Path) -> None:
     # Get project to edit
     print(projects.to_string(index=False))
     print("Enter ID of project to edit")
@@ -57,7 +61,9 @@ def edit_project(projects, projects_path):
 
 
 # CATEGORIES
-def read_categories(categories, categories_path, project_id):
+def read_categories(
+    categories: pd.DataFrame, categories_path: str | Path, project_id: int
+) -> None:
     # Print information
     print("Categories:")
     print(
@@ -79,7 +85,9 @@ def read_categories(categories, categories_path, project_id):
             print("Returning to home page")
 
 
-def add_categories(categories, categories_path, project_id):
+def add_categories(
+    categories: pd.DataFrame, categories_path: str | Path, project_id: int
+) -> None:
     # Get category information
     print("What is the name of the new category")
     category_name = input()
@@ -91,7 +99,7 @@ def add_categories(categories, categories_path, project_id):
     csv_utils.write_data([categories_path], [categories])
 
 
-def edit_categories(categories, category_path):
+def edit_categories(categories: pd.DataFrame, category_path: str | Path) -> None:
     # Get category to edit
     print("Enter ID of category to edit")
     category_id = int(input())

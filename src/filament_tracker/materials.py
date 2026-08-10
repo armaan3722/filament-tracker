@@ -1,8 +1,14 @@
+from pathlib import Path
+
+import pandas as pd
+
 from filament_tracker import csv_utils
 
 
 # FILAMENT
-def read_filament(filament_path, dryer_path, dryer_events_path):
+def read_filament(
+    filament_path: str | Path, dryer_path: str | Path, dryer_events_path: str | Path
+) -> None:
     # Get filament information
     filament, dryers, dryer_events = csv_utils.read_data(
         [filament_path, dryer_path, dryer_events_path]
@@ -29,7 +35,7 @@ def read_filament(filament_path, dryer_path, dryer_events_path):
             print("Returning to home page")
 
 
-def edit_filament(filament, filament_path):
+def edit_filament(filament: pd.DataFrame, filament_path: str | Path) -> None:
     # Get filament to edit
     print(filament.to_string(index=False))
     print("Enter ID of filament to edit")
@@ -64,7 +70,13 @@ def edit_filament(filament, filament_path):
     csv_utils.write_data([filament_path], [filament])
 
 
-def add_drying_event(filament, filament_path, dryers, dryer_events, dryer_events_path):
+def add_drying_event(
+    filament: pd.DataFrame,
+    filament_path: str | Path,
+    dryers: pd.DataFrame,
+    dryer_events: pd.DataFrame,
+    dryer_events_path: str | Path,
+) -> None:
     # Get filament roll dried
     print(filament.to_string(index=False))
     print("Enter ID of filament roll dried")
@@ -97,7 +109,7 @@ def add_drying_event(filament, filament_path, dryers, dryer_events, dryer_events
 
 
 # REUSABLE SPOOLS
-def read_spools(spool_path):
+def read_spools(spool_path: str | Path) -> None:
     # Convert to csv
     spools = csv_utils.read_data([spool_path])[0]
 
@@ -116,7 +128,7 @@ def read_spools(spool_path):
             print("Returning to home page")
 
 
-def edit_spool(spools, spool_path):
+def edit_spool(spools: pd.DataFrame, spool_path: str | Path) -> None:
     # Get spool to edit
     print("Enter ID of spool to edit")
     spool_id = int(input())
@@ -131,7 +143,7 @@ def edit_spool(spools, spool_path):
 
 
 # PARTS
-def read_parts(parts_path):
+def read_parts(parts_path: str | Path) -> None:
     # Get information from csv
     parts = csv_utils.read_data([parts_path])[0]
 
@@ -150,7 +162,7 @@ def read_parts(parts_path):
             print("Returning to home page")
 
 
-def edit_parts(parts, parts_path):
+def edit_parts(parts: pd.DataFrame, parts_path: str | Path) -> None:
     # Get ID of part to edit
     print(parts.to_string(index=False))
     print("Enter ID of part to edit")

@@ -1,7 +1,11 @@
+from pathlib import Path
+
+import pandas as pd
+
 from filament_tracker import csv_utils
 
 
-def view_purchases(all_paths):
+def view_purchases(all_paths: list[str | Path]) -> None:
     # Read dataframe
     purchases = csv_utils.read_data([all_paths[-1]])[0]
 
@@ -23,11 +27,19 @@ def view_purchases(all_paths):
             print("Returning to home")
 
 
-def add_purchases(all_paths):
+def add_purchases(all_paths: list[str | Path]) -> None:
     # Read dataframes
-    printers, hotends, buildplates, ams, filament, dryers, spools, parts, purchases = (
-        csv_utils.read_data(all_paths)
-    )
+    (
+        printers,
+        hotends,
+        buildplates,
+        ams,
+        filament,
+        dryers,
+        spools,
+        parts,
+        purchases,
+    ) = csv_utils.read_data(all_paths)
 
     if len(purchases) == 0:
         purchase_id = 0
@@ -93,7 +105,13 @@ def add_purchases(all_paths):
         i += 1
 
 
-def add_printer(printer, path, purchases, purchases_path, purchase_id):
+def add_printer(
+    printer: pd.DataFrame,
+    path: str | Path,
+    purchases: pd.DataFrame,
+    purchases_path: str | Path,
+    purchase_id: int,
+) -> None:
     # Get new printer information
     print("What is the new printer company")
     new_printer_company = input()
@@ -132,7 +150,13 @@ def add_printer(printer, path, purchases, purchases_path, purchase_id):
     csv_utils.write_data([path, purchases_path], [printer, purchases])
 
 
-def add_hotend(hotend, hotend_path, purchases, purchases_path, purchase_id):
+def add_hotend(
+    hotend: pd.DataFrame,
+    hotend_path: str | Path,
+    purchases: pd.DataFrame,
+    purchases_path: str | Path,
+    purchase_id: int,
+) -> None:
     # Get hotend to add
     print("What is the new hotend company")
     new_hotend_company = input()
@@ -175,7 +199,13 @@ def add_hotend(hotend, hotend_path, purchases, purchases_path, purchase_id):
     csv_utils.write_data([hotend_path, purchases_path], [hotend, purchases])
 
 
-def add_buildplate(buildplate, buildplate_path, purchases, purchases_path, purchase_id):
+def add_buildplate(
+    buildplate: pd.DataFrame,
+    buildplate_path: str | Path,
+    purchases: pd.DataFrame,
+    purchases_path: str | Path,
+    purchase_id: int,
+) -> None:
     # Get buildplate to add
     print("What company is the buildplate from")
     buildplate_company = input()
@@ -209,7 +239,13 @@ def add_buildplate(buildplate, buildplate_path, purchases, purchases_path, purch
     csv_utils.write_data([buildplate_path, purchases_path], [buildplate, purchases])
 
 
-def add_ams(ams, ams_path, purchases, purchases_path, purchase_id):
+def add_ams(
+    ams: pd.DataFrame,
+    ams_path: str | Path,
+    purchases: pd.DataFrame,
+    purchases_path: str | Path,
+    purchase_id: int,
+) -> None:
     # Get AMS to add
     print("What AMS model is added")
     ams_model = input()
@@ -231,7 +267,13 @@ def add_ams(ams, ams_path, purchases, purchases_path, purchase_id):
     csv_utils.write_data([ams_path, purchases_path], [ams, purchases])
 
 
-def add_filament(filament, filament_path, purchases, purchases_path, purchase_id):
+def add_filament(
+    filament: pd.DataFrame,
+    filament_path: str | Path,
+    purchases: pd.DataFrame,
+    purchases_path: str | Path,
+    purchase_id: int,
+) -> None:
     # Get information
     print("What is the new filament company")
     company = input()
@@ -282,7 +324,13 @@ def add_filament(filament, filament_path, purchases, purchases_path, purchase_id
     csv_utils.write_data([filament_path, purchases_path], [filament, purchases])
 
 
-def add_dryer(dryers, dryer_path, purchases, purchases_path, purchase_id):
+def add_dryer(
+    dryers: pd.DataFrame,
+    dryer_path: str | Path,
+    purchases: pd.DataFrame,
+    purchases_path: str | Path,
+    purchase_id: int,
+) -> None:
     # Get information about dryer
     print("What is the company for the filament dryer")
     company = input()
@@ -322,7 +370,13 @@ def add_dryer(dryers, dryer_path, purchases, purchases_path, purchase_id):
     csv_utils.write_data([dryer_path, purchases_path], [dryers, purchases])
 
 
-def add_spool(spools, spool_path, purchases, purchase_path, purchase_id):
+def add_spool(
+    spools: pd.DataFrame,
+    spool_path: str | Path,
+    purchases: pd.DataFrame,
+    purchase_path: str | Path,
+    purchase_id: int,
+) -> None:
     # Get information about purchase
     print("What is the type of spool")
     spool_type = input()
@@ -350,7 +404,13 @@ def add_spool(spools, spool_path, purchases, purchase_path, purchase_id):
     csv_utils.write_data([spool_path, purchase_path], [spools, purchases])
 
 
-def add_parts(parts, parts_path, purchases, purchases_path, purchase_id):
+def add_parts(
+    parts: pd.DataFrame,
+    parts_path: str | Path,
+    purchases: pd.DataFrame,
+    purchases_path: str | Path,
+    purchase_id: int,
+) -> None:
     # Get information about purchase
     print("What is the part type")
     part_type = input()
