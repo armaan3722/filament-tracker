@@ -1,10 +1,13 @@
 # Import modules
+import json
 import os
+from importlib.metadata import version
 from importlib.resources import files
 from pathlib import Path
 
 import pandas as pd
 from dotenv import load_dotenv
+from packaging.version import parse
 from platformdirs import PlatformDirs
 
 from filament_tracker import equipment, materials, projects, purchase, usage
@@ -38,35 +41,92 @@ user_data_file_names = {
     "filament_configs": "filament_configs.csv",
 }
 
-# todo: json metadata
-
 # Create empty dictionary and platformdirs object
 user_data_file_paths = {}
 dirs = PlatformDirs("filament-tracker", appauthor=False)
 
-# Get path based on environment variables
-if dev_user_data_dir:
-    data_dir = Path(dev_user_data_dir)
-else:
-    data_dir = dirs.user_data_path
+# Constants for the newest program, data, and metadata versions
+NEWEST_VERSION = version("filament_tracker")
+NEWEST_DATA_VERSION = 1
+NEWEST_METADATA_VERSION = 1
 
-# Get full path including file name from dir
-for key, value in user_data_file_names.items():
-    user_data_file_paths[key] = data_dir / value
 
-# Check if directory exists, and add default files if needed
-for value in user_data_file_paths.values():
-    if not value.exists():
-        # Get path of default files, and make dir for user data files
-        default_path = files("filament_tracker") / "default_data" / value.name
+# Get paths of all data files
+def get_paths():
+    # Get path based on environment variables
+    if dev_user_data_dir:
+        data_dir = Path(dev_user_data_dir)
+    else:
+        data_dir = dirs.user_data_path
+
+    # Get full path including file name from dir
+    for key, value in user_data_file_names.items():
+        user_data_file_paths[key] = data_dir / value
+
+    # Check if directory exists, and add default files if needed
+    for value in user_data_file_paths.values():
+        if not value.exists():
+            # Get path of default files, and make dir for user data files
+            default_path = files("filament_tracker") / "default_data" / value.name
+            data_dir.mkdir(parents=True, exist_ok=True)
+
+            # Read default file and write to user data dir
+            pd.read_csv(str(default_path)).to_csv(data_dir / value.name, index=False)
+
+    # Get json metadata
+    get_metadata(data_dir)
+
+
+# Get metadata
+def get_metadata(data_dir):
+    # Get path to metadata file
+    metadata_path = data_dir / "metadata.json"
+
+    # Get default metadata
+    if not metadata_path.exists():
+        # Get the default path
+        default_path = files("filament_tracker") / "default_data" / "metadata.json"
         data_dir.mkdir(parents=True, exist_ok=True)
 
-        # Read default file and write to user data dir
-        pd.read_csv(str(default_path)).to_csv(data_dir / value.name, index=False)
+        # Read the file from the default path, and write to the data path
+        with open(str(default_path), "r") as f:
+            metadata = json.load(f)
+
+        with open(metadata_path, "w") as f:
+            json.dump(metadata, f, indent=4)
+
+    else:
+        with open(metadata_path, "r") as f:
+            metadata = json.load(f)
+
+    # Check for required migration steps
+    check_for_migration(metadata, metadata_path)
+
+
+# Check if migration steps are required, and do the correct ones
+def check_for_migration(metadata, metadata_path):
+    write_required = False
+
+    if parse(metadata["version"]) != parse(NEWEST_VERSION):
+        metadata["version"] = NEWEST_VERSION
+        write_required = True
+
+    if metadata["data_version"] != NEWEST_DATA_VERSION:
+        metadata["data_version"] = NEWEST_DATA_VERSION
+        write_required = True
+
+    if metadata["metadata_version"] != NEWEST_METADATA_VERSION:
+        metadata["metadata_version"] = NEWEST_METADATA_VERSION
+        write_required = True
+
+    if write_required:
+        with open(metadata_path, "w") as f:
+            json.dump(metadata, f, indent=4)
 
 
 # Main loop
 def main():
+    get_paths()
     run_loop = True
     while run_loop:
         # Start home screen
