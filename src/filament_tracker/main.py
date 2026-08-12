@@ -9,7 +9,7 @@ from typing import Any
 import pandas as pd
 from dotenv import load_dotenv
 from packaging.version import parse
-from platformdirs import PlatformDirs
+from platformdirs import user_data_path
 
 from filament_tracker import equipment, materials, projects, purchase, usage
 
@@ -44,7 +44,6 @@ user_data_file_names = {
 
 # Create empty dictionary and platformdirs object
 user_data_file_paths: dict[str, Path] = {}
-dirs = PlatformDirs("filament-tracker", appauthor=False)
 
 # Constants for the newest program, data, and metadata versions
 NEWEST_VERSION = version("filament_tracker")
@@ -53,17 +52,37 @@ NEWEST_METADATA_VERSION = 1
 
 
 def get_data_dir() -> Path:
+    """Gets the directory to store user data.
+
+    Checks if the dev_user_data_dir variable has been set, and returns
+    it's path if exists.  If not, it returns the directory given by
+    platformdirs.
+
+    Returns:
+        The path that the user data should be stored in and
+            accessed from
+    """
     # Get path based on environment variables
     if dev_user_data_dir:
         data_dir = Path(dev_user_data_dir)
     else:
-        data_dir = dirs.user_data_path
+        data_dir = user_data_path("filament_tracker", appauthor=False)
 
     return data_dir
 
 
 # Get paths of all data files
 def get_paths(data_dir: Path) -> None:
+    """Gets the paths to all data files.
+
+    Uses the given data_dir and the dictionary user_data_file_names to
+    get the full path to each data file, and stores them into
+    user_data_file_paths.  After, it checks each path, and if any file
+    doesn't exist, it creates a new one based on the default_data files.
+
+    Args:
+        data_dir: The path to the data directory.
+    """
     # Get full path including file name from dir
     for key, value in user_data_file_names.items():
         user_data_file_paths[key] = data_dir / value
@@ -81,6 +100,17 @@ def get_paths(data_dir: Path) -> None:
 
 # Get metadata
 def get_metadata(data_dir: Path) -> None:
+    """Get the metadata JSON file.
+
+    Gets full path to the metadata file based on data_dir parameter,
+    assuming metadata file is called metadata.json.  If that path does
+    not exist, it creates a new file at that path from the default_data
+    file. Finally, runs check_for_migration function.
+
+    Args:
+        data_dir: The directory that the metadata file should be
+            stored in.
+    """
     # Get path to metadata file
     metadata_path = data_dir / "metadata.json"
 
@@ -107,6 +137,18 @@ def get_metadata(data_dir: Path) -> None:
 
 # Check if migration steps are required, and do the correct ones
 def check_for_migration(metadata: dict[str, Any], metadata_path: Path) -> None:
+    """Checks if migration functions are required, and runs the
+    required ones.
+
+    Compares the versions given by the metadata file to the newest
+    versions.  If any do not match, it checks if migration steps are
+    required, calls migration functions if applicable, and updates the
+    metadata file with the new version.
+
+    Args:
+        metadata: The data from the metadata file.
+        metadata_path: The path to the metadata file.
+    """
     write_required = False
 
     if parse(metadata["version"]) != parse(NEWEST_VERSION):
@@ -128,6 +170,10 @@ def check_for_migration(metadata: dict[str, Any], metadata_path: Path) -> None:
 
 # Main loop
 def main() -> None:
+    """Run the main loop.
+
+    Runs all functions that are required to make the application work.
+    """
     data_dir = get_data_dir()
     get_paths(data_dir)
     get_metadata(data_dir)

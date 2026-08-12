@@ -16,6 +16,24 @@ def add_filament_usage(
     filament_path: str | Path,
     filament_used_path: str | Path,
 ) -> None:
+    """Record a new print job and filament usage.
+
+    Prompts the user for project, collection, print job, and filament details,
+    then updates the relevant CSV files. It also decrements filament stock and
+    accumulates printer usage seconds.
+
+    Args:
+        projects_path: Path to the projects CSV file.
+        categories_path: Path to the categories CSV file.
+        collections_path: Path to the collections CSV file.
+        print_jobs_path: Path to the print jobs CSV file.
+        printer_path: Path to the printer CSV file.
+        ams_path: Path to the AMS CSV file.
+        hotend_path: Path to the hotend CSV file.
+        buildplate_path: Path to the buildplate CSV file.
+        filament_path: Path to the filament CSV file.
+        filament_used_path: Path to the filament used CSV file.
+    """
     # Get dataframes
     (
         projects,
@@ -248,6 +266,16 @@ def add_filament_usage(
 def add_parts(
     projects_path: str | Path, categories_path: str | Path, collections_path: str | Path
 ) -> None:
+    """Record a non-printed part by creating or selecting a collection.
+
+    Prompts the user for project details and collection information,
+    creating a new collection if needed, then saves it to the CSV file.
+
+    Args:
+        projects_path: Path to the projects CSV file.
+        categories_path: Path to the categories CSV file.
+        collections_path: Path to the collections CSV file.
+    """
     # Get dataframes
     projects, categories, collections = csv_utils.read_data(
         [projects_path, categories_path, collections_path]

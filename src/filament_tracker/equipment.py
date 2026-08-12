@@ -9,6 +9,16 @@ from filament_tracker import csv_utils
 def read_printer(
     printer_path: str | Path, printer_maintenance_path: str | Path
 ) -> None:
+    """Read printer data and maintenance history, then present a menu for updates.
+
+    Reads the printer and printer maintenance CSV files, displays their contents,
+    and prompts the user to edit a printer, create a maintenance event, or return
+    to the home page.
+
+    Args:
+        printer_path: Path to the printer CSV file.
+        printer_maintenance_path: Path to the printer maintenance history CSV file.
+    """
     # Get csv files
     printer, printer_maintenance = csv_utils.read_data(
         [printer_path, printer_maintenance_path]
@@ -38,6 +48,15 @@ def read_printer(
 
 
 def edit_printer(printer: pd.DataFrame, path: str | Path) -> None:
+    """Edit a printer's name, company, or model.
+
+    Displays all printers, prompts for a printer ID and the field to edit
+    (name, company, or model), then saves the change to the CSV file.
+
+    Args:
+        printer: DataFrame containing printer data.
+        path: Path to the printer CSV file.
+    """
     # Get printer to edit
     print(printer.to_string(index=False))
     print("\nEnter ID of printer to edit")
@@ -68,6 +87,17 @@ def edit_printer(printer: pd.DataFrame, path: str | Path) -> None:
 def update_printer_maintenance(
     printer: pd.DataFrame, maintenance: pd.DataFrame, maintenance_path: str | Path
 ) -> None:
+    """Create a maintenance event for a printer.
+
+    Prompts for a printer ID, maintenance type (automatic calibration or firmware
+    update), date, and optionally the firmware version. Appends the event to the
+    maintenance history CSV file.
+
+    Args:
+        printer: DataFrame containing printer data.
+        maintenance: DataFrame containing maintenance history.
+        maintenance_path: Path to the maintenance history CSV file.
+    """
     # Get printer for maintenance
     print(printer.to_string(index=False))
     print("\nEnter ID of printer for maintenance event")
@@ -100,6 +130,16 @@ def update_printer_maintenance(
 
 # HOTEND
 def read_hotend(hotend_path: str | Path, hotend_maintenance_path: str | Path) -> None:
+    """Read hotend data and maintenance history, then present a menu for updates.
+
+    Reads the hotend and hotend maintenance CSV files, displays their contents,
+    and prompts the user to edit a hotend, create a maintenance event, or return
+    to the home page.
+
+    Args:
+        hotend_path: Path to the hotend CSV file.
+        hotend_maintenance_path: Path to the hotend maintenance history CSV file.
+    """
     # Read csv files
     hotend, hotend_maintenance = csv_utils.read_data(
         [hotend_path, hotend_maintenance_path]
@@ -129,6 +169,15 @@ def read_hotend(hotend_path: str | Path, hotend_maintenance_path: str | Path) ->
 
 
 def edit_hotend(hotend: pd.DataFrame, hotend_path: str | Path) -> None:
+    """Edit a hotend's company, size, material, or state.
+
+    Displays all hotends, prompts for a hotend ID and the field to edit,
+    then saves the change to the CSV file.
+
+    Args:
+        hotend: DataFrame containing hotend data.
+        hotend_path: Path to the hotend CSV file.
+    """
     # Get hotend to edit
     print(hotend.to_string(index=False))
     print("\nEnter ID of hotend to edit")
@@ -159,6 +208,16 @@ def edit_hotend(hotend: pd.DataFrame, hotend_path: str | Path) -> None:
 def update_hotend_maintenance(
     hotend: pd.DataFrame, maintenance: pd.DataFrame, maintenance_path: str | Path
 ) -> None:
+    """Create a maintenance event for a hotend.
+
+    Prompts for a hotend ID, maintenance type (cleaning), and date.
+    Appends the event to the maintenance history CSV file.
+
+    Args:
+        hotend: DataFrame containing hotend data.
+        maintenance: DataFrame containing maintenance history.
+        maintenance_path: Path to the maintenance history CSV file.
+    """
     # Get hotend for maintenance
     print(hotend)
     print("\nEnter ID of hotend for maintenance event")
@@ -185,6 +244,16 @@ def update_hotend_maintenance(
 def read_buildplate(
     buildplate_path: str | Path, buildplate_maintenance_path: str | Path
 ) -> None:
+    """Read buildplate data and maintenance history, then present a menu for updates.
+
+    Reads the buildplate and buildplate maintenance CSV files, displays their
+    contents, and prompts the user to edit a buildplate, create a maintenance
+    event, or return to the home page.
+
+    Args:
+        buildplate_path: Path to the buildplate CSV file.
+        buildplate_maintenance_path: Path to the buildplate maintenance history CSV file.
+    """
     # Read csv files
     buildplate, buildplate_maintenance = csv_utils.read_data(
         [buildplate_path, buildplate_maintenance_path]
@@ -214,6 +283,15 @@ def read_buildplate(
 
 
 def edit_buildplate(buildplate: pd.DataFrame, buildplate_path: str | Path) -> None:
+    """Edit a buildplate's company or type.
+
+    Displays all buildplates, prompts for a buildplate ID and the field to edit,
+    then saves the change to the CSV file.
+
+    Args:
+        buildplate: DataFrame containing buildplate data.
+        buildplate_path: Path to the buildplate CSV file.
+    """
     # Get buildplate to edit
     print(buildplate.to_string(index=False))
     print("Enter ID for buildplate to edit")
@@ -240,6 +318,16 @@ def edit_buildplate(buildplate: pd.DataFrame, buildplate_path: str | Path) -> No
 def update_buildplate_maintenance(
     buildplate: pd.DataFrame, maintenance: pd.DataFrame, maintenance_path: str | Path
 ) -> None:
+    """Create a maintenance event for a buildplate.
+
+    Prompts for a buildplate ID, maintenance type (cleaning), and date.
+    Appends the event to the maintenance history CSV file.
+
+    Args:
+        buildplate: DataFrame containing buildplate data.
+        maintenance: DataFrame containing maintenance history.
+        maintenance_path: Path to the maintenance history CSV file.
+    """
     # Get buildplate id
     print(buildplate.to_string(index=False))
     print("Enter ID of buildplate to edit")
@@ -264,6 +352,16 @@ def update_buildplate_maintenance(
 
 # AMS
 def read_ams(ams_path: str | Path, ams_maintenance_path: str | Path) -> None:
+    """Read AMS data and maintenance history, then present a menu for updates.
+
+    Reads the AMS and AMS maintenance CSV files, displays their contents,
+    and prompts the user to edit an AMS, create a maintenance event, or return
+    to the home page.
+
+    Args:
+        ams_path: Path to the AMS CSV file.
+        ams_maintenance_path: Path to the AMS maintenance history CSV file.
+    """
     # Get dataframes
     ams, ams_maintenance = csv_utils.read_data([ams_path, ams_maintenance_path])
 
@@ -289,6 +387,15 @@ def read_ams(ams_path: str | Path, ams_maintenance_path: str | Path) -> None:
 
 
 def edit_ams(ams: pd.DataFrame, ams_path: str | Path) -> None:
+    """Edit an AMS model.
+
+    Displays all AMS units, prompts for an AMS ID and the new model value,
+    then saves the change to the CSV file.
+
+    Args:
+        ams: DataFrame containing AMS data.
+        ams_path: Path to the AMS CSV file.
+    """
     # Get ams to edit
     print(ams.to_string(index=False))
     print("Enter ID of AMS to edit model")
@@ -305,6 +412,17 @@ def edit_ams(ams: pd.DataFrame, ams_path: str | Path) -> None:
 def update_ams_maintenance(
     ams: pd.DataFrame, maintenance: pd.DataFrame, maintenance_path: str | Path
 ) -> None:
+    """Create a maintenance event for an AMS.
+
+    Prompts for an AMS ID, maintenance type (desiccant change or firmware
+    update), date, and optionally the firmware version. Appends the event
+    to the maintenance history CSV file.
+
+    Args:
+        ams: DataFrame containing AMS data.
+        maintenance: DataFrame containing maintenance history.
+        maintenance_path: Path to the maintenance history CSV file.
+    """
     # Get ams to update
     print(ams.to_string(index=False))
     print("Enter ID of AMS for maintenance event")
@@ -337,6 +455,15 @@ def update_ams_maintenance(
 
 # DRYERS
 def read_filament_dryers(dryer_path: str | Path, dryer_events_path: str | Path) -> None:
+    """Read filament dryer data and usage history, then present a menu for updates.
+
+    Reads the dryer and dryer events CSV files, displays their contents,
+    and prompts the user to edit a dryer or return to the home page.
+
+    Args:
+        dryer_path: Path to the dryer CSV file.
+        dryer_events_path: Path to the dryer events CSV file.
+    """
     # Get information
     dryers, dryer_events = csv_utils.read_data([dryer_path, dryer_events_path])
 
@@ -358,6 +485,15 @@ def read_filament_dryers(dryer_path: str | Path, dryer_events_path: str | Path) 
 
 
 def edit_dryer(dryers: pd.DataFrame, dryer_path: str | Path) -> None:
+    """Edit a filament dryer's company, model, capacity, or temperature range.
+
+    Displays all dryers, prompts for a dryer ID and the field to edit,
+    then saves the change to the CSV file.
+
+    Args:
+        dryers: DataFrame containing dryer data.
+        dryer_path: Path to the dryer CSV file.
+    """
     # Get dryer to edit
     print(dryers.to_string(index=False))
     print("Enter ID of filament dryer to edit")

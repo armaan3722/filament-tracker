@@ -6,6 +6,16 @@ from filament_tracker import csv_utils
 
 
 def view_purchases(all_paths: list[str | Path]) -> None:
+    """View purchase history and present a menu for updates.
+
+    Reads the purchases CSV file, displays the purchase history,
+    and prompts the user to add a purchase, edit a purchase, or return
+    to the home page.
+
+    Args:
+        all_paths: List of all file paths, with the last element being the
+            purchases CSV file path.
+    """
     # Read dataframe
     purchases = csv_utils.read_data([all_paths[-1]])[0]
 
@@ -28,6 +38,16 @@ def view_purchases(all_paths: list[str | Path]) -> None:
 
 
 def add_purchases(all_paths: list[str | Path]) -> None:
+    """Record a new purchase of equipment and materials.
+
+    Prompts for quantities of each item type being purchased (printers,
+    hotends, buildplates, AMS, filament, dryers, spools, parts), then
+    collects details for each item and updates the relevant CSV files.
+
+    Args:
+        all_paths: List of file paths in order: printers, hotends,
+            buildplates, AMS, filament, dryers, spools, parts, purchases.
+    """
     # Read dataframes
     (
         printers,
@@ -112,6 +132,19 @@ def add_printer(
     purchases_path: str | Path,
     purchase_id: int,
 ) -> None:
+    """Add a newly purchased printer and record the purchase.
+
+    Prompts for printer details (company, model, name, seller, cost, dates),
+    appends rows to both the printer and purchases DataFrames, then saves
+    them to their respective CSV files.
+
+    Args:
+        printer: DataFrame containing printer data.
+        path: Path to the printer CSV file.
+        purchases: DataFrame containing purchase history.
+        purchases_path: Path to the purchases CSV file.
+        purchase_id: ID for the current purchase record.
+    """
     # Get new printer information
     print("What is the new printer company")
     new_printer_company = input()
@@ -157,6 +190,19 @@ def add_hotend(
     purchases_path: str | Path,
     purchase_id: int,
 ) -> None:
+    """Add a newly purchased hotend and record the purchase.
+
+    Prompts for hotend details (company, size, material, seller, cost, dates),
+    appends rows to both the hotend and purchases DataFrames, then saves
+    them to their respective CSV files.
+
+    Args:
+        hotend: DataFrame containing hotend data.
+        hotend_path: Path to the hotend CSV file.
+        purchases: DataFrame containing purchase history.
+        purchases_path: Path to the purchases CSV file.
+        purchase_id: ID for the current purchase record.
+    """
     # Get hotend to add
     print("What is the new hotend company")
     new_hotend_company = input()
@@ -206,6 +252,19 @@ def add_buildplate(
     purchases_path: str | Path,
     purchase_id: int,
 ) -> None:
+    """Add a newly purchased buildplate and record the purchase.
+
+    Prompts for buildplate details (company, type, seller, dates, cost),
+    appends rows to both the buildplate and purchases DataFrames, then saves
+    them to their respective CSV files.
+
+    Args:
+        buildplate: DataFrame containing buildplate data.
+        buildplate_path: Path to the buildplate CSV file.
+        purchases: DataFrame containing purchase history.
+        purchases_path: Path to the purchases CSV file.
+        purchase_id: ID for the current purchase record.
+    """
     # Get buildplate to add
     print("What company is the buildplate from")
     buildplate_company = input()
@@ -246,6 +305,19 @@ def add_ams(
     purchases_path: str | Path,
     purchase_id: int,
 ) -> None:
+    """Add a newly purchased AMS and record the purchase.
+
+    Prompts for AMS details (model, seller, dates, cost), appends rows
+    to both the AMS and purchases DataFrames, then saves them to their
+    respective CSV files.
+
+    Args:
+        ams: DataFrame containing AMS data.
+        ams_path: Path to the AMS CSV file.
+        purchases: DataFrame containing purchase history.
+        purchases_path: Path to the purchases CSV file.
+        purchase_id: ID for the current purchase record.
+    """
     # Get AMS to add
     print("What AMS model is added")
     ams_model = input()
@@ -274,6 +346,20 @@ def add_filament(
     purchases_path: str | Path,
     purchase_id: int,
 ) -> None:
+    """Add newly purchased filament and record the purchase.
+
+    Prompts for filament details (company, colour, material, diameter,
+    starting amount, seller, dates, cost), appends rows to both the
+    filament and purchases DataFrames, then saves them to their
+    respective CSV files.
+
+    Args:
+        filament: DataFrame containing filament data.
+        filament_path: Path to the filament CSV file.
+        purchases: DataFrame containing purchase history.
+        purchases_path: Path to the purchases CSV file.
+        purchase_id: ID for the current purchase record.
+    """
     # Get information
     print("What is the new filament company")
     company = input()
@@ -331,6 +417,19 @@ def add_dryer(
     purchases_path: str | Path,
     purchase_id: int,
 ) -> None:
+    """Add a newly purchased filament dryer and record the purchase.
+
+    Prompts for dryer details (company, model, capacity, temperature
+    range, seller, dates, cost), appends rows to both the dryers and
+    purchases DataFrames, then saves them to their respective CSV files.
+
+    Args:
+        dryers: DataFrame containing dryer data.
+        dryer_path: Path to the dryer CSV file.
+        purchases: DataFrame containing purchase history.
+        purchases_path: Path to the purchases CSV file.
+        purchase_id: ID for the current purchase record.
+    """
     # Get information about dryer
     print("What is the company for the filament dryer")
     company = input()
@@ -377,6 +476,19 @@ def add_spool(
     purchase_path: str | Path,
     purchase_id: int,
 ) -> None:
+    """Add a newly purchased reusable spool and record the purchase.
+
+    Prompts for spool type and purchase details (dates, cost), appends
+    rows to both the spools and purchases DataFrames, then saves them
+    to their respective CSV files.
+
+    Args:
+        spools: DataFrame containing spool data.
+        spool_path: Path to the spools CSV file.
+        purchases: DataFrame containing purchase history.
+        purchase_path: Path to the purchases CSV file.
+        purchase_id: ID for the current purchase record.
+    """
     # Get information about purchase
     print("What is the type of spool")
     spool_type = input()
@@ -411,6 +523,19 @@ def add_parts(
     purchases_path: str | Path,
     purchase_id: int,
 ) -> None:
+    """Add newly purchased parts and record the purchase.
+
+    Prompts for part details (type, spec, amount, dates, cost, seller),
+    appends rows to both the parts and purchases DataFrames, then saves
+    them to their respective CSV files.
+
+    Args:
+        parts: DataFrame containing parts data.
+        parts_path: Path to the parts CSV file.
+        purchases: DataFrame containing purchase history.
+        purchases_path: Path to the purchases CSV file.
+        purchase_id: ID for the current purchase record.
+    """
     # Get information about purchase
     print("What is the part type")
     part_type = input()
