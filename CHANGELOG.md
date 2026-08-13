@@ -1,22 +1,62 @@
-Version 0.5.0 - File organization - 04/27/2026
- - Divided one large interface file into multiple smaller files
- - Extra values added to csv files to track version firmare updated to for ams and printers
- - Ability to input version updated to when adding maintenance event
+# Changelog
 
-Version 0.4.0 - Parts tracking - 03/18/2026
- - Able to purchase, view, and edit any hardware parts
+## [Unreleased]
 
-Version 0.3.0 - Filament tracking - 03/16/2026
- - Able to purchase, view, and edit filament spools
- - Able to purchase and edit reusable spools
- - Able to purchase and edit filament dryers
- - Able to add filament roll drying events and update date last dried
+### Added
+- Version tracking for firmware updates to printers and ams
+- Creating, editing, and viewing info for projects and categories
+- Creating print jobs
+- Printer seconds used tracking
+- Creating parts usage events
 
-Version 0.2.0 - Starting again - 03/08/2026
- - Redoing entire system to be easier to navigate and add functions to
- - Able to purchase, view, edit, and create maintenance events for printers, AMS, hotends, and buildplates
+### Changed
+- Storing user data in proper directory
+- Creating default data files if there is no user data
 
-Version 0.1.0 - Basic program - 02/27/2026
- - Able to enter in new rolls of filament and update their status
- - Able to add prints to history and remove from filament status
- - Able to view information about all filament
+### Internal
+- Removed old impossible to access files from v0.1.0
+- Separated interface.py into 5 different files
+- Issue and PR templates created
+- Moved code into src/filament_tracker
+- Added uv_build backend to pyproject
+- Reformated all code with ruff
+- Environment variables added
+- Refactored all variable, function, file, folder, and csv column names to snake_case
+- Added metadata.json
+- Added type hints and docstrings
+
+## [0.4.0] - 2026-03-18
+
+### Added
+- Purchasing, editing, and viewing info for parts
+
+## [0.3.0] - 2026-03-16
+
+### Added
+- Seller information tracking to all purchasing
+- Purchasing, editing, and viewing info for filament, filament dryers, and reusable spools
+- Creating drying events that automatically update filament time last dried
+
+## [0.2.0] - 2026-03-08
+
+### Added
+- Adding, editing, and viewing info for printers, hotends, buildplates, and ams
+- Creating maintenance events for printers, hotends, buildplates, and ams
+- Viewing purchases
+- Multi item purchases
+
+### Removed
+- All v0.1.0 interface code
+- All v0.1.0 data files
+
+## [0.1.0] - 2026-02-27
+
+### Added
+- Adding new filament rolls to database
+- Editing and updating all info for filament rolls
+- Viewing all info for filament rolls
+- Adding prints to print history, and automatically reducing amount of filament left
+- Viewing print history
+
+### Internal
+- Created csv helper functions

@@ -1,62 +1,37 @@
-3D Printing filament tracker
+# Filament tracker
 
-This is a filament usage tracker for 3d printing.  It can keep track of a history with dates, names, times, and filament used for every print ever done, as well as when filament was purchased, finished, and last dried.
+## An interactive cli program for tracking everything about your 3d printing.
 
-Feature overview:
- - Filament usage tracking
-   - History of every print with
-     - Day printed
-     - Name of print
-     - How many filaments used
-     - Amount of each filament used
-     - Time spent printing with each filament
- - Current state of each roll of filament
-   - Colour, material, and company
-   - Amount started with and amount remaining
-   - State
-   - Date purchased and date finished
-   - Date last dried
-   - Cost
+This is an interactive cli program that is intended to help you store any important information for 3d printing.  It is currently not done, but when completed, it will be able to track:
 
-How to use:
- - Enter 'uv run main.py' into terminal
- - Use command line to navigate program by entering numbers
+- 3d printer hours used and maintenance history
+- Hotend and buildplates hours used and maintenance history
+- AMS/other multicolor systems total amount of colour changes, and maintenance history
+- Filament rolls' remaining filament, and date last dried
+- Filament dryer's drying history
+- Usage of other parts related to prints, such as heat set inserts, screws, bearings, etc.
+- Print job history
 
-Objectives
- - Keep track of filament usage
-   - List of all rolls, current and future
-   - List of remaining capacity in rolls
-   - List of remaining capacity over time in rolls per day
-   - List of all projects with day printed and time print taken
- - Keep track of other parts usage
-   - List all sizes of heat set inserts and screws
-   - List amount of solder left
-   - List all electronics left
-   - Day and time that everything was used
- - Keep track of purchases and revenue
-   - Amount spent when, on what
-   - Amount made for sales
- - Keep track of hours of printer usage
-   - Hours each project
-   - Hours each day
- - Analyze data and sort into tables and graphs
-   - Most used filament colours, types, and companies
-   - Hours of printing each day or each month
-   - Line graph of each unique roll's usage over time
-   - Line graph of each type of filament's usage over time
-   - Line graph of each non printed part's usage over time
+The print job history will include lots of detailed information, such as:
 
-Strategy
- - Data stored in csv files
- - Analysis done in pandas and matlibplot
- - Input done with python terminal
+- Date of print
+- Length of print
+- Amount of filament printed for each filament used
+- Categorization of print
+  - Project that it belongs to
+  - Which part of that project it is for
+  - Purpose (test print, prototype, final copy, etc)
+  - Reason (personal print, print for selling, etc)
+  - Other print plates that are grouped together to print the same object
 
-Files
- - main.py (runs main program)
- - analyzer.py (runs data analysis and graph generation functions)
- - utils.py (runs formatting and other useful functions)
- - data/
-   - prints.csv (stores print name, date, and print id)
-   - filamentUsed.csv (stores filament id and use for each print id)
-   - allRolls.csv (stores current information about all rolls)
-   - projects.csv (stores project category, name, stage, and date created)git
+And eventually, this project will have data analysis features that allow you to see:
+
+- How much filament you use on average every month
+- A graph of how much you use your 3d printer
+- Information into which materials and colours you use the most
+- Estimated time until printer requires maintenance
+- And more!
+
+## How to install
+
+Currently, there is no way to install this application.  This application is also currently not fully released yet, and may be unstable or have breaking changes made while it is still incomplete.  There will be a method for installation in the future.
