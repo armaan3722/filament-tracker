@@ -85,7 +85,7 @@ def add_filament_usage(
         stage = input()
         print(categories.to_string(index=False))
         print("Enter category ID")
-        category_id = input()
+        category_id = int(input())
         print("Enter version")
         version = input()
         print("Enter revision")
