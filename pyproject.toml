@@ -16,7 +16,6 @@ dependencies = [
 
 [project.scripts]
 filament-tracker = "filament_tracker.main:main"
-test-tracker = "filament_tracker.main:get_paths"
 
 [build-system]
 requires = ["uv_build>=0.12.1,<0.13.0"]
