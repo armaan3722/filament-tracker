@@ -64,12 +64,7 @@ def add_filament_usage(
     # Get project information
     print(projects)
     print("Enter project ID of print")
-    project_id = input()
-
-    if project_id != "":
-        project_id = int(project_id)
-    else:
-        project_id = None
+    project_id = int(input())
 
     # Get collection information, either pick a collection or create a new one
     print("Do you want to select a collection(1), or create a new collection(2)")
@@ -108,10 +103,8 @@ def add_filament_usage(
 
         # Handle null values
         test_array = [
-            collection_name,
             purpose,
             stage,
-            category_id,
             version,
             revision,
             has_config,
@@ -131,13 +124,13 @@ def add_filament_usage(
                 len(collections),
                 collection_name,
                 project_id,
+                test_array[0],
                 test_array[1],
+                category_id,
                 test_array[2],
                 test_array[3],
                 test_array[4],
                 test_array[5],
-                test_array[6],
-                test_array[7],
             ],
             collections,
         )
