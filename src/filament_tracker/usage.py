@@ -200,7 +200,6 @@ def add_filament_usage(
             None,
             None,
             None,
-            None,
         ],
         print_jobs,
     )

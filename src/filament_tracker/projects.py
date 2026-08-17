@@ -59,7 +59,9 @@ def add_project(projects: pd.DataFrame, projects_path: str | Path) -> None:
     purpose = input()
 
     # Update information
-    projects = csv_utils.add_row([len(projects), name, "In progress", purpose], projects)
+    projects = csv_utils.add_row(
+        [len(projects), name, "In progress", purpose], projects
+    )
     csv_utils.write_data([projects_path], [projects])
 
 
@@ -79,7 +81,9 @@ def edit_project(projects: pd.DataFrame, projects_path: str | Path) -> None:
     project_id = int(input())
 
     # Get value to edit
-    print("Would you like to edit the project name (1), project state (2), or purpose (3)?")
+    print(
+        "Would you like to edit the project name (1), project state (2), or purpose (3)?"
+    )
     edit_type = int(input())
     print("Enter new value")
     new_value = input()
@@ -102,7 +106,10 @@ def edit_project(projects: pd.DataFrame, projects_path: str | Path) -> None:
 
 # CATEGORIES
 def read_categories(
-    categories: pd.DataFrame, categories_path: str | Path, projects: pd.DataFrame, project_id: int
+    categories: pd.DataFrame,
+    categories_path: str | Path,
+    projects: pd.DataFrame,
+    project_id: int,
 ) -> None:
     """Read categories for a project and present a menu for updates.
 
@@ -136,7 +143,10 @@ def read_categories(
 
 
 def add_categories(
-    categories: pd.DataFrame, categories_path: str | Path, projects: pd.DataFrame, project_id: int
+    categories: pd.DataFrame,
+    categories_path: str | Path,
+    projects: pd.DataFrame,
+    project_id: int,
 ) -> None:
     """Add a new category to a project.
 
@@ -182,7 +192,9 @@ def edit_categories(categories: pd.DataFrame, category_path: str | Path) -> None
     category_id = int(input())
 
     # Get edit value
-    print("Would you like to edit the name(1), purpose (2), stage (3), or best version (4)")
+    print(
+        "Would you like to edit the name(1), purpose (2), stage (3), or best version (4)"
+    )
     edit_type = int(input())
     print("Enter new value")
     new_value = input()
