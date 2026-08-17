@@ -79,17 +79,15 @@ def add_filament_usage(
     else:
         print("\n\nWhat is the new collection name")
         collection_name = input()
-        print("Enter purpose")
-        purpose = input()
-        print("Enter stage")
-        stage = input()
         print(categories.to_string(index=False))
         print("Enter category ID")
         category_id = int(input())
+        print("Enter purpose (press enter for same as category)")
+        purpose = input()
+        print("Enter stage (press enter for same as category)")
+        stage = input()
         print("Enter version")
         version = input()
-        print("Enter revision")
-        revision = input()
         print("Does this collection have configs (T/f)")
         has_config = input()
         print("What quantity does this collection produce")
@@ -106,7 +104,6 @@ def add_filament_usage(
             purpose,
             stage,
             version,
-            revision,
             has_config,
             quantity_produced,
         ]
@@ -121,16 +118,15 @@ def add_filament_usage(
         collection_id = len(collections)
         collections = csv_utils.add_row(
             [
-                len(collections),
+                collection_id,
                 collection_name,
                 project_id,
+                category_id,
                 test_array[0],
                 test_array[1],
-                category_id,
                 test_array[2],
                 test_array[3],
                 test_array[4],
-                test_array[5],
             ],
             collections,
         )
