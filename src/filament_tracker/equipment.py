@@ -407,6 +407,7 @@ def edit_ams(ams: pd.DataFrame, ams_path: str | Path) -> None:
 
     # Save
     ams = csv_utils.change_cell(ams, "ams_id", ams_id, "ams_model", new_value)
+    csv_utils.write_data([ams_path], [ams])
 
 
 def update_ams_maintenance(
