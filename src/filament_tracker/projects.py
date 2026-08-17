@@ -55,9 +55,11 @@ def add_project(projects: pd.DataFrame, projects_path: str | Path) -> None:
     # Get information about new project
     print("What is the new project name")
     name = input()
+    print("What is the new project's purpose")
+    purpose = input()
 
     # Update information
-    projects = csv_utils.add_row([len(projects), name, "In progress"], projects)
+    projects = csv_utils.add_row([len(projects), name, "In progress", purpose], projects)
     csv_utils.write_data([projects_path], [projects])
 
 
@@ -77,7 +79,7 @@ def edit_project(projects: pd.DataFrame, projects_path: str | Path) -> None:
     project_id = int(input())
 
     # Get value to edit
-    print("Would you like to edit the project name (1), or project state (2)?")
+    print("Would you like to edit the project name (1), project state (2), or purpose (3)?")
     edit_type = int(input())
     print("Enter new value")
     new_value = input()
@@ -88,6 +90,8 @@ def edit_project(projects: pd.DataFrame, projects_path: str | Path) -> None:
             column = "project_name"
         case 2:
             column = "project_state"
+        case 3:
+            column = "purpose"
 
     # Save data
     projects = csv_utils.change_cell(
