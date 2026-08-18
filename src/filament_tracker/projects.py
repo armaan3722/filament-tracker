@@ -209,6 +209,9 @@ def edit_categories(categories: pd.DataFrame, category_path: str | Path) -> None
         case 4:
             column = "best_version"
 
+     # Fix dtype for best_version
+    categories["best_version"] = categories["best_version"].astype(str)
+    
     # Save change
     categories = csv_utils.change_cell(
         categories, "category_id", category_id, column, new_value
