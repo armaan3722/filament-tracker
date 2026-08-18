@@ -119,6 +119,7 @@ def read_categories(
     Args:
         categories: DataFrame containing category data.
         categories_path: Path to the categories CSV file.
+        projects: DataFrame containing projects data.
         project_id: ID of the project to filter categories for.
     """
     # Print information
@@ -156,6 +157,7 @@ def add_categories(
     Args:
         categories: DataFrame containing category data.
         categories_path: Path to the categories CSV file.
+        projects: DataFrame containing project data.
         project_id: ID of the project to associate the category with.
     """
     # Get category information
