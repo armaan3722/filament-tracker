@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import Any
 
 from filament_tracker import csv_utils

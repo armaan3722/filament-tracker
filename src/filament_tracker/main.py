@@ -69,11 +69,14 @@ def get_paths(data_dir: Path) -> dict[str, dict[str, Any]]:
     # Create default files if some files don't exist
     for value in datasets.values():
         if not value["filepath"].exists():
-            default_path = files("filament_tracker") / "default_data" / value["filepath"].name
+            default_path = (
+                files("filament_tracker") / "default_data" / value["filepath"].name
+            )
             data_dir.mkdir(parents=True, exist_ok=True)
             pd.read_csv(str(default_path)).to_csv(value["filepath"], index=False)
 
     return datasets
+
 
 # Get metadata
 def get_metadata(data_dir: Path) -> None:
@@ -181,9 +184,7 @@ def main() -> None:
                     datasets["buildplate_maintenance"],
                 )
             case 4:
-                equipment.read_ams(
-                    datasets["ams"], datasets["ams_maintenance"]
-                )
+                equipment.read_ams(datasets["ams"], datasets["ams_maintenance"])
             case 5:
                 materials.read_filament(
                     datasets["filament"],
@@ -202,9 +203,7 @@ def main() -> None:
             case 9:
                 materials.read_parts(datasets["parts"])
             case 10:
-                projects.read_projects(
-                    datasets["projects"], datasets["categories"]
-                )
+                projects.read_projects(datasets["projects"], datasets["categories"])
             case 11:
                 print(11)
             case 12:

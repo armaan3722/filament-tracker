@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import Any
 
 import pandas as pd
@@ -7,9 +6,7 @@ from filament_tracker import csv_utils
 
 
 # PRINTER
-def read_printer(
-    printer: dict[str, Any], printer_maintenance: dict[str, Any]
-) -> None:
+def read_printer(printer: dict[str, Any], printer_maintenance: dict[str, Any]) -> None:
     """Read printer data and maintenance history, then present a menu for updates.
 
     Reads the printer and printer maintenance CSV files, displays their contents,
@@ -142,9 +139,7 @@ def read_hotend(hotend: dict[str, Any], hotend_maintenance: dict[str, Any]) -> N
         hotend_maintenance: Dict containing hotend maintenance metadata with 'filepath' key.
     """
     # Read csv files
-    hotend_df, hotend_maintenance_df = csv_utils.read_data(
-        [hotend, hotend_maintenance]
-    )
+    hotend_df, hotend_maintenance_df = csv_utils.read_data([hotend, hotend_maintenance])
 
     # Print information
     print("Hotends:")
@@ -317,7 +312,9 @@ def edit_buildplate(buildplate: pd.DataFrame, buildplate_meta: dict[str, Any]) -
 
 
 def update_buildplate_maintenance(
-    buildplate: pd.DataFrame, maintenance: pd.DataFrame, maintenance_meta: dict[str, Any]
+    buildplate: pd.DataFrame,
+    maintenance: pd.DataFrame,
+    maintenance_meta: dict[str, Any],
 ) -> None:
     """Create a maintenance event for a buildplate.
 

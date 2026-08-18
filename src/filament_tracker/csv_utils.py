@@ -1,10 +1,13 @@
+from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
 
 
-def read_data(csv_paths: list[str | Path | dict[str, Any]]) -> tuple[pd.DataFrame, ...]:
+def read_data(
+    csv_paths: Sequence[str | Path | dict[str, Any]],
+) -> tuple[pd.DataFrame, ...]:
     """Read the data from multiple csv files.
 
     Reads the csv files at the given paths, and outputs a tuple with
@@ -31,7 +34,7 @@ def read_data(csv_paths: list[str | Path | dict[str, Any]]) -> tuple[pd.DataFram
 
 
 def write_data(
-    csv_paths: list[str | Path | dict[str, Any]], dataframes: list[pd.DataFrame]
+    csv_paths: Sequence[str | Path | dict[str, Any]], dataframes: list[pd.DataFrame]
 ) -> None:
     """Write multiple dataframes to multiple csv files.
 

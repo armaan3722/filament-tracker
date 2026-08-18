@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import Any
 
 import pandas as pd
@@ -7,7 +6,9 @@ from filament_tracker import csv_utils
 
 
 # PROJECTS
-def read_projects(projects_meta: dict[str, Any], categories_meta: dict[str, Any]) -> None:
+def read_projects(
+    projects_meta: dict[str, Any], categories_meta: dict[str, Any]
+) -> None:
     """Read projects and categories, then present a menu for updates.
 
     Reads the projects and categories CSV files, displays projects,
@@ -212,9 +213,9 @@ def edit_categories(categories: pd.DataFrame, categories_meta: dict[str, Any]) -
         case 4:
             column = "best_version"
 
-     # Fix dtype for best_version
+    # Fix dtype for best_version
     categories["best_version"] = categories["best_version"].astype(str)
-    
+
     # Save change
     categories = csv_utils.change_cell(
         categories, "category_id", category_id, column, new_value
