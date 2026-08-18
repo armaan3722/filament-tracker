@@ -1,1 +1,1 @@
-print_id,print_date,print_time,print_preparation_time,printer_id,ams_id,hotend_id,buildplate_id,collection_id,batch,plate_config_id,print_successful,failure_reason,filament_lost,repair_print
+print_id,print_date,print_time,print_preparation_time,printer_id,ams_id,hotend_id,buildplate_id,collection_id,plate_config_id,print_successful,failure_reason,filament_lost,repair_print

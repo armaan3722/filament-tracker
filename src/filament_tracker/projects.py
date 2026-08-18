@@ -38,7 +38,7 @@ def read_projects(projects_path: str | Path, categories_path: str | Path) -> Non
         case 3:
             print("Enter ID of project to view categories for")
             project_id = int(input())
-            read_categories(categories, categories_path, project_id)
+            read_categories(categories, categories_path, projects, project_id)
         case 4:
             print("Returning to home page")
 
@@ -55,9 +55,13 @@ def add_project(projects: pd.DataFrame, projects_path: str | Path) -> None:
     # Get information about new project
     print("What is the new project name")
     name = input()
+    print("What is the new project's purpose")
+    purpose = input()
 
     # Update information
-    projects = csv_utils.add_row([len(projects), name, "In progress"], projects)
+    projects = csv_utils.add_row(
+        [len(projects), name, "In progress", purpose], projects
+    )
     csv_utils.write_data([projects_path], [projects])
 
 
@@ -77,7 +81,9 @@ def edit_project(projects: pd.DataFrame, projects_path: str | Path) -> None:
     project_id = int(input())
 
     # Get value to edit
-    print("Would you like to edit the project name (1), or project state (2)?")
+    print(
+        "Would you like to edit the project name (1), project state (2), or purpose (3)?"
+    )
     edit_type = int(input())
     print("Enter new value")
     new_value = input()
@@ -88,6 +94,8 @@ def edit_project(projects: pd.DataFrame, projects_path: str | Path) -> None:
             column = "project_name"
         case 2:
             column = "project_state"
+        case 3:
+            column = "purpose"
 
     # Save data
     projects = csv_utils.change_cell(
@@ -98,7 +106,10 @@ def edit_project(projects: pd.DataFrame, projects_path: str | Path) -> None:
 
 # CATEGORIES
 def read_categories(
-    categories: pd.DataFrame, categories_path: str | Path, project_id: int
+    categories: pd.DataFrame,
+    categories_path: str | Path,
+    projects: pd.DataFrame,
+    project_id: int,
 ) -> None:
     """Read categories for a project and present a menu for updates.
 
@@ -108,6 +119,7 @@ def read_categories(
     Args:
         categories: DataFrame containing category data.
         categories_path: Path to the categories CSV file.
+        projects: DataFrame containing projects data.
         project_id: ID of the project to filter categories for.
     """
     # Print information
@@ -124,7 +136,7 @@ def read_categories(
 
     match action:
         case 1:
-            add_categories(categories, categories_path, project_id)
+            add_categories(categories, categories_path, projects, project_id)
         case 2:
             edit_categories(categories, categories_path)
         case 3:
@@ -132,7 +144,10 @@ def read_categories(
 
 
 def add_categories(
-    categories: pd.DataFrame, categories_path: str | Path, project_id: int
+    categories: pd.DataFrame,
+    categories_path: str | Path,
+    projects: pd.DataFrame,
+    project_id: int,
 ) -> None:
     """Add a new category to a project.
 
@@ -142,15 +157,24 @@ def add_categories(
     Args:
         categories: DataFrame containing category data.
         categories_path: Path to the categories CSV file.
+        projects: DataFrame containing project data.
         project_id: ID of the project to associate the category with.
     """
     # Get category information
     print("What is the name of the new category")
     category_name = input()
+    print("What is the purpose of the category (press enter for same as project)")
+    purpose = input()
+    print("What is the stage of the category")
+    stage = input()
+
+    # Check if purpose manual override given
+    if purpose == "":
+        purpose = csv_utils.get_cell(projects, "project_id", project_id, "purpose")
 
     # Update information
     categories = csv_utils.add_row(
-        [len(categories), category_name, project_id, None, None], categories
+        [len(categories), category_name, project_id, purpose, stage, None], categories
     )
     csv_utils.write_data([categories_path], [categories])
 
@@ -170,7 +194,9 @@ def edit_categories(categories: pd.DataFrame, category_path: str | Path) -> None
     category_id = int(input())
 
     # Get edit value
-    print("Would you like to edit the name(1), best version(2), or best revision(3)")
+    print(
+        "Would you like to edit the name(1), purpose (2), stage (3), or best version (4)"
+    )
     edit_type = int(input())
     print("Enter new value")
     new_value = input()
@@ -179,10 +205,15 @@ def edit_categories(categories: pd.DataFrame, category_path: str | Path) -> None
         case 1:
             column = "category_name"
         case 2:
-            column = "best_version"
+            column = "purpose"
         case 3:
-            column = "best_revision"
+            column = "stage"
+        case 4:
+            column = "best_version"
 
+     # Fix dtype for best_version
+    categories["best_version"] = categories["best_version"].astype(str)
+    
     # Save change
     categories = csv_utils.change_cell(
         categories, "category_id", category_id, column, new_value
