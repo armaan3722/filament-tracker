@@ -128,9 +128,6 @@ def add_drying_event(
     print("When was the filament dried")
     date = input()
 
-    # Reformat
-    filament["date_last_dried"] = filament["date_last_dried"].astype(str)
-
     # Save to csv files
     filament = csv_utils.change_cell(
         filament, "filament_id", filament_id, "date_last_dried", date
