@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Any
 
 import pandas as pd
 
@@ -7,7 +8,7 @@ from filament_tracker import csv_utils
 
 # PRINTER
 def read_printer(
-    printer_path: str | Path, printer_maintenance_path: str | Path
+    printer: dict[str, Any], printer_maintenance: dict[str, Any]
 ) -> None:
     """Read printer data and maintenance history, then present a menu for updates.
 
@@ -16,19 +17,19 @@ def read_printer(
     to the home page.
 
     Args:
-        printer_path: Path to the printer CSV file.
-        printer_maintenance_path: Path to the printer maintenance history CSV file.
+        printer: Dict containing printer metadata with 'filepath' key.
+        printer_maintenance: Dict containing printer maintenance metadata with 'filepath' key.
     """
     # Get csv files
-    printer, printer_maintenance = csv_utils.read_data(
-        [printer_path, printer_maintenance_path]
+    printer_df, printer_maintenance_df = csv_utils.read_data(
+        [printer, printer_maintenance]
     )
 
     # Print dataframes
     print("Printers:")
-    print(printer.to_string(index=False))
+    print(printer_df.to_string(index=False))
     print("\n\nPrinter maintenance history:")
-    print(printer_maintenance.to_string(index=False))
+    print(printer_maintenance_df.to_string(index=False))
 
     # Update
     print(
@@ -38,16 +39,16 @@ def read_printer(
 
     match action:
         case 1:
-            edit_printer(printer, printer_path)
+            edit_printer(printer_df, printer)
         case 2:
             update_printer_maintenance(
-                printer, printer_maintenance, printer_maintenance_path
+                printer_df, printer_maintenance_df, printer_maintenance
             )
         case 3:
             print("Returning to home page")
 
 
-def edit_printer(printer: pd.DataFrame, path: str | Path) -> None:
+def edit_printer(printer: pd.DataFrame, printer_meta: dict[str, Any]) -> None:
     """Edit a printer's name, company, or model.
 
     Displays all printers, prompts for a printer ID and the field to edit
@@ -55,7 +56,7 @@ def edit_printer(printer: pd.DataFrame, path: str | Path) -> None:
 
     Args:
         printer: DataFrame containing printer data.
-        path: Path to the printer CSV file.
+        printer_meta: Dict containing printer metadata with 'filepath' key.
     """
     # Get printer to edit
     print(printer.to_string(index=False))
@@ -81,11 +82,11 @@ def edit_printer(printer: pd.DataFrame, path: str | Path) -> None:
     printer = csv_utils.change_cell(
         printer, "printer_id", printer_id, column, new_value
     )
-    csv_utils.write_data([path], [printer])
+    csv_utils.write_data([printer_meta], [printer])
 
 
 def update_printer_maintenance(
-    printer: pd.DataFrame, maintenance: pd.DataFrame, maintenance_path: str | Path
+    printer: pd.DataFrame, maintenance: pd.DataFrame, maintenance_meta: dict[str, Any]
 ) -> None:
     """Create a maintenance event for a printer.
 
@@ -96,7 +97,7 @@ def update_printer_maintenance(
     Args:
         printer: DataFrame containing printer data.
         maintenance: DataFrame containing maintenance history.
-        maintenance_path: Path to the maintenance history CSV file.
+        maintenance_meta: Dict containing maintenance metadata with 'filepath' key.
     """
     # Get printer for maintenance
     print(printer.to_string(index=False))
@@ -125,11 +126,11 @@ def update_printer_maintenance(
         [len(maintenance), printer_id, event_date, event_type, firmware_version],
         maintenance,
     )
-    csv_utils.write_data([maintenance_path], [maintenance])
+    csv_utils.write_data([maintenance_meta], [maintenance])
 
 
 # HOTEND
-def read_hotend(hotend_path: str | Path, hotend_maintenance_path: str | Path) -> None:
+def read_hotend(hotend: dict[str, Any], hotend_maintenance: dict[str, Any]) -> None:
     """Read hotend data and maintenance history, then present a menu for updates.
 
     Reads the hotend and hotend maintenance CSV files, displays their contents,
@@ -137,19 +138,19 @@ def read_hotend(hotend_path: str | Path, hotend_maintenance_path: str | Path) ->
     to the home page.
 
     Args:
-        hotend_path: Path to the hotend CSV file.
-        hotend_maintenance_path: Path to the hotend maintenance history CSV file.
+        hotend: Dict containing hotend metadata with 'filepath' key.
+        hotend_maintenance: Dict containing hotend maintenance metadata with 'filepath' key.
     """
     # Read csv files
-    hotend, hotend_maintenance = csv_utils.read_data(
-        [hotend_path, hotend_maintenance_path]
+    hotend_df, hotend_maintenance_df = csv_utils.read_data(
+        [hotend, hotend_maintenance]
     )
 
     # Print information
     print("Hotends:")
-    print(hotend.to_string(index=False))
+    print(hotend_df.to_string(index=False))
     print("\n\nHotend maintenance history:")
-    print(hotend_maintenance.to_string(index=False))
+    print(hotend_maintenance_df.to_string(index=False))
 
     # Update
     print(
@@ -159,16 +160,16 @@ def read_hotend(hotend_path: str | Path, hotend_maintenance_path: str | Path) ->
 
     match action:
         case 1:
-            edit_hotend(hotend, hotend_path)
+            edit_hotend(hotend_df, hotend)
         case 2:
             update_hotend_maintenance(
-                hotend, hotend_maintenance, hotend_maintenance_path
+                hotend_df, hotend_maintenance_df, hotend_maintenance
             )
         case 3:
             print("Returning to home page")
 
 
-def edit_hotend(hotend: pd.DataFrame, hotend_path: str | Path) -> None:
+def edit_hotend(hotend: pd.DataFrame, hotend_meta: dict[str, Any]) -> None:
     """Edit a hotend's company, size, material, or state.
 
     Displays all hotends, prompts for a hotend ID and the field to edit,
@@ -176,7 +177,7 @@ def edit_hotend(hotend: pd.DataFrame, hotend_path: str | Path) -> None:
 
     Args:
         hotend: DataFrame containing hotend data.
-        hotend_path: Path to the hotend CSV file.
+        hotend_meta: Dict containing hotend metadata with 'filepath' key.
     """
     # Get hotend to edit
     print(hotend.to_string(index=False))
@@ -202,11 +203,11 @@ def edit_hotend(hotend: pd.DataFrame, hotend_path: str | Path) -> None:
             column = "state"
 
     hotend = csv_utils.change_cell(hotend, "hotend_id", hotend_id, column, new_value)
-    csv_utils.write_data([hotend_path], [hotend])
+    csv_utils.write_data([hotend_meta], [hotend])
 
 
 def update_hotend_maintenance(
-    hotend: pd.DataFrame, maintenance: pd.DataFrame, maintenance_path: str | Path
+    hotend: pd.DataFrame, maintenance: pd.DataFrame, maintenance_meta: dict[str, Any]
 ) -> None:
     """Create a maintenance event for a hotend.
 
@@ -216,7 +217,7 @@ def update_hotend_maintenance(
     Args:
         hotend: DataFrame containing hotend data.
         maintenance: DataFrame containing maintenance history.
-        maintenance_path: Path to the maintenance history CSV file.
+        maintenance_meta: Dict containing maintenance metadata with 'filepath' key.
     """
     # Get hotend for maintenance
     print(hotend)
@@ -237,12 +238,12 @@ def update_hotend_maintenance(
     maintenance = csv_utils.add_row(
         [len(maintenance), hotend_id, date, event_type], maintenance
     )
-    csv_utils.write_data([maintenance_path], [maintenance])
+    csv_utils.write_data([maintenance_meta], [maintenance])
 
 
 # BUILDPLATE
 def read_buildplate(
-    buildplate_path: str | Path, buildplate_maintenance_path: str | Path
+    buildplate: dict[str, Any], buildplate_maintenance: dict[str, Any]
 ) -> None:
     """Read buildplate data and maintenance history, then present a menu for updates.
 
@@ -251,19 +252,19 @@ def read_buildplate(
     event, or return to the home page.
 
     Args:
-        buildplate_path: Path to the buildplate CSV file.
-        buildplate_maintenance_path: Path to the buildplate maintenance history CSV file.
+        buildplate: Dict containing buildplate metadata with 'filepath' key.
+        buildplate_maintenance: Dict containing buildplate maintenance metadata with 'filepath' key.
     """
     # Read csv files
-    buildplate, buildplate_maintenance = csv_utils.read_data(
-        [buildplate_path, buildplate_maintenance_path]
+    buildplate_df, buildplate_maintenance_df = csv_utils.read_data(
+        [buildplate, buildplate_maintenance]
     )
 
     # Print information
     print("Buildplates:")
-    print(buildplate.to_string(index=False))
+    print(buildplate_df.to_string(index=False))
     print("\n\nBuildplate maintenance history")
-    print(buildplate_maintenance.to_string(index=False))
+    print(buildplate_maintenance_df.to_string(index=False))
 
     # Update
     print(
@@ -273,16 +274,16 @@ def read_buildplate(
 
     match action:
         case 1:
-            edit_buildplate(buildplate, buildplate_path)
+            edit_buildplate(buildplate_df, buildplate)
         case 2:
             update_buildplate_maintenance(
-                buildplate, buildplate_maintenance, buildplate_maintenance_path
+                buildplate_df, buildplate_maintenance_df, buildplate_maintenance
             )
         case 3:
             print("Returning to home page")
 
 
-def edit_buildplate(buildplate: pd.DataFrame, buildplate_path: str | Path) -> None:
+def edit_buildplate(buildplate: pd.DataFrame, buildplate_meta: dict[str, Any]) -> None:
     """Edit a buildplate's company or type.
 
     Displays all buildplates, prompts for a buildplate ID and the field to edit,
@@ -290,7 +291,7 @@ def edit_buildplate(buildplate: pd.DataFrame, buildplate_path: str | Path) -> No
 
     Args:
         buildplate: DataFrame containing buildplate data.
-        buildplate_path: Path to the buildplate CSV file.
+        buildplate_meta: Dict containing buildplate metadata with 'filepath' key.
     """
     # Get buildplate to edit
     print(buildplate.to_string(index=False))
@@ -312,11 +313,11 @@ def edit_buildplate(buildplate: pd.DataFrame, buildplate_path: str | Path) -> No
     buildplate = csv_utils.change_cell(
         buildplate, "buildplate_id", buildplate_id, column, new_value
     )
-    csv_utils.write_data([buildplate_path], [buildplate])
+    csv_utils.write_data([buildplate_meta], [buildplate])
 
 
 def update_buildplate_maintenance(
-    buildplate: pd.DataFrame, maintenance: pd.DataFrame, maintenance_path: str | Path
+    buildplate: pd.DataFrame, maintenance: pd.DataFrame, maintenance_meta: dict[str, Any]
 ) -> None:
     """Create a maintenance event for a buildplate.
 
@@ -326,7 +327,7 @@ def update_buildplate_maintenance(
     Args:
         buildplate: DataFrame containing buildplate data.
         maintenance: DataFrame containing maintenance history.
-        maintenance_path: Path to the maintenance history CSV file.
+        maintenance_meta: Dict containing maintenance metadata with 'filepath' key.
     """
     # Get buildplate id
     print(buildplate.to_string(index=False))
@@ -347,11 +348,11 @@ def update_buildplate_maintenance(
     maintenance = csv_utils.add_row(
         [len(maintenance), buildplate_id, date, event_type], maintenance
     )
-    csv_utils.write_data([maintenance_path], [maintenance])
+    csv_utils.write_data([maintenance_meta], [maintenance])
 
 
 # AMS
-def read_ams(ams_path: str | Path, ams_maintenance_path: str | Path) -> None:
+def read_ams(ams: dict[str, Any], ams_maintenance: dict[str, Any]) -> None:
     """Read AMS data and maintenance history, then present a menu for updates.
 
     Reads the AMS and AMS maintenance CSV files, displays their contents,
@@ -359,17 +360,17 @@ def read_ams(ams_path: str | Path, ams_maintenance_path: str | Path) -> None:
     to the home page.
 
     Args:
-        ams_path: Path to the AMS CSV file.
-        ams_maintenance_path: Path to the AMS maintenance history CSV file.
+        ams: Dict containing AMS metadata with 'filepath' key.
+        ams_maintenance: Dict containing AMS maintenance metadata with 'filepath' key.
     """
     # Get dataframes
-    ams, ams_maintenance = csv_utils.read_data([ams_path, ams_maintenance_path])
+    ams_df, ams_maintenance_df = csv_utils.read_data([ams, ams_maintenance])
 
     # Print data
     print("AMS")
-    print(ams.to_string(index=False))
+    print(ams_df.to_string(index=False))
     print("\n\nAMS maintenance")
-    print(ams_maintenance.to_string(index=False))
+    print(ams_maintenance_df.to_string(index=False))
 
     # Get action
     print(
@@ -379,14 +380,14 @@ def read_ams(ams_path: str | Path, ams_maintenance_path: str | Path) -> None:
 
     match action:
         case 1:
-            edit_ams(ams, ams_path)
+            edit_ams(ams_df, ams)
         case 2:
-            update_ams_maintenance(ams, ams_maintenance, ams_maintenance_path)
+            update_ams_maintenance(ams_df, ams_maintenance_df, ams_maintenance)
         case 3:
             print("Returning to home page")
 
 
-def edit_ams(ams: pd.DataFrame, ams_path: str | Path) -> None:
+def edit_ams(ams: pd.DataFrame, ams_meta: dict[str, Any]) -> None:
     """Edit an AMS model.
 
     Displays all AMS units, prompts for an AMS ID and the new model value,
@@ -394,7 +395,7 @@ def edit_ams(ams: pd.DataFrame, ams_path: str | Path) -> None:
 
     Args:
         ams: DataFrame containing AMS data.
-        ams_path: Path to the AMS CSV file.
+        ams_meta: Dict containing AMS metadata with 'filepath' key.
     """
     # Get ams to edit
     print(ams.to_string(index=False))
@@ -407,11 +408,11 @@ def edit_ams(ams: pd.DataFrame, ams_path: str | Path) -> None:
 
     # Save
     ams = csv_utils.change_cell(ams, "ams_id", ams_id, "ams_model", new_value)
-    csv_utils.write_data([ams_path], [ams])
+    csv_utils.write_data([ams_meta], [ams])
 
 
 def update_ams_maintenance(
-    ams: pd.DataFrame, maintenance: pd.DataFrame, maintenance_path: str | Path
+    ams: pd.DataFrame, maintenance: pd.DataFrame, maintenance_meta: dict[str, Any]
 ) -> None:
     """Create a maintenance event for an AMS.
 
@@ -422,7 +423,7 @@ def update_ams_maintenance(
     Args:
         ams: DataFrame containing AMS data.
         maintenance: DataFrame containing maintenance history.
-        maintenance_path: Path to the maintenance history CSV file.
+        maintenance_meta: Dict containing maintenance metadata with 'filepath' key.
     """
     # Get ams to update
     print(ams.to_string(index=False))
@@ -451,28 +452,28 @@ def update_ams_maintenance(
     maintenance = csv_utils.add_row(
         [len(maintenance), ams_id, date, event_type, firmware_version], maintenance
     )
-    csv_utils.write_data([maintenance_path], [maintenance])
+    csv_utils.write_data([maintenance_meta], [maintenance])
 
 
 # DRYERS
-def read_filament_dryers(dryer_path: str | Path, dryer_events_path: str | Path) -> None:
+def read_filament_dryers(dryers: dict[str, Any], dryer_events: dict[str, Any]) -> None:
     """Read filament dryer data and usage history, then present a menu for updates.
 
     Reads the dryer and dryer events CSV files, displays their contents,
     and prompts the user to edit a dryer or return to the home page.
 
     Args:
-        dryer_path: Path to the dryer CSV file.
-        dryer_events_path: Path to the dryer events CSV file.
+        dryers: Dict containing dryer metadata with 'filepath' key.
+        dryer_events: Dict containing dryer events metadata with 'filepath' key.
     """
     # Get information
-    dryers, dryer_events = csv_utils.read_data([dryer_path, dryer_events_path])
+    dryers_df, dryer_events_df = csv_utils.read_data([dryers, dryer_events])
 
     # Print information
     print("Filament dryers")
-    print(dryers.to_string(index=False))
+    print(dryers_df.to_string(index=False))
     print("\n\nFilament dryer usage history")
-    print(dryer_events.to_string(index=False))
+    print(dryer_events_df.to_string(index=False))
 
     # Get action
     print("\n\nWould you like to edit a filament dryer(1), or return to home page(2)")
@@ -480,12 +481,12 @@ def read_filament_dryers(dryer_path: str | Path, dryer_events_path: str | Path) 
 
     match action:
         case 1:
-            edit_dryer(dryers, dryer_path)
+            edit_dryer(dryers_df, dryers)
         case 2:
             print("Returning to home page")
 
 
-def edit_dryer(dryers: pd.DataFrame, dryer_path: str | Path) -> None:
+def edit_dryer(dryers: pd.DataFrame, dryers_meta: dict[str, Any]) -> None:
     """Edit a filament dryer's company, model, capacity, or temperature range.
 
     Displays all dryers, prompts for a dryer ID and the field to edit,
@@ -493,7 +494,7 @@ def edit_dryer(dryers: pd.DataFrame, dryer_path: str | Path) -> None:
 
     Args:
         dryers: DataFrame containing dryer data.
-        dryer_path: Path to the dryer CSV file.
+        dryers_meta: Dict containing dryer metadata with 'filepath' key.
     """
     # Get dryer to edit
     print(dryers.to_string(index=False))
@@ -522,4 +523,4 @@ def edit_dryer(dryers: pd.DataFrame, dryer_path: str | Path) -> None:
 
     # Save change
     dryers = csv_utils.change_cell(dryers, "dryer_id", dryer_id, column, new_value)
-    csv_utils.write_data([dryer_path], [dryers])
+    csv_utils.write_data([dryers_meta], [dryers])

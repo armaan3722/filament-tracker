@@ -1,20 +1,21 @@
 from pathlib import Path
+from typing import Any
 
 from filament_tracker import csv_utils
 
 
 # FILAMENT USAGE
 def add_filament_usage(
-    projects_path: str | Path,
-    categories_path: str | Path,
-    collections_path: str | Path,
-    print_jobs_path: str | Path,
-    printer_path: str | Path,
-    ams_path: str | Path,
-    hotend_path: str | Path,
-    buildplate_path: str | Path,
-    filament_path: str | Path,
-    filament_used_path: str | Path,
+    projects_meta: dict[str, Any],
+    categories_meta: dict[str, Any],
+    collections_meta: dict[str, Any],
+    print_jobs_meta: dict[str, Any],
+    printer_meta: dict[str, Any],
+    ams_meta: dict[str, Any],
+    hotend_meta: dict[str, Any],
+    buildplate_meta: dict[str, Any],
+    filament_meta: dict[str, Any],
+    filament_used_meta: dict[str, Any],
 ) -> None:
     """Record a new print job and filament usage.
 
@@ -23,16 +24,16 @@ def add_filament_usage(
     accumulates printer usage seconds.
 
     Args:
-        projects_path: Path to the projects CSV file.
-        categories_path: Path to the categories CSV file.
-        collections_path: Path to the collections CSV file.
-        print_jobs_path: Path to the print jobs CSV file.
-        printer_path: Path to the printer CSV file.
-        ams_path: Path to the AMS CSV file.
-        hotend_path: Path to the hotend CSV file.
-        buildplate_path: Path to the buildplate CSV file.
-        filament_path: Path to the filament CSV file.
-        filament_used_path: Path to the filament used CSV file.
+        projects_meta: Dict containing projects metadata with 'filepath' key.
+        categories_meta: Dict containing categories metadata with 'filepath' key.
+        collections_meta: Dict containing collections metadata with 'filepath' key.
+        print_jobs_meta: Dict containing print jobs metadata with 'filepath' key.
+        printer_meta: Dict containing printer metadata with 'filepath' key.
+        ams_meta: Dict containing AMS metadata with 'filepath' key.
+        hotend_meta: Dict containing hotend metadata with 'filepath' key.
+        buildplate_meta: Dict containing buildplate metadata with 'filepath' key.
+        filament_meta: Dict containing filament metadata with 'filepath' key.
+        filament_used_meta: Dict containing filament used metadata with 'filepath' key.
     """
     # Get dataframes
     (
@@ -48,16 +49,16 @@ def add_filament_usage(
         filament_used,
     ) = csv_utils.read_data(
         [
-            projects_path,
-            categories_path,
-            collections_path,
-            print_jobs_path,
-            printer_path,
-            ams_path,
-            hotend_path,
-            buildplate_path,
-            filament_path,
-            filament_used_path,
+            projects_meta,
+            categories_meta,
+            collections_meta,
+            print_jobs_meta,
+            printer_meta,
+            ams_meta,
+            hotend_meta,
+            buildplate_meta,
+            filament_meta,
+            filament_used_meta,
         ]
     )
 
@@ -130,7 +131,7 @@ def add_filament_usage(
             ],
             collections,
         )
-        csv_utils.write_data([collections_path], [collections])
+        csv_utils.write_data([collections_meta], [collections])
 
     # Get the rest of the print job and filament usage information
 
@@ -243,7 +244,7 @@ def add_filament_usage(
     )
 
     csv_utils.write_data(
-        [print_jobs_path, filament_used_path, printer_path, filament_path],
+        [print_jobs_meta, filament_used_meta, printer_meta, filament_meta],
         [print_jobs, filament_used, printer, filament],
     )
 
@@ -252,7 +253,9 @@ def add_filament_usage(
 
 # NON PRINTED PARTS
 def add_parts(
-    projects_path: str | Path, categories_path: str | Path, collections_path: str | Path
+    projects_meta: dict[str, Any],
+    categories_meta: dict[str, Any],
+    collections_meta: dict[str, Any],
 ) -> None:
     """Record a non-printed part by creating or selecting a collection.
 
@@ -260,13 +263,13 @@ def add_parts(
     creating a new collection if needed, then saves it to the CSV file.
 
     Args:
-        projects_path: Path to the projects CSV file.
-        categories_path: Path to the categories CSV file.
-        collections_path: Path to the collections CSV file.
+        projects_meta: Dict containing projects metadata with 'filepath' key.
+        categories_meta: Dict containing categories metadata with 'filepath' key.
+        collections_meta: Dict containing collections metadata with 'filepath' key.
     """
     # Get dataframes
     projects, categories, collections = csv_utils.read_data(
-        [projects_path, categories_path, collections_path]
+        [projects_meta, categories_meta, collections_meta]
     )
 
     # Get project information
@@ -349,4 +352,4 @@ def add_parts(
                 ],
                 collections,
             )
-            csv_utils.write_data([collections_path], [collections])
+            csv_utils.write_data([collections_meta], [collections])
