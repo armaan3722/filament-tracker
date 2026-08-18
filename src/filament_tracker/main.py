@@ -43,7 +43,7 @@ user_data_file_names = {
 }
 
 # Create empty dictionary and platformdirs object
-user_data_file_paths: dict[str, Path] = {}
+user_data_file_paths = {}
 
 # Constants for the newest program, data, and metadata versions
 NEWEST_VERSION = version("filament_tracker")
@@ -83,20 +83,18 @@ def get_paths(data_dir: Path) -> None:
     Args:
         data_dir: The path to the data directory.
     """
-    # Get full path including file name from dir
-    for key, value in user_data_file_names.items():
-        user_data_file_paths[key] = data_dir / value
+    # Read the datasets.json file
+    with open(str(files("filament_tracker") / "datasets.json"), "r") as f:
+        datasets = json.load(f)
 
-    # Check if directory exists, and add default files if needed
-    for value in user_data_file_paths.values():
-        if not value.exists():
-            # Get path of default files, and make dir for user data files
-            default_path = files("filament_tracker") / "default_data" / value.name
+    for key, value in datasets.items():
+        datasets[key]["filepath"] = data_dir / value["filename"]
+
+    for value in datasets.values():
+        if not value["filepath"].exists():
+            default_path = files("filament_tracker") / "default_data" / value["filepath"].name
             data_dir.mkdir(parents=True, exist_ok=True)
-
-            # Read default file and write to user data dir
-            pd.read_csv(str(default_path)).to_csv(data_dir / value.name, index=False)
-
+            pd.read_csv(str(default_path)).to_csv(value["filepath"], index=False)
 
 # Get metadata
 def get_metadata(data_dir: Path) -> None:
