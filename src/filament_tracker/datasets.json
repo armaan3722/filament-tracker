@@ -168,7 +168,7 @@
             "purpose": "string",
             "stage": "string",
             "version": "string",
-            "has_config": "bool",
+            "has_config": "boolean",
             "quantity_produced": "Int64"
         }
     },
@@ -185,10 +185,10 @@
             "buildplate_id": "Int64",
             "collection_id": "Int64",
             "plate_config_id": "Int64",
-            "print_successful": "bool",
+            "print_successful": "boolean",
             "failure_reason": "string",
             "filament_lost": "Float64",
-            "repair_print": "bool"
+            "repair_print": "boolean"
         }
     },
     "filament_used": {
