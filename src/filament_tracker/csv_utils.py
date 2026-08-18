@@ -1,12 +1,12 @@
 from collections.abc import Sequence
 from pathlib import Path
-from typing import Any
+from typing import Any, List
 
 import pandas as pd
 
 
 def read_data(
-    csv_paths: Sequence[str | Path | dict[str, Any]],
+    csv_paths: List[dict[str, Any]],
 ) -> tuple[pd.DataFrame, ...]:
     """Read the data from multiple csv files.
 
@@ -26,8 +26,7 @@ def read_data(
 
     # Read multiple CSV files
     for item in csv_paths:
-        path = item["filepath"] if isinstance(item, dict) else item
-        dataframes.append(pd.read_csv(path))
+        dataframes.append(pd.read_csv(item["filepath"], dtype=item["schema"]))
 
     # Output as a tuple of dataframes
     return tuple(dataframes)
