@@ -93,6 +93,10 @@ def add_filament_usage(
         print("What quantity does this collection produce")
         quantity_produced = input()
 
+        # Set collection name to None if not given
+        if collection_name == "":
+            collection_name = None
+
         # Changing value types
         if has_config == "T":
             has_config = True
@@ -135,6 +139,8 @@ def add_filament_usage(
     # Get the rest of the print job and filament usage information
 
     # Print job information
+    print("Enter the name of the print")
+    print_name = input()
     print("Enter the date printed")
     date = input()
     print("Enter the length of print")
@@ -153,6 +159,10 @@ def add_filament_usage(
     print(buildplate.to_string(index=False))
     print("Enter buildplate ID")
     buildplate_id = int(input())
+
+    # Make print name None if not given
+    if print_name == "":
+        print_name = None
 
     # Get filament used
     print("How many different spools of filament were used")
@@ -187,6 +197,7 @@ def add_filament_usage(
     print_jobs = csv_utils.add_row(
         [
             len(print_jobs),
+            print_name,
             date,
             time,
             prep_time,
