@@ -1,11 +1,11 @@
-from pathlib import Path
+from typing import Any
 
 import pandas as pd
 
 from filament_tracker import csv_utils
 
 
-def view_purchases(all_paths: list[str | Path]) -> None:
+def view_purchases(all_meta: list[dict[str, Any]]) -> None:
     """View purchase history and present a menu for updates.
 
     Reads the purchases CSV file, displays the purchase history,
@@ -13,11 +13,11 @@ def view_purchases(all_paths: list[str | Path]) -> None:
     to the home page.
 
     Args:
-        all_paths: List of all file paths, with the last element being the
-            purchases CSV file path.
+        all_meta: List of all metadata dicts, with the last element being the
+            purchases metadata dict.
     """
     # Read dataframe
-    purchases = csv_utils.read_data([all_paths[-1]])[0]
+    purchases = csv_utils.read_data([all_meta[-1]])[0]
 
     # Print purchase history
     print(purchases.to_string(index=False))
@@ -30,14 +30,14 @@ def view_purchases(all_paths: list[str | Path]) -> None:
 
     match action:
         case 1:
-            add_purchases(all_paths)
+            add_purchases(all_meta)
         case 2:
             print(2)
         case 3:
             print("Returning to home")
 
 
-def add_purchases(all_paths: list[str | Path]) -> None:
+def add_purchases(all_meta: list[dict[str, Any]]) -> None:
     """Record a new purchase of equipment and materials.
 
     Prompts for quantities of each item type being purchased (printers,
@@ -45,7 +45,7 @@ def add_purchases(all_paths: list[str | Path]) -> None:
     collects details for each item and updates the relevant CSV files.
 
     Args:
-        all_paths: List of file paths in order: printers, hotends,
+        all_meta: List of metadata dicts in order: printers, hotends,
             buildplates, AMS, filament, dryers, spools, parts, purchases.
     """
     # Read dataframes
@@ -59,7 +59,7 @@ def add_purchases(all_paths: list[str | Path]) -> None:
         spools,
         parts,
         purchases,
-    ) = csv_utils.read_data(all_paths)
+    ) = csv_utils.read_data(all_meta)
 
     if len(purchases) == 0:
         purchase_id = 0
@@ -86,50 +86,50 @@ def add_purchases(all_paths: list[str | Path]) -> None:
 
     i = 0
     while i < printers_purchased:
-        add_printer(printers, all_paths[0], purchases, all_paths[-1], purchase_id)
+        add_printer(printers, all_meta[0], purchases, all_meta[-1], purchase_id)
         i += 1
 
     i = 0
     while i < hotends_purchased:
-        add_hotend(hotends, all_paths[1], purchases, all_paths[-1], purchase_id)
+        add_hotend(hotends, all_meta[1], purchases, all_meta[-1], purchase_id)
         i += 1
 
     i = 0
     while i < buildplates_purchased:
-        add_buildplate(buildplates, all_paths[2], purchases, all_paths[-1], purchase_id)
+        add_buildplate(buildplates, all_meta[2], purchases, all_meta[-1], purchase_id)
         i += 1
 
     i = 0
     while i < ams_purchased:
-        add_ams(ams, all_paths[3], purchases, all_paths[-1], purchase_id)
+        add_ams(ams, all_meta[3], purchases, all_meta[-1], purchase_id)
         i += 1
 
     i = 0
     while i < filament_purchased:
-        add_filament(filament, all_paths[4], purchases, all_paths[-1], purchase_id)
+        add_filament(filament, all_meta[4], purchases, all_meta[-1], purchase_id)
         i += 1
 
     i = 0
     while i < dryers_purchased:
-        add_dryer(dryers, all_paths[5], purchases, all_paths[-1], purchase_id)
+        add_dryer(dryers, all_meta[5], purchases, all_meta[-1], purchase_id)
         i += 1
 
     i = 0
     while i < spools_purchased:
-        add_spool(spools, all_paths[6], purchases, all_paths[-1], purchase_id)
+        add_spool(spools, all_meta[6], purchases, all_meta[-1], purchase_id)
         i += 1
 
     i = 0
     while i < parts_purchased:
-        add_parts(parts, all_paths[7], purchases, all_paths[-1], purchase_id)
+        add_parts(parts, all_meta[7], purchases, all_meta[-1], purchase_id)
         i += 1
 
 
 def add_printer(
     printer: pd.DataFrame,
-    path: str | Path,
+    printer_meta: dict[str, Any],
     purchases: pd.DataFrame,
-    purchases_path: str | Path,
+    purchases_meta: dict[str, Any],
     purchase_id: int,
 ) -> None:
     """Add a newly purchased printer and record the purchase.
@@ -140,9 +140,9 @@ def add_printer(
 
     Args:
         printer: DataFrame containing printer data.
-        path: Path to the printer CSV file.
+        printer_meta: Dict containing printer metadata with 'filepath' key.
         purchases: DataFrame containing purchase history.
-        purchases_path: Path to the purchases CSV file.
+        purchases_meta: Dict containing purchases metadata with 'filepath' key.
         purchase_id: ID for the current purchase record.
     """
     # Get new printer information
@@ -180,14 +180,14 @@ def add_printer(
     )
 
     # Save
-    csv_utils.write_data([path, purchases_path], [printer, purchases])
+    csv_utils.write_data([printer_meta, purchases_meta], [printer, purchases])
 
 
 def add_hotend(
     hotend: pd.DataFrame,
-    hotend_path: str | Path,
+    hotend_meta: dict[str, Any],
     purchases: pd.DataFrame,
-    purchases_path: str | Path,
+    purchases_meta: dict[str, Any],
     purchase_id: int,
 ) -> None:
     """Add a newly purchased hotend and record the purchase.
@@ -198,9 +198,9 @@ def add_hotend(
 
     Args:
         hotend: DataFrame containing hotend data.
-        hotend_path: Path to the hotend CSV file.
+        hotend_meta: Dict containing hotend metadata with 'filepath' key.
         purchases: DataFrame containing purchase history.
-        purchases_path: Path to the purchases CSV file.
+        purchases_meta: Dict containing purchases metadata with 'filepath' key.
         purchase_id: ID for the current purchase record.
     """
     # Get hotend to add
@@ -242,14 +242,14 @@ def add_hotend(
         ],
         purchases,
     )
-    csv_utils.write_data([hotend_path, purchases_path], [hotend, purchases])
+    csv_utils.write_data([hotend_meta, purchases_meta], [hotend, purchases])
 
 
 def add_buildplate(
     buildplate: pd.DataFrame,
-    buildplate_path: str | Path,
+    buildplate_meta: dict[str, Any],
     purchases: pd.DataFrame,
-    purchases_path: str | Path,
+    purchases_meta: dict[str, Any],
     purchase_id: int,
 ) -> None:
     """Add a newly purchased buildplate and record the purchase.
@@ -260,9 +260,9 @@ def add_buildplate(
 
     Args:
         buildplate: DataFrame containing buildplate data.
-        buildplate_path: Path to the buildplate CSV file.
+        buildplate_meta: Dict containing buildplate metadata with 'filepath' key.
         purchases: DataFrame containing purchase history.
-        purchases_path: Path to the purchases CSV file.
+        purchases_meta: Dict containing purchases metadata with 'filepath' key.
         purchase_id: ID for the current purchase record.
     """
     # Get buildplate to add
@@ -295,14 +295,14 @@ def add_buildplate(
         ],
         purchases,
     )
-    csv_utils.write_data([buildplate_path, purchases_path], [buildplate, purchases])
+    csv_utils.write_data([buildplate_meta, purchases_meta], [buildplate, purchases])
 
 
 def add_ams(
     ams: pd.DataFrame,
-    ams_path: str | Path,
+    ams_meta: dict[str, Any],
     purchases: pd.DataFrame,
-    purchases_path: str | Path,
+    purchases_meta: dict[str, Any],
     purchase_id: int,
 ) -> None:
     """Add a newly purchased AMS and record the purchase.
@@ -313,9 +313,9 @@ def add_ams(
 
     Args:
         ams: DataFrame containing AMS data.
-        ams_path: Path to the AMS CSV file.
+        ams_meta: Dict containing AMS metadata with 'filepath' key.
         purchases: DataFrame containing purchase history.
-        purchases_path: Path to the purchases CSV file.
+        purchases_meta: Dict containing purchases metadata with 'filepath' key.
         purchase_id: ID for the current purchase record.
     """
     # Get AMS to add
@@ -336,14 +336,14 @@ def add_ams(
         [purchase_id, "AMS", seller, len(ams) - 1, purchase_date, arrival_date, cost],
         purchases,
     )
-    csv_utils.write_data([ams_path, purchases_path], [ams, purchases])
+    csv_utils.write_data([ams_meta, purchases_meta], [ams, purchases])
 
 
 def add_filament(
     filament: pd.DataFrame,
-    filament_path: str | Path,
+    filament_meta: dict[str, Any],
     purchases: pd.DataFrame,
-    purchases_path: str | Path,
+    purchases_meta: dict[str, Any],
     purchase_id: int,
 ) -> None:
     """Add newly purchased filament and record the purchase.
@@ -355,9 +355,9 @@ def add_filament(
 
     Args:
         filament: DataFrame containing filament data.
-        filament_path: Path to the filament CSV file.
+        filament_meta: Dict containing filament metadata with 'filepath' key.
         purchases: DataFrame containing purchase history.
-        purchases_path: Path to the purchases CSV file.
+        purchases_meta: Dict containing purchases metadata with 'filepath' key.
         purchase_id: ID for the current purchase record.
     """
     # Get information
@@ -407,14 +407,14 @@ def add_filament(
         ],
         purchases,
     )
-    csv_utils.write_data([filament_path, purchases_path], [filament, purchases])
+    csv_utils.write_data([filament_meta, purchases_meta], [filament, purchases])
 
 
 def add_dryer(
     dryers: pd.DataFrame,
-    dryer_path: str | Path,
+    dryers_meta: dict[str, Any],
     purchases: pd.DataFrame,
-    purchases_path: str | Path,
+    purchases_meta: dict[str, Any],
     purchase_id: int,
 ) -> None:
     """Add a newly purchased filament dryer and record the purchase.
@@ -425,9 +425,9 @@ def add_dryer(
 
     Args:
         dryers: DataFrame containing dryer data.
-        dryer_path: Path to the dryer CSV file.
+        dryers_meta: Dict containing dryer metadata with 'filepath' key.
         purchases: DataFrame containing purchase history.
-        purchases_path: Path to the purchases CSV file.
+        purchases_meta: Dict containing purchases metadata with 'filepath' key.
         purchase_id: ID for the current purchase record.
     """
     # Get information about dryer
@@ -466,14 +466,14 @@ def add_dryer(
         ],
         purchases,
     )
-    csv_utils.write_data([dryer_path, purchases_path], [dryers, purchases])
+    csv_utils.write_data([dryers_meta, purchases_meta], [dryers, purchases])
 
 
 def add_spool(
     spools: pd.DataFrame,
-    spool_path: str | Path,
+    spool_meta: dict[str, Any],
     purchases: pd.DataFrame,
-    purchase_path: str | Path,
+    purchases_meta: dict[str, Any],
     purchase_id: int,
 ) -> None:
     """Add a newly purchased reusable spool and record the purchase.
@@ -484,9 +484,9 @@ def add_spool(
 
     Args:
         spools: DataFrame containing spool data.
-        spool_path: Path to the spools CSV file.
+        spool_meta: Dict containing spool metadata with 'filepath' key.
         purchases: DataFrame containing purchase history.
-        purchase_path: Path to the purchases CSV file.
+        purchases_meta: Dict containing purchases metadata with 'filepath' key.
         purchase_id: ID for the current purchase record.
     """
     # Get information about purchase
@@ -513,14 +513,14 @@ def add_spool(
         ],
         purchases,
     )
-    csv_utils.write_data([spool_path, purchase_path], [spools, purchases])
+    csv_utils.write_data([spool_meta, purchases_meta], [spools, purchases])
 
 
 def add_parts(
     parts: pd.DataFrame,
-    parts_path: str | Path,
+    parts_meta: dict[str, Any],
     purchases: pd.DataFrame,
-    purchases_path: str | Path,
+    purchases_meta: dict[str, Any],
     purchase_id: int,
 ) -> None:
     """Add newly purchased parts and record the purchase.
@@ -531,9 +531,9 @@ def add_parts(
 
     Args:
         parts: DataFrame containing parts data.
-        parts_path: Path to the parts CSV file.
+        parts_meta: Dict containing parts metadata with 'filepath' key.
         purchases: DataFrame containing purchase history.
-        purchases_path: Path to the purchases CSV file.
+        purchases_meta: Dict containing purchases metadata with 'filepath' key.
         purchase_id: ID for the current purchase record.
     """
     # Get information about purchase
@@ -568,4 +568,4 @@ def add_parts(
         ],
         purchases,
     )
-    csv_utils.write_data([parts_path, purchases_path], [parts, purchases])
+    csv_utils.write_data([parts_meta, purchases_meta], [parts, purchases])

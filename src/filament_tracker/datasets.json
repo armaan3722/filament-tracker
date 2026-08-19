@@ -1,0 +1,223 @@
+{
+    "printers": {
+        "filename": "printers.csv",
+        "schema": {
+            "printer_id": "Int64",
+            "printer_name": "string",
+            "printer_company": "string",
+            "printer_model": "string",
+            "printer_seconds_used": "Int64",
+            "printer_seconds_in_operation": "Int64"
+        }
+    },
+    "printer_maintenance": {
+        "filename": "printer_maintenance.csv",
+        "schema": {
+            "maintanence_event_id": "Int64",
+            "printer_id": "Int64",
+            "date": "string",
+            "action": "string",
+            "firmware_version": "string"
+        }
+    },
+    "hotends": {
+        "filename": "hotends.csv",
+        "schema": {
+            "hotend_id": "Int64",
+            "company": "string",
+            "size": "Float64",
+            "material": "string",
+            "state": "string"
+        }
+    },
+    "hotend_maintenance": {
+        "filename": "hotend_maintenance.csv",
+        "schema": {
+            "maintenance_event_id": "Int64",
+            "hotend_id": "Int64",
+            "date": "string",
+            "action": "string"
+        }
+    },
+    "buildplates": {
+        "filename": "buildplates.csv",
+        "schema": {
+            "buildplate_id": "Int64",
+            "company": "string",
+            "type": "string"
+        }
+    },
+    "buildplate_maintenance": {
+        "filename": "buildplate_maintenance.csv",
+        "schema": {
+            "maintenance_event_id": "Int64",
+            "buildplate_id": "Int64",
+            "date": "string",
+            "action": "string"
+        }
+    },
+    "ams": {
+        "filename": "ams.csv",
+        "schema": {
+            "ams_id": "Int64",
+            "ams_model": "string"
+        }
+    },
+    "ams_maintenance": {
+        "filename": "ams_maintenance.csv",
+        "schema": {
+            "maintenance_event_id": "Int64",
+            "ams_id": "Int64",
+            "date": "string",
+            "action": "string",
+            "firmware_version": "string"
+        }
+    },
+    "filament": {
+        "filename": "filament.csv",
+        "schema": {
+            "filament_id": "Int64",
+            "filament_company": "string",
+            "filament_colour": "string",
+            "filament_material": "string",
+            "diameter": "Float64",
+            "starting_amount": "Float64",
+            "amount_left": "Float64",
+            "state": "string",
+            "date_last_dried": "string"
+        }
+    },
+    "filament_dryers": {
+        "filename": "filament_dryers.csv",
+        "schema": {
+            "dryer_id": "Int64",
+            "company": "string",
+            "model": "string",
+            "capacity": "Int64",
+            "min_temp": "Float64",
+            "max_temp": "Float64"
+        }
+    },
+    "filament_dryer_events": {
+        "filename": "filament_dryer_events.csv",
+        "schema": {
+            "event_id": "Int64",
+            "filament_id": "Int64",
+            "dryer_id": "Int64",
+            "temp": "Float64",
+            "length": "Int64",
+            "date": "string"
+        }
+    },
+    "spools": {
+        "filename": "spools.csv",
+        "schema": {
+            "spool_id": "Int64",
+            "type": "string"
+        }
+    },
+    "parts": {
+        "filename": "parts.csv",
+        "schema": {
+            "part_id": "Int64",
+            "part_type": "string",
+            "part_spec": "string",
+            "starting_amount": "Int64",
+            "current_amount": "Int64"
+        }
+    },
+    "purchases": {
+        "filename": "purchases.csv",
+        "schema": {
+            "purchase_id": "Int64",
+            "item_type": "string",
+            "seller": "string",
+            "item_id": "Int64",
+            "date_purchased": "string",
+            "date_delivered": "string",
+            "cost": "Float64"
+        }
+    },
+    "projects": {
+        "filename": "projects.csv",
+        "schema": {
+            "project_id": "Int64",
+            "project_name": "string",
+            "project_state": "string",
+            "purpose": "string"
+        }
+    },
+    "categories": {
+        "filename": "categories.csv",
+        "schema": {
+            "category_id": "Int64",
+            "category_name": "string",
+            "project_id": "Int64",
+            "purpose": "string",
+            "stage": "string",
+            "best_version": "string"
+        }
+    },
+    "collections": {
+        "filename": "collections.csv",
+        "schema": {
+            "collection_id": "Int64",
+            "collection_name": "string",
+            "project_id": "Int64",
+            "category_id": "Int64",
+            "purpose": "string",
+            "stage": "string",
+            "version": "string",
+            "has_config": "boolean",
+            "quantity_produced": "Int64"
+        }
+    },
+    "print_jobs": {
+        "filename": "print_jobs.csv",
+        "schema": {
+            "print_id": "Int64",
+            "print_date": "string",
+            "print_time": "string",
+            "print_preparation_time": "string",
+            "printer_id": "Int64",
+            "ams_id": "Int64",
+            "hotend_id": "Int64",
+            "buildplate_id": "Int64",
+            "collection_id": "Int64",
+            "plate_config_id": "Int64",
+            "print_successful": "boolean",
+            "failure_reason": "string",
+            "filament_lost": "Float64",
+            "repair_print": "boolean"
+        }
+    },
+    "filament_used": {
+        "filename": "filament_used.csv",
+        "schema": {
+            "filament_id": "Int64",
+            "amount_used": "Float64",
+            "print_id": "Int64"
+        }
+    },
+    "plate_configs": {
+        "filename": "plate_configs.csv",
+        "schema": {
+            "plate_config_id": "Int64",
+            "plate_name": "string",
+            "print_length": "string",
+            "collection_id": "Int64",
+            "printer_required": "string",
+            "buildplate_required": "string",
+            "hotend_required": "string",
+            "filament_feeding_required": "string"
+        }
+    },
+    "filament_configs": {
+        "filename": "filament_configs.csv",
+        "schema": {
+            "filament_id": "Int64",
+            "filament_used": "Float64",
+            "plate_config_id": "Int64"
+        }
+    }
+}

@@ -17,34 +17,6 @@ from filament_tracker import equipment, materials, projects, purchase, usage
 load_dotenv()
 dev_user_data_dir = os.getenv("DEV_USER_DATA_DIR")
 
-# List all file names
-user_data_file_names = {
-    "printers": "printers.csv",
-    "printer_maintenance": "printer_maintenance.csv",
-    "hotends": "hotends.csv",
-    "hotend_maintenance": "hotend_maintenance.csv",
-    "buildplates": "buildplates.csv",
-    "buildplate_maintenance": "buildplate_maintenance.csv",
-    "ams": "ams.csv",
-    "ams_maintenance": "ams_maintenance.csv",
-    "filament": "filament.csv",
-    "filament_dryers": "filament_dryers.csv",
-    "filament_dryer_events": "filament_dryer_events.csv",
-    "spools": "spools.csv",
-    "parts": "parts.csv",
-    "purchases": "purchases.csv",
-    "projects": "projects.csv",
-    "categories": "categories.csv",
-    "collections": "collections.csv",
-    "print_jobs": "print_jobs.csv",
-    "filament_used": "filament_used.csv",
-    "plate_configs": "plate_configs.csv",
-    "filament_configs": "filament_configs.csv",
-}
-
-# Create empty dictionary and platformdirs object
-user_data_file_paths: dict[str, Path] = {}
-
 # Constants for the newest program, data, and metadata versions
 NEWEST_VERSION = version("filament_tracker")
 NEWEST_DATA_VERSION = 1
@@ -72,30 +44,38 @@ def get_data_dir() -> Path:
 
 
 # Get paths of all data files
-def get_paths(data_dir: Path) -> None:
-    """Gets the paths to all data files.
+def get_paths(data_dir: Path) -> dict[str, dict[str, Any]]:
+    """Builds full paths to all user data files and creates missing ones.
 
-    Uses the given data_dir and the dictionary user_data_file_names to
-    get the full path to each data file, and stores them into
-    user_data_file_paths.  After, it checks each path, and if any file
-    doesn't exist, it creates a new one based on the default_data files.
+    Loads the schema definitions from datasets.json, appends the full
+    file path to each entry, and creates any missing CSV files from
+    the default_data templates.
 
     Args:
-        data_dir: The path to the data directory.
+        data_dir: The path to the user data directory.
+
+    Returns:
+        A dictionary mapping entity names to their metadata,
+        including filename, filepath, and schema.
     """
-    # Get full path including file name from dir
-    for key, value in user_data_file_names.items():
-        user_data_file_paths[key] = data_dir / value
+    # Read the datasets.json file
+    with open(str(files("filament_tracker") / "datasets.json"), "r") as f:
+        datasets = json.load(f)
 
-    # Check if directory exists, and add default files if needed
-    for value in user_data_file_paths.values():
-        if not value.exists():
-            # Get path of default files, and make dir for user data files
-            default_path = files("filament_tracker") / "default_data" / value.name
+    # Add full file paths to datasets
+    for key, value in datasets.items():
+        datasets[key]["filepath"] = data_dir / value["filename"]
+
+    # Create default files if some files don't exist
+    for value in datasets.values():
+        if not value["filepath"].exists():
+            default_path = (
+                files("filament_tracker") / "default_data" / value["filepath"].name
+            )
             data_dir.mkdir(parents=True, exist_ok=True)
+            pd.read_csv(str(default_path)).to_csv(value["filepath"], index=False)
 
-            # Read default file and write to user data dir
-            pd.read_csv(str(default_path)).to_csv(data_dir / value.name, index=False)
+    return datasets
 
 
 # Get metadata
@@ -175,7 +155,7 @@ def main() -> None:
     Runs all functions that are required to make the application work.
     """
     data_dir = get_data_dir()
-    get_paths(data_dir)
+    datasets = get_paths(data_dir)
     get_metadata(data_dir)
 
     run_loop = True
@@ -190,72 +170,68 @@ def main() -> None:
         match action:
             case 1:
                 equipment.read_printer(
-                    user_data_file_paths["printers"],
-                    user_data_file_paths["printer_maintenance"],
+                    datasets["printers"],
+                    datasets["printer_maintenance"],
                 )
             case 2:
                 equipment.read_hotend(
-                    user_data_file_paths["hotends"],
-                    user_data_file_paths["hotend_maintenance"],
+                    datasets["hotends"],
+                    datasets["hotend_maintenance"],
                 )
             case 3:
                 equipment.read_buildplate(
-                    user_data_file_paths["buildplates"],
-                    user_data_file_paths["buildplate_maintenance"],
+                    datasets["buildplates"],
+                    datasets["buildplate_maintenance"],
                 )
             case 4:
-                equipment.read_ams(
-                    user_data_file_paths["ams"], user_data_file_paths["ams_maintenance"]
-                )
+                equipment.read_ams(datasets["ams"], datasets["ams_maintenance"])
             case 5:
                 materials.read_filament(
-                    user_data_file_paths["filament"],
-                    user_data_file_paths["filament_dryers"],
-                    user_data_file_paths["filament_dryer_events"],
+                    datasets["filament"],
+                    datasets["filament_dryers"],
+                    datasets["filament_dryer_events"],
                 )
             case 6:
                 equipment.read_filament_dryers(
-                    user_data_file_paths["filament_dryers"],
-                    user_data_file_paths["filament_dryer_events"],
+                    datasets["filament_dryers"],
+                    datasets["filament_dryer_events"],
                 )
             case 7:
-                materials.read_spools(user_data_file_paths["spools"])
+                materials.read_spools(datasets["spools"])
             case 8:
                 print(8)
             case 9:
-                materials.read_parts(user_data_file_paths["parts"])
+                materials.read_parts(datasets["parts"])
             case 10:
-                projects.read_projects(
-                    user_data_file_paths["projects"], user_data_file_paths["categories"]
-                )
+                projects.read_projects(datasets["projects"], datasets["categories"])
             case 11:
                 print(11)
             case 12:
                 purchase.view_purchases(
                     [
-                        user_data_file_paths["printers"],
-                        user_data_file_paths["hotends"],
-                        user_data_file_paths["buildplates"],
-                        user_data_file_paths["ams"],
-                        user_data_file_paths["filament"],
-                        user_data_file_paths["filament_dryers"],
-                        user_data_file_paths["spools"],
-                        user_data_file_paths["parts"],
-                        user_data_file_paths["purchases"],
+                        datasets["printers"],
+                        datasets["hotends"],
+                        datasets["buildplates"],
+                        datasets["ams"],
+                        datasets["filament"],
+                        datasets["filament_dryers"],
+                        datasets["spools"],
+                        datasets["parts"],
+                        datasets["purchases"],
                     ]
                 )
             case 13:
                 usage.add_filament_usage(
-                    user_data_file_paths["projects"],
-                    user_data_file_paths["categories"],
-                    user_data_file_paths["collections"],
-                    user_data_file_paths["print_jobs"],
-                    user_data_file_paths["printers"],
-                    user_data_file_paths["ams"],
-                    user_data_file_paths["hotends"],
-                    user_data_file_paths["buildplates"],
-                    user_data_file_paths["filament"],
-                    user_data_file_paths["filament_used"],
+                    datasets["projects"],
+                    datasets["categories"],
+                    datasets["collections"],
+                    datasets["print_jobs"],
+                    datasets["printers"],
+                    datasets["ams"],
+                    datasets["hotends"],
+                    datasets["buildplates"],
+                    datasets["filament"],
+                    datasets["filament_used"],
                 )
             case 14:
                 print("Ending program")

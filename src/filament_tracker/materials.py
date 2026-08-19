@@ -1,4 +1,4 @@
-from pathlib import Path
+from typing import Any
 
 import pandas as pd
 
@@ -7,7 +7,9 @@ from filament_tracker import csv_utils
 
 # FILAMENT
 def read_filament(
-    filament_path: str | Path, dryer_path: str | Path, dryer_events_path: str | Path
+    filament_meta: dict[str, Any],
+    dryers_meta: dict[str, Any],
+    dryer_events_meta: dict[str, Any],
 ) -> None:
     """Read filament data and drying events, then present a menu for updates.
 
@@ -16,13 +18,13 @@ def read_filament(
     return to the home page.
 
     Args:
-        filament_path: Path to the filament CSV file.
-        dryer_path: Path to the dryer CSV file.
-        dryer_events_path: Path to the dryer events CSV file.
+        filament_meta: Dict containing filament metadata with 'filepath' key.
+        dryers_meta: Dict containing dryer metadata with 'filepath' key.
+        dryer_events_meta: Dict containing dryer events metadata with 'filepath' key.
     """
     # Get filament information
     filament, dryers, dryer_events = csv_utils.read_data(
-        [filament_path, dryer_path, dryer_events_path]
+        [filament_meta, dryers_meta, dryer_events_meta]
     )
 
     # Print data
@@ -37,16 +39,16 @@ def read_filament(
 
     match action:
         case 1:
-            edit_filament(filament, filament_path)
+            edit_filament(filament, filament_meta)
         case 2:
             add_drying_event(
-                filament, filament_path, dryers, dryer_events, dryer_events_path
+                filament, filament_meta, dryers, dryer_events, dryer_events_meta
             )
         case 3:
             print("Returning to home page")
 
 
-def edit_filament(filament: pd.DataFrame, filament_path: str | Path) -> None:
+def edit_filament(filament: pd.DataFrame, filament_meta: dict[str, Any]) -> None:
     """Edit a filament's company, colour, material, diameter, starting amount, or state.
 
     Displays all filaments, prompts for a filament ID and the field to edit,
@@ -54,7 +56,7 @@ def edit_filament(filament: pd.DataFrame, filament_path: str | Path) -> None:
 
     Args:
         filament: DataFrame containing filament data.
-        filament_path: Path to the filament CSV file.
+        filament_meta: Dict containing filament metadata with 'filepath' key.
     """
     # Get filament to edit
     print(filament.to_string(index=False))
@@ -87,15 +89,15 @@ def edit_filament(filament: pd.DataFrame, filament_path: str | Path) -> None:
     filament = csv_utils.change_cell(
         filament, "filament_id", filament_id, column, new_value
     )
-    csv_utils.write_data([filament_path], [filament])
+    csv_utils.write_data([filament_meta], [filament])
 
 
 def add_drying_event(
     filament: pd.DataFrame,
-    filament_path: str | Path,
+    filament_meta: dict[str, Any],
     dryers: pd.DataFrame,
     dryer_events: pd.DataFrame,
-    dryer_events_path: str | Path,
+    dryer_events_meta: dict[str, Any],
 ) -> None:
     """Record a drying event for a filament roll.
 
@@ -105,10 +107,10 @@ def add_drying_event(
 
     Args:
         filament: DataFrame containing filament data.
-        filament_path: Path to the filament CSV file.
+        filament_meta: Dict containing filament metadata with 'filepath' key.
         dryers: DataFrame containing dryer data.
         dryer_events: DataFrame containing dryer events.
-        dryer_events_path: Path to the dryer events CSV file.
+        dryer_events_meta: Dict containing dryer events metadata with 'filepath' key.
     """
     # Get filament roll dried
     print(filament.to_string(index=False))
@@ -128,9 +130,6 @@ def add_drying_event(
     print("When was the filament dried")
     date = input()
 
-    # Reformat
-    filament["date_last_dried"] = filament["date_last_dried"].astype(str)
-
     # Save to csv files
     filament = csv_utils.change_cell(
         filament, "filament_id", filament_id, "date_last_dried", date
@@ -138,21 +137,21 @@ def add_drying_event(
     dryer_events = csv_utils.add_row(
         [len(dryer_events), filament_id, dryer_id, temp, length, date], dryer_events
     )
-    csv_utils.write_data([filament_path, dryer_events_path], [filament, dryer_events])
+    csv_utils.write_data([filament_meta, dryer_events_meta], [filament, dryer_events])
 
 
 # REUSABLE SPOOLS
-def read_spools(spool_path: str | Path) -> None:
+def read_spools(spool_meta: dict[str, Any]) -> None:
     """Read reusable spool data, then present a menu for updates.
 
     Reads the spools CSV file, displays spool data, and prompts the user
     to edit a spool or return to the home page.
 
     Args:
-        spool_path: Path to the spools CSV file.
+        spool_meta: Dict containing spool metadata with 'filepath' key.
     """
     # Convert to csv
-    spools = csv_utils.read_data([spool_path])[0]
+    spools = csv_utils.read_data([spool_meta])[0]
 
     # Print spool information
     print("Reusable spools")
@@ -164,12 +163,12 @@ def read_spools(spool_path: str | Path) -> None:
 
     match action:
         case 1:
-            edit_spool(spools, spool_path)
+            edit_spool(spools, spool_meta)
         case 2:
             print("Returning to home page")
 
 
-def edit_spool(spools: pd.DataFrame, spool_path: str | Path) -> None:
+def edit_spool(spools: pd.DataFrame, spool_meta: dict[str, Any]) -> None:
     """Edit a spool's type.
 
     Prompts for a spool ID and new type value, then saves the change
@@ -177,7 +176,7 @@ def edit_spool(spools: pd.DataFrame, spool_path: str | Path) -> None:
 
     Args:
         spools: DataFrame containing spool data.
-        spool_path: Path to the spools CSV file.
+        spool_meta: Dict containing spool metadata with 'filepath' key.
     """
     # Get spool to edit
     print("Enter ID of spool to edit")
@@ -189,21 +188,21 @@ def edit_spool(spools: pd.DataFrame, spool_path: str | Path) -> None:
 
     # Modify
     spools = csv_utils.change_cell(spools, "spool_id", spool_id, "type", new_value)
-    csv_utils.write_data([spool_path], [spools])
+    csv_utils.write_data([spool_meta], [spools])
 
 
 # PARTS
-def read_parts(parts_path: str | Path) -> None:
+def read_parts(parts_meta: dict[str, Any]) -> None:
     """Read parts data, then present a menu for updates.
 
     Reads the parts CSV file, displays parts data, and prompts the user
     to edit a part or return to the home page.
 
     Args:
-        parts_path: Path to the parts CSV file.
+        parts_meta: Dict containing parts metadata with 'filepath' key.
     """
     # Get information from csv
-    parts = csv_utils.read_data([parts_path])[0]
+    parts = csv_utils.read_data([parts_meta])[0]
 
     # Print information
     print("Other parts information")
@@ -215,12 +214,12 @@ def read_parts(parts_path: str | Path) -> None:
 
     match action:
         case 1:
-            edit_parts(parts, parts_path)
+            edit_parts(parts, parts_meta)
         case 2:
             print("Returning to home page")
 
 
-def edit_parts(parts: pd.DataFrame, parts_path: str | Path) -> None:
+def edit_parts(parts: pd.DataFrame, parts_meta: dict[str, Any]) -> None:
     """Edit a part's type, spec, or starting quantity.
 
     Displays all parts, prompts for a part ID and the field to edit,
@@ -228,7 +227,7 @@ def edit_parts(parts: pd.DataFrame, parts_path: str | Path) -> None:
 
     Args:
         parts: DataFrame containing part data.
-        parts_path: Path to the parts CSV file.
+        parts_meta: Dict containing parts metadata with 'filepath' key.
     """
     # Get ID of part to edit
     print(parts.to_string(index=False))
@@ -251,4 +250,4 @@ def edit_parts(parts: pd.DataFrame, parts_path: str | Path) -> None:
 
     # Save change
     parts = csv_utils.change_cell(parts, "part_id", part_id, column, new_value)
-    csv_utils.write_data([parts_path], [parts])
+    csv_utils.write_data([parts_meta], [parts])

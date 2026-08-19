@@ -1,17 +1,20 @@
-from pathlib import Path
 from typing import Any
 
 import pandas as pd
 
 
-def read_data(csv_paths: list[str | Path]) -> tuple[pd.DataFrame, ...]:
+def read_data(
+    csv_paths: list[dict[str, Any]],
+) -> tuple[pd.DataFrame, ...]:
     """Read the data from multiple csv files.
 
     Reads the csv files at the given paths, and outputs a tuple with
     dataframes containing the data from those files.
+    Accepts paths directly or dicts with a 'filepath' key.
 
     Args:
-        csv_paths: The paths to get csv files from
+        csv_paths: The paths to get csv files from, or dicts containing
+            'filepath' keys.
 
     Returns:
         A tuple of dataframes with the data from the csv files.
@@ -20,27 +23,29 @@ def read_data(csv_paths: list[str | Path]) -> tuple[pd.DataFrame, ...]:
     dataframes = []
 
     # Read multiple CSV files
-    for path in csv_paths:
-        dataframes.append(pd.read_csv(path))
+    for item in csv_paths:
+        dataframes.append(pd.read_csv(item["filepath"], dtype=item["schema"]))
 
     # Output as a tuple of dataframes
     return tuple(dataframes)
 
 
-def write_data(csv_paths: list[str | Path], dataframes: list[pd.DataFrame]) -> None:
+def write_data(csv_paths: list[dict[str, Any]], dataframes: list[pd.DataFrame]) -> None:
     """Write multiple dataframes to multiple csv files.
 
     Iterates through the csv_paths and dataframes lists, writing each
     dataframe to the path with the same index.
+    Accepts paths directly or dicts with a 'filepath' key.
 
     Args:
-        csv_paths: The list of paths to write dataframes to.
+        csv_paths: The list of paths to write dataframes to, or dicts
+            containing 'filepath' keys.
         dataframes: The dataframes.
 
     Notes: The csv_paths and dataframes lists must be identical length.
     """
-    for path, df in zip(csv_paths, dataframes):
-        df.to_csv(path, index=False)
+    for item, df in zip(csv_paths, dataframes):
+        df.to_csv(item["filepath"], index=False)
 
 
 def add_row(data_to_add: list[Any], dataframe: pd.DataFrame) -> pd.DataFrame:
