@@ -3,6 +3,63 @@ from typing import Any
 from filament_tracker import csv_utils
 
 
+# PRINT HISTORY
+def view_print_history(
+    print_jobs_meta: dict[str, Any],
+    filament_used_meta: dict[str, Any],
+    filament_meta: dict[str, Any],
+) -> None:
+    """View print history and optionally see filament usage for a specific job.
+
+    Reads print job, filament used, and filament data from CSV files,
+    displays the print history, and allows the user to view filament
+    details for a selected print job.
+
+    Args:
+        print_jobs_meta: Dict containing print jobs metadata with 'filepath' key.
+        filament_used_meta: Dict containing filament used metadata with 'filepath' key.
+        filament_meta: Dict containing filament metadata with 'filepath' key.
+    """
+    # Get dataframes
+    print_jobs, filament_used, filament = csv_utils.read_data(
+        [print_jobs_meta, filament_used_meta, filament_meta]
+    )
+
+    # Print history info
+    print("Print history:\n")
+    print(print_jobs.to_string(index=False))
+
+    # Get next action
+    print(
+        "\n\nWould you like to view filament used for a print job (1), or return to home (2)"
+    )
+    action = int(input())
+
+    match action:
+        case 1:
+            # Get print job id
+            print("Enter the ID of the print job to view filament for:")
+            print_id = int(input())
+
+            # Get filament for that job
+            filament_used_per_job = csv_utils.get_row(
+                filament_used, "print_id", print_id
+            )
+            print("\n\nFilament used:")
+            print(filament_used_per_job.to_string(index=False))
+
+            # Get the actual filament data for those id's
+            unique_filament_ids = filament_used_per_job["filament_id"].unique()
+            print("\n\nFilament:")
+            print(
+                filament[filament["filament_id"].isin(unique_filament_ids)].to_string(
+                    index=False
+                )
+            )
+        case 2:
+            print("Returning to home page")
+
+
 # FILAMENT USAGE
 def add_filament_usage(
     projects_meta: dict[str, Any],
