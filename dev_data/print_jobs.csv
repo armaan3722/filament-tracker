@@ -1,4 +1,6 @@
-print_id,print_name,print_date,print_time,print_preparation_time,printer_id,ams_id,hotend_id,buildplate_id,collection_id,plate_config_id,print_successful,failure_reason,filament_lost,repair_print
-0,,12-31-2025,0 0 12 33,0 0 7 11,0,0,0,0,0,,,,,
-1,,12-32-2028,1 2 3 4,0 0 7 11,0,0,0,0,1,,,,,
-2,test-print2,02-32-2026,5 5 5 5,0 0 7 11,0,0,0,0,3,,,,,
+print_id,print_index,print_name,print_date,print_time,print_preparation_time,printer_id,ams_id,hotend_id,buildplate_id,collection_id,plate_config_id,print_successful,failure_reason,filament_lost,repair_print
+0,0,,12-31-2025,0 0 12 33,0 0 7 11,0,0,0,0,0,,,,,
+1,0,,12-32-2028,1 2 3 4,0 0 7 11,0,0,0,0,1,,,,,
+2,0,test-print2,02-32-2026,5 5 5 5,0 0 7 11,0,0,0,0,3,,,,,
+3,1,test-print3,12 12 1212,4 3 2 1,0 0 7 11,0,0,0,0,3,,,,,
+4,2,test-print4,12-37-2026,0 0 15 34,0 0 7 11,0,0,0,0,3,,,,,

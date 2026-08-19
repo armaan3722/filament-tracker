@@ -76,7 +76,9 @@ def add_filament_usage(
         print(collections.to_string(index=False))
         print("\n\nEnter collection ID")
         collection_id = int(input())
+        print_index = len(csv_utils.get_row(print_jobs, "collection_id", collection_id))
     else:
+        print_index = 0
         print("\n\nWhat is the new collection name")
         collection_name = input()
         print(categories.to_string(index=False))
@@ -197,6 +199,7 @@ def add_filament_usage(
     print_jobs = csv_utils.add_row(
         [
             len(print_jobs),
+            print_index,
             print_name,
             date,
             time,
