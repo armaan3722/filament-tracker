@@ -176,6 +176,8 @@
         "filename": "print_jobs.csv",
         "schema": {
             "print_id": "Int64",
+            "print_index": "Int64",
+            "print_name": "string",
             "print_date": "string",
             "print_time": "string",
             "print_preparation_time": "string",
