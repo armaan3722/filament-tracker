@@ -202,8 +202,10 @@ def add_filament_usage(
     print_name = input()
     print("Enter the date printed")
     date = input()
-    print("Enter the length of print")
+    print("Enter the time printed")
     time = input()
+    print("Enter the length of print")
+    length = input()
     print("Enter the time taken to prepare print")
     prep_time = input()
     print(printer.to_string(index=False))
@@ -260,6 +262,7 @@ def add_filament_usage(
             print_name,
             date,
             time,
+            length,
             prep_time,
             printer_id,
             ams_id,
@@ -282,7 +285,7 @@ def add_filament_usage(
         printer, "printer_id", printer_id, "printer_seconds_in_operation"
     )
 
-    array_time = time.split()
+    array_time = length.split()
     array_prep_time = prep_time.split()
 
     print_job_seconds = (
