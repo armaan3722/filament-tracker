@@ -1,12 +1,10 @@
-from collections.abc import Sequence
-from pathlib import Path
-from typing import Any, List
+from typing import Any
 
 import pandas as pd
 
 
 def read_data(
-    csv_paths: List[dict[str, Any]],
+    csv_paths: list[dict[str, Any]],
 ) -> tuple[pd.DataFrame, ...]:
     """Read the data from multiple csv files.
 
@@ -32,9 +30,7 @@ def read_data(
     return tuple(dataframes)
 
 
-def write_data(
-    csv_paths: Sequence[str | Path | dict[str, Any]], dataframes: list[pd.DataFrame]
-) -> None:
+def write_data(csv_paths: list[dict[str, Any]], dataframes: list[pd.DataFrame]) -> None:
     """Write multiple dataframes to multiple csv files.
 
     Iterates through the csv_paths and dataframes lists, writing each
@@ -49,8 +45,7 @@ def write_data(
     Notes: The csv_paths and dataframes lists must be identical length.
     """
     for item, df in zip(csv_paths, dataframes):
-        path = item["filepath"] if isinstance(item, dict) else item
-        df.to_csv(path, index=False)
+        df.to_csv(item["filepath"], index=False)
 
 
 def add_row(data_to_add: list[Any], dataframe: pd.DataFrame) -> pd.DataFrame:

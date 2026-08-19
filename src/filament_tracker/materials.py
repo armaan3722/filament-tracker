@@ -7,7 +7,9 @@ from filament_tracker import csv_utils
 
 # FILAMENT
 def read_filament(
-    filament: dict[str, Any], dryers: dict[str, Any], dryer_events: dict[str, Any]
+    filament_meta: dict[str, Any],
+    dryers_meta: dict[str, Any],
+    dryer_events_meta: dict[str, Any],
 ) -> None:
     """Read filament data and drying events, then present a menu for updates.
 
@@ -16,18 +18,18 @@ def read_filament(
     return to the home page.
 
     Args:
-        filament: Dict containing filament metadata with 'filepath' key.
-        dryers: Dict containing dryer metadata with 'filepath' key.
-        dryer_events: Dict containing dryer events metadata with 'filepath' key.
+        filament_meta: Dict containing filament metadata with 'filepath' key.
+        dryers_meta: Dict containing dryer metadata with 'filepath' key.
+        dryer_events_meta: Dict containing dryer events metadata with 'filepath' key.
     """
     # Get filament information
-    filament_df, dryers_df, dryer_events_df = csv_utils.read_data(
-        [filament, dryers, dryer_events]
+    filament, dryers, dryer_events = csv_utils.read_data(
+        [filament_meta, dryers_meta, dryer_events_meta]
     )
 
     # Print data
     print("Filament")
-    print(filament_df.to_string(index=False))
+    print(filament.to_string(index=False))
 
     # Get action
     print(
@@ -37,10 +39,10 @@ def read_filament(
 
     match action:
         case 1:
-            edit_filament(filament_df, filament)
+            edit_filament(filament, filament_meta)
         case 2:
             add_drying_event(
-                filament_df, filament, dryers_df, dryer_events_df, dryer_events
+                filament, filament_meta, dryers, dryer_events, dryer_events_meta
             )
         case 3:
             print("Returning to home page")

@@ -1,4 +1,4 @@
 category_id,category_name,project_id,purpose,stage,best_version
-0,first-category,0,Personal,prototype,1.1
+0,first-category,0,Personal,prototype,1.10
 1,second-category,0,Personal,proof-of-concept,2.4
-2,third-category,0,Commercial,final,
+2,third-category,0,Commercial,final,1.10
