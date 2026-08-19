@@ -205,7 +205,11 @@ def main() -> None:
             case 10:
                 projects.read_projects(datasets["projects"], datasets["categories"])
             case 11:
-                print(11)
+                usage.view_print_history(
+                    datasets["print_jobs"],
+                    datasets["filament_used"],
+                    datasets["filament"],
+                )
             case 12:
                 purchase.view_purchases(
                     [
