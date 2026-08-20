@@ -29,6 +29,12 @@ def view_print_history(
     print_jobs, filament_used, filament = csv_utils.read_data(
         [print_jobs_meta, filament_used_meta, filament_meta]
     )
+    print_jobs["print_date_and_time"] = (
+        pd.to_datetime(print_jobs["print_date_and_time"], format="%Y-%m-%d %H:%M")
+        .dt.tz_localize(UTC)
+        .dt.floor("min")
+        .dt.tz_convert(get_localzone())
+    )
 
     # Print history info
     print("Print history:\n")
@@ -124,7 +130,11 @@ def add_filament_usage(
     )
 
     # Convert print_jobs datetime column to datetime
-    print_jobs["print_date_and_time"] = pd.to_datetime(print_jobs["print_date_and_time"], format="%Y-%m-%d %H:%M").dt.tz_localize(UTC).dt.floor("min")
+    print_jobs["print_date_and_time"] = (
+        pd.to_datetime(print_jobs["print_date_and_time"], format="%Y-%m-%d %H:%M")
+        .dt.tz_localize(UTC)
+        .dt.floor("min")
+    )
 
     # Get project information
     print(projects)
@@ -240,7 +250,11 @@ def add_filament_usage(
         user_timezone = ZoneInfo(user_timezone)
 
     # Convert frm string to datetime
-    date_and_time = datetime.strptime(date_and_time, "%Y-%m-%d %H:%M").replace(tzinfo=user_timezone).astimezone(UTC)
+    date_and_time = (
+        datetime.strptime(date_and_time, "%Y-%m-%d %H:%M")
+        .replace(tzinfo=user_timezone)
+        .astimezone(UTC)
+    )
 
     # Get filament used
     print("How many different spools of filament were used")
@@ -338,7 +352,9 @@ def add_filament_usage(
         [filament_used, printer, filament],
     )
 
-    print_jobs.to_csv(print_jobs_meta["filepath"], index=False, date_format="%Y-%m-%d %H:%M")
+    print_jobs.to_csv(
+        print_jobs_meta["filepath"], index=False, date_format="%Y-%m-%d %H:%M"
+    )
 
     # Add code for creation and selection of configs later
 
