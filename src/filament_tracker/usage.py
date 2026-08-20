@@ -1,4 +1,9 @@
+from datetime import UTC, datetime
 from typing import Any
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+from tzlocal import get_localzone
 
 from filament_tracker import csv_utils
 
@@ -23,6 +28,12 @@ def view_print_history(
     # Get dataframes
     print_jobs, filament_used, filament = csv_utils.read_data(
         [print_jobs_meta, filament_used_meta, filament_meta]
+    )
+    print_jobs["print_date_and_time"] = (
+        pd.to_datetime(print_jobs["print_date_and_time"], format="%Y-%m-%d %H:%M")
+        .dt.tz_localize(UTC)
+        .dt.floor("min")
+        .dt.tz_convert(get_localzone())
     )
 
     # Print history info
@@ -118,6 +129,13 @@ def add_filament_usage(
         ]
     )
 
+    # Convert print_jobs datetime column to datetime
+    print_jobs["print_date_and_time"] = (
+        pd.to_datetime(print_jobs["print_date_and_time"], format="%Y-%m-%d %H:%M")
+        .dt.tz_localize(UTC)
+        .dt.floor("min")
+    )
+
     # Get project information
     print(projects)
     print("Enter project ID of print")
@@ -200,10 +218,10 @@ def add_filament_usage(
     # Print job information
     print("Enter the name of the print")
     print_name = input()
-    print("Enter the date printed")
-    date = input()
-    print("Enter the time printed")
-    time = input()
+    print("Enter the date and time printed (YYYY-MM-DD HH:MM, use 24 hour time)")
+    date_and_time = input()
+    print("Enter the timezone, press enter for current system timezone")
+    user_timezone = input()
     print("Enter the length of print")
     length = input()
     print("Enter the time taken to prepare print")
@@ -224,6 +242,19 @@ def add_filament_usage(
     # Make print name None if not given
     if print_name == "":
         print_name = None
+
+    # Get default timezone
+    if user_timezone == "":
+        user_timezone = get_localzone()
+    else:
+        user_timezone = ZoneInfo(user_timezone)
+
+    # Convert frm string to datetime
+    date_and_time = (
+        datetime.strptime(date_and_time, "%Y-%m-%d %H:%M")
+        .replace(tzinfo=user_timezone)
+        .astimezone(UTC)
+    )
 
     # Get filament used
     print("How many different spools of filament were used")
@@ -260,8 +291,8 @@ def add_filament_usage(
             len(print_jobs),
             print_index,
             print_name,
-            date,
-            time,
+            date_and_time,
+            user_timezone,
             length,
             prep_time,
             printer_id,
@@ -317,8 +348,12 @@ def add_filament_usage(
     )
 
     csv_utils.write_data(
-        [print_jobs_meta, filament_used_meta, printer_meta, filament_meta],
-        [print_jobs, filament_used, printer, filament],
+        [filament_used_meta, printer_meta, filament_meta],
+        [filament_used, printer, filament],
+    )
+
+    print_jobs.to_csv(
+        print_jobs_meta["filepath"], index=False, date_format="%Y-%m-%d %H:%M"
     )
 
     # Add code for creation and selection of configs later

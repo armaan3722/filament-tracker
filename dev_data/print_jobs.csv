@@ -1,7 +1,9 @@
-print_id,print_index,print_name,print_date,print_time,print_length,print_preparation_length,printer_id,ams_id,hotend_id,buildplate_id,collection_id,plate_config_id,print_successful,failure_reason,filament_lost,repair_print
-0,0,,12-31-2025,12:00:00,0 0 12 33,0 0 7 11,0,0,0,0,0,,,,,
-1,0,,12-32-2028,12:00:00,1 2 3 4,0 0 7 11,0,0,0,0,1,,,,,
-2,0,test-print2,02-32-2026,12:00:00,5 5 5 5,0 0 7 11,0,0,0,0,3,,,,,
-3,1,test-print3,12 12 1212,12:00:00,4 3 2 1,0 0 7 11,0,0,0,0,3,,,,,
-4,2,test-print4,12-37-2026,12:00:00,0 0 15 34,0 0 7 11,0,0,0,0,3,,,,,
-5,3,test-again,12-31-2025,12:37,0 0 15 34,0 0 7 11,0,0,0,0,3,,,,,
+print_id,print_index,print_name,print_date_and_time,print_timezone,print_length,print_preparation_length,printer_id,ams_id,hotend_id,buildplate_id,collection_id,plate_config_id,print_successful,failure_reason,filament_lost,repair_print
+0,0,,2025-12-31 12:00,Canada/Mountain,0 0 12 33,0 0 7 11,0,0,0,0,0,,,,,
+1,0,,2025-12-31 12:45,Canada/Mountain,1 2 3 4,0 0 7 11,0,0,0,0,1,,,,,
+2,0,test-print2,2026-02-25 12:00,Canada/Mountain,5 5 5 5,0 0 7 11,0,0,0,0,3,,,,,
+3,1,test-print3,2025-12-12 12:12,Canada/Mountain,4 3 2 1,0 0 7 11,0,0,0,0,3,,,,,
+4,2,test-print4,2026-05-15 12:00,Canada/Mountain,0 0 15 34,0 0 7 11,0,0,0,0,3,,,,,
+5,3,test-again,2026-06-16 12:37,Canada/Mountain,0 0 15 34,0 0 7 11,0,0,0,0,3,,,,,
+6,0,local-tz-test,2026-08-20 20:15,Canada/Mountain,0 1 2 3,0 0 7 11,0,0,0,0,4,,,,,
+7,1,remote-tz-test,2026-08-20 21:16,Canada/Pacific,0 1 2 3,0 0 7 11,0,0,0,0,4,,,,,
