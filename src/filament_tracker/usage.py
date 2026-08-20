@@ -200,10 +200,10 @@ def add_filament_usage(
     # Print job information
     print("Enter the name of the print")
     print_name = input()
-    print("Enter the date printed")
-    date = input()
-    print("Enter the time printed")
-    time = input()
+    print("Enter the date and time printed (YYYY-MM-DD HH:MM)")
+    date_and_time = input()
+    print("Enter the timezone")
+    user_timezone = input()
     print("Enter the length of print")
     length = input()
     print("Enter the time taken to prepare print")
@@ -260,8 +260,8 @@ def add_filament_usage(
             len(print_jobs),
             print_index,
             print_name,
-            date,
-            time,
+            date_and_time,
+            user_timezone,
             length,
             prep_time,
             printer_id,
