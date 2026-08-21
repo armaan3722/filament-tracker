@@ -226,6 +226,8 @@ def add_filament_usage(
     length = input()
     print("Enter the time taken to prepare print")
     prep_time = input()
+    print("Enter the amount of filament changes")
+    filament_changes = int(input())
     print(printer.to_string(index=False))
     print("Enter printer ID")
     printer_id = int(input())
@@ -295,6 +297,7 @@ def add_filament_usage(
             user_timezone,
             length,
             prep_time,
+            filament_changes,
             printer_id,
             ams_id,
             hotend_id,
