@@ -192,7 +192,8 @@
             "print_successful": "boolean",
             "failure_reason": "string",
             "filament_lost": "Float64",
-            "repair_print": "boolean"
+            "repair_print": "boolean",
+            "repair_print_id": "Int64"
         }
     },
     "filament_used": {
