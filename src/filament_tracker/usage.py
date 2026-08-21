@@ -287,6 +287,40 @@ def add_filament_usage(
 
         i += 1
 
+    # Get print success data
+    print("Was the print successful (Y/n)")
+    print_successful = input()
+
+    if print_successful == "Y":
+        print_successful = True
+        failure_reason = None
+        filament_lost = None
+    else:
+        print_successful = False
+        print("What was the reason for failure")
+        failure_reason = input()
+        print("How much filament was lost to the failure")
+        filament_lost = input()
+
+    # Get repair print data
+    print("Was this print a repair print (Y/n)")
+    repair_print = input()
+
+    if repair_print == "Y":
+        repair_print = True
+
+        print(print_jobs.to_string(index=False))
+        print("\n\nHow many print jobs was this a repair print for")
+        repair_print_amount = int(input())
+
+        for i in range(repair_print_amount):
+            print("What is the ID of the print job")
+            repair_id = int(input())
+            csv_utils.change_cell(print_jobs, "print_id", repair_id, "repair_print_id", repair_id)
+    else:
+        repair_print = False
+
+
     # Update filament left and printer hours used
     print_jobs = csv_utils.add_row(
         [
@@ -304,10 +338,11 @@ def add_filament_usage(
             buildplate_id,
             collection_id,
             None,
-            None,
-            None,
-            None,
-            None,
+            print_successful,
+            failure_reason,
+            filament_lost,
+            repair_print,
+            None
         ],
         print_jobs,
     )
