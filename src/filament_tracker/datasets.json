@@ -182,6 +182,7 @@
             "print_timezone": "string",
             "print_length": "string",
             "print_preparation_length": "string",
+            "filament_changes": "Int64",
             "printer_id": "Int64",
             "ams_id": "Int64",
             "hotend_id": "Int64",
