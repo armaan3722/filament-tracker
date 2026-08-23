@@ -240,7 +240,13 @@ def main() -> None:
                     datasets["filament_used"],
                 )
             case 15:
-                usage.add_parts_usage(datasets["projects"], datasets["categories"], datasets["collections"], datasets["parts"], datasets["parts_usage"])
+                usage.add_parts_usage(
+                    datasets["projects"],
+                    datasets["categories"],
+                    datasets["collections"],
+                    datasets["parts"],
+                    datasets["parts_usage"],
+                )
             case 16:
                 print("Ending program")
                 run_loop = False

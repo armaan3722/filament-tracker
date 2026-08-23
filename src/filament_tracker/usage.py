@@ -70,6 +70,7 @@ def view_print_history(
         case 2:
             print("Returning to home page")
 
+
 def view_parts_usage_history(
     parts_usage_meta: dict[str, Any],
 ) -> None:
@@ -82,9 +83,7 @@ def view_parts_usage_history(
         parts_usage_meta: Dict containing parts usage metadata with 'filepath' key.
     """
     # Get dataframes
-    parts_usage = csv_utils.read_data(
-        [parts_usage_meta]
-    )[0]
+    parts_usage = csv_utils.read_data([parts_usage_meta])[0]
 
     parts_usage["usage_date_and_time"] = (
         pd.to_datetime(parts_usage["usage_date_and_time"], format="%Y-%m-%d %H:%M")
@@ -343,10 +342,11 @@ def add_filament_usage(
         for i in range(repair_print_amount):
             print("What is the ID of the print job")
             repair_id = int(input())
-            csv_utils.change_cell(print_jobs, "print_id", repair_id, "repair_print_id", repair_id)
+            csv_utils.change_cell(
+                print_jobs, "print_id", repair_id, "repair_print_id", repair_id
+            )
     else:
         repair_print = False
-
 
     # Update filament left and printer hours used
     print_jobs = csv_utils.add_row(
@@ -369,7 +369,7 @@ def add_filament_usage(
             failure_reason,
             filament_lost,
             repair_print,
-            None
+            None,
         ],
         print_jobs,
     )
@@ -430,7 +430,7 @@ def add_parts_usage(
     categories_meta: dict[str, Any],
     collections_meta: dict[str, Any],
     parts_meta: dict[str, Any],
-    parts_usage_meta: dict[str, Any]
+    parts_usage_meta: dict[str, Any],
 ) -> None:
     """Record a non-printed part by creating or selecting a collection.
 
@@ -558,9 +558,24 @@ def add_parts_usage(
         .astimezone(UTC)
     )
 
-    remaining = int(csv_utils.get_cell(parts, "part_id", part_used_id, "current_amount")) - amount_used
-    parts = csv_utils.change_cell(parts, "part_id", part_used_id, "current_amount", remaining)
-    parts_usage = csv_utils.add_row([len(parts_usage), date_and_time, user_timezone, part_used_id, amount_used, collection_id], parts_usage)
+    remaining = (
+        int(csv_utils.get_cell(parts, "part_id", part_used_id, "current_amount"))
+        - amount_used
+    )
+    parts = csv_utils.change_cell(
+        parts, "part_id", part_used_id, "current_amount", remaining
+    )
+    parts_usage = csv_utils.add_row(
+        [
+            len(parts_usage),
+            date_and_time,
+            user_timezone,
+            part_used_id,
+            amount_used,
+            collection_id,
+        ],
+        parts_usage,
+    )
     csv_utils.write_data([parts_meta], [parts])
 
     parts_usage.to_csv(
