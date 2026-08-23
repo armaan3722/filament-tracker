@@ -162,7 +162,7 @@ def main() -> None:
     while run_loop:
         # Start home screen
         print(
-            "Would you like to view printer information(1), hotend information(2), build plate information(3), AMS information(4), \nfilament information(5), filament dryer information(6), reusable spools information(7), \nfilament storage information(8), non printed parts information(9), project information(10), \nprint history(11), purchases(12), update filament usage(13), or end program(14)"
+            "Would you like to view printer information(1), hotend information(2), build plate information(3), \nAMS information(4), filament information(5), filament dryer information(6), reusable spools information(7), \nfilament storage information(8), non printed parts information(9), project information(10), \nprint history(11), parts usage history(12), purchases(13), update filament usage(14), \nupdate parts usage(15), or end program(16)"
         )
         action = int(input())
 
@@ -211,6 +211,8 @@ def main() -> None:
                     datasets["filament"],
                 )
             case 12:
+                usage.view_parts_usage_history(datasets["parts_usage"])
+            case 13:
                 purchase.view_purchases(
                     [
                         datasets["printers"],
@@ -224,7 +226,7 @@ def main() -> None:
                         datasets["purchases"],
                     ]
                 )
-            case 13:
+            case 14:
                 usage.add_filament_usage(
                     datasets["projects"],
                     datasets["categories"],
@@ -237,6 +239,8 @@ def main() -> None:
                     datasets["filament"],
                     datasets["filament_used"],
                 )
-            case 14:
+            case 15:
+                usage.add_parts_usage(datasets["projects"], datasets["categories"], datasets["collections"], datasets["parts"], datasets["parts_usage"])
+            case 16:
                 print("Ending program")
                 run_loop = False

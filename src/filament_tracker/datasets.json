@@ -126,6 +126,17 @@
             "current_amount": "Int64"
         }
     },
+    "parts_usage": {
+        "filename": "parts_usage.csv",
+        "schema": {
+            "usage_id": "Int64",
+            "usage_date_and_time": "string",
+            "usage_timezone": "string",
+            "part_used_id": "Int64",
+            "amount_used": "Int64",
+            "collection_id": "Int64"
+        }
+    },
     "purchases": {
         "filename": "purchases.csv",
         "schema": {

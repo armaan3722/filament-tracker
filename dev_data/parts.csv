@@ -1,5 +1,5 @@
 part_id,part_type,part_spec,starting_amount,current_amount
-0,Inserts,M3x6,50,50
+0,Inserts,M3x6,50,46
 1,Hex screws,M3x6,100,100
 2,PTFE washers,5x10x2mm,30,30
 3,Ball bearings,608-2RS,20,20
