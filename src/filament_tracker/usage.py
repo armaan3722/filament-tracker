@@ -71,6 +71,32 @@ def view_print_history(
             print("Returning to home page")
 
 
+def view_parts_usage_history(
+    parts_usage_meta: dict[str, Any],
+) -> None:
+    """View parts usage history.
+
+    Read parts usage data from a CSV file, converts the datetime column
+    to the local timezone, and displays the full history of parts usage.
+
+    Args:
+        parts_usage_meta: Dict containing parts usage metadata with 'filepath' key.
+    """
+    # Get dataframes
+    parts_usage = csv_utils.read_data([parts_usage_meta])[0]
+
+    parts_usage["usage_date_and_time"] = (
+        pd.to_datetime(parts_usage["usage_date_and_time"], format="%Y-%m-%d %H:%M")
+        .dt.tz_localize(UTC)
+        .dt.floor("min")
+        .dt.tz_convert(get_localzone())
+    )
+
+    # Print history info
+    print("Parts usage history:\n")
+    print(parts_usage.to_string(index=False))
+
+
 # FILAMENT USAGE
 def add_filament_usage(
     projects_meta: dict[str, Any],
@@ -316,10 +342,11 @@ def add_filament_usage(
         for i in range(repair_print_amount):
             print("What is the ID of the print job")
             repair_id = int(input())
-            csv_utils.change_cell(print_jobs, "print_id", repair_id, "repair_print_id", repair_id)
+            csv_utils.change_cell(
+                print_jobs, "print_id", repair_id, "repair_print_id", repair_id
+            )
     else:
         repair_print = False
-
 
     # Update filament left and printer hours used
     print_jobs = csv_utils.add_row(
@@ -342,7 +369,7 @@ def add_filament_usage(
             failure_reason,
             filament_lost,
             repair_print,
-            None
+            None,
         ],
         print_jobs,
     )
@@ -398,24 +425,37 @@ def add_filament_usage(
 
 
 # NON PRINTED PARTS
-def add_parts(
+def add_parts_usage(
     projects_meta: dict[str, Any],
     categories_meta: dict[str, Any],
     collections_meta: dict[str, Any],
+    parts_meta: dict[str, Any],
+    parts_usage_meta: dict[str, Any],
 ) -> None:
     """Record a non-printed part by creating or selecting a collection.
 
     Prompts the user for project details and collection information,
-    creating a new collection if needed, then saves it to the CSV file.
+    creating a new collection if needed, then records the part usage
+    and updates the relevant CSV files. It also decrements the part
+    stock in the parts table.
 
     Args:
         projects_meta: Dict containing projects metadata with 'filepath' key.
         categories_meta: Dict containing categories metadata with 'filepath' key.
         collections_meta: Dict containing collections metadata with 'filepath' key.
+        parts_meta: Dict containing parts metadata with 'filepath' key.
+        parts_usage_meta: Dict containing parts usage metadata with 'filepath' key.
     """
     # Get dataframes
-    projects, categories, collections = csv_utils.read_data(
-        [projects_meta, categories_meta, collections_meta]
+    projects, categories, collections, parts, parts_usage = csv_utils.read_data(
+        [projects_meta, categories_meta, collections_meta, parts_meta, parts_usage_meta]
+    )
+
+    # Convert print_jobs datetime column to datetime
+    parts_usage["usage_date_and_time"] = (
+        pd.to_datetime(parts_usage["usage_date_and_time"], format="%Y-%m-%d %H:%M")
+        .dt.tz_localize(UTC)
+        .dt.floor("min")
     )
 
     # Get project information
@@ -423,79 +463,121 @@ def add_parts(
     print("Enter project ID")
     project_id = input()
 
-    if project_id != "":
-        project_id = int(project_id)
-    else:
-        project_id = None
-
-    # Get collection
-    print("\n\nWould you like to select a collection(1) or create a new collection(2)")
+    # Get collection information, either pick a collection or create a new one
+    print("Do you want to select a collection(1), or create a new collection(2)")
     collection_action = int(input())
 
-    match collection_action:
-        case 1:
-            print("\n\n" + collections.to_string(index=False))
-            print("Enter collection ID")
-            collection_id = int(input())
-        case 2:
-            print("\n\n")
-            print("Enter collection name")
-            collection_name = input()
-            if collection_name == "":
-                collection_name = None
-            print("\n")
+    if collection_action == 1:
+        print(parts_usage.to_string(index=False))
+        print("\n\n")
+        print(collections.to_string(index=False))
+        print("\n\nEnter collection ID")
+        collection_id = int(input())
+    else:
+        print("\n\nWhat is the new collection name")
+        collection_name = input()
+        print(categories.to_string(index=False))
+        print("Enter category ID")
+        category_id = int(input())
+        print("Enter purpose (press enter for same as category)")
+        purpose = input()
+        print("Enter stage (press enter for same as category)")
+        stage = input()
+        print("Enter version")
+        version = input()
+        print("Does this collection have configs (T/f)")
+        has_config = input()
+        print("What quantity does this collection produce")
+        quantity_produced = input()
 
-            print(categories.to_csv(index=False))
-            print("Enter category ID")
-            category_id = int(input())
-            if category_id == "":
-                category_id = None
-            print("\n")
+        # Set collection name to None if not given
+        if collection_name == "":
+            collection_name = None
 
-            print("Enter purpose of collection")
-            purpose = input()
-            if purpose == "":
-                purpose = None
-            print("Enter stage of collection")
-            stage = input()
-            if stage == "":
-                stage = None
-            print("\n")
+        # Changing value types
+        if has_config == "T":
+            has_config = True
+        else:
+            has_config = False
 
-            print("Enter version")
-            version = int(input())
-            if version == "":
-                version = None
-            print("Enter revision")
-            revision = int(input())
-            if revision == "":
-                revision = None
-            print("\n")
+        # Handle null values
+        test_array = [
+            purpose,
+            stage,
+            version,
+            has_config,
+            quantity_produced,
+        ]
 
-            print("Does this have a config (T/f)")
-            has_config = input()
-            if has_config == "T":
-                has_config = True
-                print("What quantity does it produce")
-                quantity_produced = input()
-            else:
-                has_config = False
-                quantity_produced = None
+        i = 0
+        while i < len(test_array):
+            if test_array[i] == "":
+                test_array[i] = None
+            i += 1
 
-            collection_id = len(collections)
-            collections = csv_utils.add_row(
-                [
-                    collection_id,
-                    collection_name,
-                    project_id,
-                    purpose,
-                    stage,
-                    category_id,
-                    version,
-                    revision,
-                    has_config,
-                    quantity_produced,
-                ],
-                collections,
-            )
-            csv_utils.write_data([collections_meta], [collections])
+        # Save data
+        collection_id = len(collections)
+        collections = csv_utils.add_row(
+            [
+                collection_id,
+                collection_name,
+                project_id,
+                category_id,
+                test_array[0],
+                test_array[1],
+                test_array[2],
+                test_array[3],
+                test_array[4],
+            ],
+            collections,
+        )
+        csv_utils.write_data([collections_meta], [collections])
+
+    # Get the rest of the information
+
+    print(parts.to_string(index=False))
+    print("Enter the part id for part used")
+    part_used_id = int(input())
+    print("How many were used")
+    amount_used = int(input())
+    print("Enter the date and time used (YYYY-MM-DD HH:MM, use 24 hour time)")
+    date_and_time = input()
+    print("Enter the timezone, press enter for current system timezone")
+    user_timezone = input()
+
+    # Get default timezone
+    if user_timezone == "":
+        user_timezone = get_localzone()
+    else:
+        user_timezone = ZoneInfo(user_timezone)
+
+    # Convert frm string to datetime
+    date_and_time = (
+        datetime.strptime(date_and_time, "%Y-%m-%d %H:%M")
+        .replace(tzinfo=user_timezone)
+        .astimezone(UTC)
+    )
+
+    remaining = (
+        int(csv_utils.get_cell(parts, "part_id", part_used_id, "current_amount"))
+        - amount_used
+    )
+    parts = csv_utils.change_cell(
+        parts, "part_id", part_used_id, "current_amount", remaining
+    )
+    parts_usage = csv_utils.add_row(
+        [
+            len(parts_usage),
+            date_and_time,
+            user_timezone,
+            part_used_id,
+            amount_used,
+            collection_id,
+        ],
+        parts_usage,
+    )
+    csv_utils.write_data([parts_meta], [parts])
+
+    parts_usage.to_csv(
+        parts_usage_meta["filepath"], index=False, date_format="%Y-%m-%d %H:%M"
+    )
