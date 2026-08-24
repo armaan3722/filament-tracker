@@ -1,7 +1,7 @@
 [project]
 name = "filament-tracker"
-version = "0.5.0.dev1"
-description = "Add your description here"
+version = "0.5.0"
+description = "A basic 3d printing filament tracker CLI app"
 readme = "README.md"
 authors = [
     { name = "Armaan Sandhu", email = "103614886+armaan3722@users.noreply.github.com" }
