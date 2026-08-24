@@ -180,7 +180,9 @@
             "stage": "string",
             "version": "string",
             "has_config": "boolean",
-            "quantity_produced": "Int64"
+            "quantity_produced": "Int64",
+            "is_clone": "boolean",
+            "cloned_from": "Int64"
         }
     },
     "print_jobs": {
