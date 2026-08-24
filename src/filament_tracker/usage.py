@@ -475,7 +475,7 @@ def add_parts_usage(
     # Get project information
     print(projects.to_string(index=False))
     print("Enter project ID")
-    project_id = input()
+    project_id = int(input())
 
     # Get collection information, either pick a collection or create a new one
     print("Do you want to select a collection(1), or create a new collection(2)")
@@ -556,6 +556,8 @@ def add_parts_usage(
                 test_array[2],
                 test_array[3],
                 test_array[4],
+                is_clone,
+                cloned_from
             ],
             collections,
         )

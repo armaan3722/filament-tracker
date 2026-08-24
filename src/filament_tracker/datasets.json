@@ -13,7 +13,7 @@
     "printer_maintenance": {
         "filename": "printer_maintenance.csv",
         "schema": {
-            "maintanence_event_id": "Int64",
+            "maintenance_event_id": "Int64",
             "printer_id": "Int64",
             "date": "string",
             "action": "string",
