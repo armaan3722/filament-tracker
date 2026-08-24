@@ -8,10 +8,23 @@
 - Creating print jobs
 - Printer seconds used tracking
 - Creating parts usage events
+- Optional print and collection naming and print job indexes inside of collections
+- Parts usage tracking
+- Print history and parts usage history viewing
+- Filament change tracking
+- Clone tracking for collections
 
 ### Changed
 - Storing user data in proper directory
 - Creating default data files if there is no user data
+- Made projects and categories required for print jobs
+- Complicated print categorization into a simpler, easy to understand categorization system
+- Better print start time added with datetime objects and timezones
+- Repair print tracking to actually work
+
+### Fixed
+- Write to csv file after editing AMS
+- Used datasets.json to prevent dataframe dtype issues
 
 ### Internal
 - Removed old impossible to access files from v0.1.0
