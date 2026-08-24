@@ -195,6 +195,8 @@ def add_filament_usage(
         has_config = input()
         print("What quantity does this collection produce")
         quantity_produced = input()
+        print("Is this collection a clone (Y/n)")
+        is_clone = input()
 
         # Set collection name to None if not given
         if collection_name == "":
@@ -205,6 +207,16 @@ def add_filament_usage(
             has_config = True
         else:
             has_config = False
+
+        # Get clone information
+        if is_clone == "Y":
+            is_clone = True
+            print(collections.to_string(index=False))
+            print("\nEnter the collection cloned from")
+            cloned_from = int(input())
+        else:
+            is_clone = False
+            cloned_from = None
 
         # Handle null values
         test_array = [
@@ -234,6 +246,8 @@ def add_filament_usage(
                 test_array[2],
                 test_array[3],
                 test_array[4],
+                is_clone,
+                cloned_from
             ],
             collections,
         )
@@ -489,6 +503,8 @@ def add_parts_usage(
         has_config = input()
         print("What quantity does this collection produce")
         quantity_produced = input()
+        print("Is this collection a clone (Y/n)")
+        is_clone = input()
 
         # Set collection name to None if not given
         if collection_name == "":
@@ -500,6 +516,16 @@ def add_parts_usage(
         else:
             has_config = False
 
+        # Get clone information
+        if is_clone == "Y":
+            is_clone = True
+            print(collections.to_string(index=False))
+            print("\nEnter the collection cloned from")
+            cloned_from = int(input())
+        else:
+            is_clone = False
+            cloned_from = None
+
         # Handle null values
         test_array = [
             purpose,
@@ -507,6 +533,8 @@ def add_parts_usage(
             version,
             has_config,
             quantity_produced,
+            is_clone,
+            cloned_from,
         ]
 
         i = 0
