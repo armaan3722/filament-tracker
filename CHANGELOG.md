@@ -1,6 +1,11 @@
 # Changelog
 
-## [v0.5.0] - 2026-08-24
+## [0.5.1] - 2026-08-25
+
+### Fixed
+- Pandas concat not resetting index
+
+## [0.5.0] - 2026-08-24
 
 ### Added
 - Version tracking for firmware updates to printers and ams

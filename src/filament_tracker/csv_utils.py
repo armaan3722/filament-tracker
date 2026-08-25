@@ -59,7 +59,8 @@ def add_row(data_to_add: list[Any], dataframe: pd.DataFrame) -> pd.DataFrame:
         The dataframe with the row added.
     """
     dataframe = pd.concat(
-        [dataframe, pd.DataFrame([data_to_add], columns=dataframe.columns)]
+        [dataframe, pd.DataFrame([data_to_add], columns=dataframe.columns)],
+        ignore_index=True,
     )
     return dataframe
 
