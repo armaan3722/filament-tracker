@@ -28,3 +28,5 @@ purchase_id,item_type,seller,item_id,date_purchased,date_delivered,cost
 6,Parts,Amazon,1,02-09-2026,,12.09
 6,Parts,Amazon,2,02-09-2026,,10.49
 6,Parts,Amazon,3,02-09-2026,,10.99
+7,Filament,Bambu,12,08-25-2026,08-26-2026,19.49
+7,Filament,Bambu,13,08-25-2026,08-26-2026,19.49
