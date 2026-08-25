@@ -11,3 +11,5 @@ filament_id,filament_company,filament_colour,filament_material,diameter,starting
 9,Bambu,Orange,PLA basic,1.75,1000.0,1000.0,Waiting,
 10,Bambu,Black,ABS,1.75,1000.0,1000.0,Waiting,
 11,Bambu,White,PETG HF,1.75,1000.0,1000.0,Waiting,
+12,Bambu,Red,PLA,1.75,1000,1000,Waiting,
+13,Bambu,Yellow,PLA,1.75,1000,1000,Waiting,
