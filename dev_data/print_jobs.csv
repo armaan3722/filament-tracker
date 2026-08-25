@@ -1,0 +1,13 @@
+print_id,print_index,print_name,print_date_and_time,print_timezone,print_length,print_preparation_length,filament_changes,printer_id,ams_id,hotend_id,buildplate_id,collection_id,plate_config_id,print_successful,failure_reason,filament_lost,repair_print,repair_print_id
+0,0,,2025-12-31 12:00,Canada/Mountain,0 0 12 33,0 0 7 11,1,0,0,0,0,0,,,,,,
+1,0,,2025-12-31 12:45,Canada/Mountain,1 2 3 4,0 0 7 11,1,0,0,0,0,1,,,,,,
+2,0,test-print2,2026-02-25 12:00,Canada/Mountain,5 5 5 5,0 0 7 11,1,0,0,0,0,3,,,,,,
+3,1,test-print3,2025-12-12 12:12,Canada/Mountain,4 3 2 1,0 0 7 11,1,0,0,0,0,3,,,,,,
+4,2,test-print4,2026-05-15 12:00,Canada/Mountain,0 0 15 34,0 0 7 11,1,0,0,0,0,3,,,,,,
+5,3,test-again,2026-06-16 12:37,Canada/Mountain,0 0 15 34,0 0 7 11,1,0,0,0,0,3,,,,,,
+6,0,local-tz-test,2026-08-20 20:15,Canada/Mountain,0 1 2 3,0 0 7 11,1,0,0,0,0,4,,,,,,
+7,1,remote-tz-test,2026-08-20 21:16,Canada/Pacific,0 1 2 3,0 0 7 11,1,0,0,0,0,4,,,,,,
+8,4,color-test,2026-08-21 19:23,Canada/Mountain,0 1 5 23,0 0 7 11,2,0,0,0,0,3,,,,,,
+9,0,test-failure,2026-08-21 20:57,Canada/Mountain,1 2 3 4,0 0 7 11,1,0,0,0,0,5,,False,,,False,9
+10,1,test-repair-print,2026-08-21 21:58,Canada/Mountain,1 2 3 4,0 0 7 11,1,0,0,0,0,5,,True,,,True,
+11,0,test-clone-print,2026-08-24 17:35,Canada/Mountain,1 2 3 4,0 0 7 12,1,0,0,0,0,6,,True,,,False,

@@ -1,0 +1,1 @@
+print_id,print_index,print_name,print_date_and_time,print_timezone,print_length,print_preparation_length,filament_changes,printer_id,ams_id,hotend_id,buildplate_id,collection_id,plate_config_id,print_successful,failure_reason,filament_lost,repair_print,repair_print_id

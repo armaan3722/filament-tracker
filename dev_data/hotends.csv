@@ -1,0 +1,3 @@
+hotend_id,company,size,material,state
+0,Bambu,0.4,Stainless steel,Active
+1,Bambu,0.4,Stainless steel,Passive
