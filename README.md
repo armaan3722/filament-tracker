@@ -1,8 +1,8 @@
 # Filament tracker
 
-## An interactive cli program for tracking everything about your 3d printing.
+## An interactive CLI program for tracking everything about your 3d printing.
 
-This is an interactive cli program that is intended to help you store any important information for 3d printing.  It is currently not done, but when completed, it will be able to track:
+This is an interactive CLI program that is intended to help you store any important information for 3d printing.  It is currently not done, but when completed, it will be able to track:
 
 - 3d printer hours used and maintenance history
 - Hotend and buildplates hours used and maintenance history

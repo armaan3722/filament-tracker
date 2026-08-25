@@ -221,7 +221,7 @@ def update_hotend_maintenance(
         maintenance_meta: Dict containing maintenance metadata with 'filepath' key.
     """
     # Get hotend for maintenance
-    print(hotend)
+    print(hotend.to_string(index=False))
     print("\nEnter ID of hotend for maintenance event")
     hotend_id = int(input())
 

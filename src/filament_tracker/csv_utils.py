@@ -58,7 +58,9 @@ def add_row(data_to_add: list[Any], dataframe: pd.DataFrame) -> pd.DataFrame:
     Returns:
         The dataframe with the row added.
     """
-    dataframe.loc[len(dataframe)] = data_to_add
+    dataframe = pd.concat(
+        [dataframe, pd.DataFrame([data_to_add], columns=dataframe.columns)]
+    )
     return dataframe
 
 
@@ -93,7 +95,7 @@ def change_row(dataframe: pd.DataFrame, row: int, value: list[Any]) -> pd.DataFr
     Returns:
         The dataframe with the modified row.
     """
-    dataframe.loc[row] = value
+    dataframe.iloc[row] = value
     return dataframe
 
 

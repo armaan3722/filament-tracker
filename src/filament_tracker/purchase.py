@@ -64,7 +64,7 @@ def add_purchases(all_meta: list[dict[str, Any]]) -> None:
     if len(purchases) == 0:
         purchase_id = 0
     else:
-        purchase_id = purchases.iloc[-1]["purchaseID"] + 1
+        purchase_id = purchases.iloc[-1]["purchase_id"] + 1
 
     # Get purchases required
     print("How many printers were purchased")

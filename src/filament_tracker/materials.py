@@ -124,9 +124,9 @@ def add_drying_event(
 
     # Get drying information
     print("How long was the filament dried")
-    length = input()
+    length = int(input())
     print("What temperature was the filament dried at")
-    temp = input()
+    temp = float(input())
     print("When was the filament dried")
     date = input()
 

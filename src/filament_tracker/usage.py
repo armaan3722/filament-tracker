@@ -247,7 +247,7 @@ def add_filament_usage(
                 test_array[3],
                 test_array[4],
                 is_clone,
-                cloned_from
+                cloned_from,
             ],
             collections,
         )
@@ -340,7 +340,7 @@ def add_filament_usage(
         print("What was the reason for failure")
         failure_reason = input()
         print("How much filament was lost to the failure")
-        filament_lost = input()
+        filament_lost = float(input())
 
     # Get repair print data
     print("Was this print a repair print (Y/n)")
@@ -465,7 +465,7 @@ def add_parts_usage(
         [projects_meta, categories_meta, collections_meta, parts_meta, parts_usage_meta]
     )
 
-    # Convert print_jobs datetime column to datetime
+    # Convert parts_usage datetime column to datetime
     parts_usage["usage_date_and_time"] = (
         pd.to_datetime(parts_usage["usage_date_and_time"], format="%Y-%m-%d %H:%M")
         .dt.tz_localize(UTC)
@@ -475,7 +475,7 @@ def add_parts_usage(
     # Get project information
     print(projects.to_string(index=False))
     print("Enter project ID")
-    project_id = input()
+    project_id = int(input())
 
     # Get collection information, either pick a collection or create a new one
     print("Do you want to select a collection(1), or create a new collection(2)")
@@ -556,6 +556,8 @@ def add_parts_usage(
                 test_array[2],
                 test_array[3],
                 test_array[4],
+                is_clone,
+                cloned_from,
             ],
             collections,
         )
