@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.2] - 2026-08-25
+
+### Fixed
+- Overwriting changes when making a purchase
+
 ## [0.5.1] - 2026-08-25
 
 ### Fixed

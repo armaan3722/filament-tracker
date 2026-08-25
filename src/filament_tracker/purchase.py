@@ -86,42 +86,56 @@ def add_purchases(all_meta: list[dict[str, Any]]) -> None:
 
     i = 0
     while i < printers_purchased:
-        add_printer(printers, all_meta[0], purchases, all_meta[-1], purchase_id)
+        printers, purchases = add_printer(
+            printers, all_meta[0], purchases, all_meta[-1], purchase_id
+        )
         i += 1
 
     i = 0
     while i < hotends_purchased:
-        add_hotend(hotends, all_meta[1], purchases, all_meta[-1], purchase_id)
+        hotends, purchases = add_hotend(
+            hotends, all_meta[1], purchases, all_meta[-1], purchase_id
+        )
         i += 1
 
     i = 0
     while i < buildplates_purchased:
-        add_buildplate(buildplates, all_meta[2], purchases, all_meta[-1], purchase_id)
+        buildplates, purchases = add_buildplate(
+            buildplates, all_meta[2], purchases, all_meta[-1], purchase_id
+        )
         i += 1
 
     i = 0
     while i < ams_purchased:
-        add_ams(ams, all_meta[3], purchases, all_meta[-1], purchase_id)
+        ams, purchases = add_ams(ams, all_meta[3], purchases, all_meta[-1], purchase_id)
         i += 1
 
     i = 0
     while i < filament_purchased:
-        add_filament(filament, all_meta[4], purchases, all_meta[-1], purchase_id)
+        filament, purchases = add_filament(
+            filament, all_meta[4], purchases, all_meta[-1], purchase_id
+        )
         i += 1
 
     i = 0
     while i < dryers_purchased:
-        add_dryer(dryers, all_meta[5], purchases, all_meta[-1], purchase_id)
+        dryers, purchases = add_dryer(
+            dryers, all_meta[5], purchases, all_meta[-1], purchase_id
+        )
         i += 1
 
     i = 0
     while i < spools_purchased:
-        add_spool(spools, all_meta[6], purchases, all_meta[-1], purchase_id)
+        spools, purchases = add_spool(
+            spools, all_meta[6], purchases, all_meta[-1], purchase_id
+        )
         i += 1
 
     i = 0
     while i < parts_purchased:
-        add_parts(parts, all_meta[7], purchases, all_meta[-1], purchase_id)
+        parts, purchases = add_parts(
+            parts, all_meta[7], purchases, all_meta[-1], purchase_id
+        )
         i += 1
 
 
@@ -131,7 +145,7 @@ def add_printer(
     purchases: pd.DataFrame,
     purchases_meta: dict[str, Any],
     purchase_id: int,
-) -> None:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Add a newly purchased printer and record the purchase.
 
     Prompts for printer details (company, model, name, seller, cost, dates),
@@ -182,6 +196,8 @@ def add_printer(
     # Save
     csv_utils.write_data([printer_meta, purchases_meta], [printer, purchases])
 
+    return printer, purchases
+
 
 def add_hotend(
     hotend: pd.DataFrame,
@@ -189,7 +205,7 @@ def add_hotend(
     purchases: pd.DataFrame,
     purchases_meta: dict[str, Any],
     purchase_id: int,
-) -> None:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Add a newly purchased hotend and record the purchase.
 
     Prompts for hotend details (company, size, material, seller, cost, dates),
@@ -244,6 +260,8 @@ def add_hotend(
     )
     csv_utils.write_data([hotend_meta, purchases_meta], [hotend, purchases])
 
+    return hotend, purchases
+
 
 def add_buildplate(
     buildplate: pd.DataFrame,
@@ -251,7 +269,7 @@ def add_buildplate(
     purchases: pd.DataFrame,
     purchases_meta: dict[str, Any],
     purchase_id: int,
-) -> None:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Add a newly purchased buildplate and record the purchase.
 
     Prompts for buildplate details (company, type, seller, dates, cost),
@@ -297,6 +315,8 @@ def add_buildplate(
     )
     csv_utils.write_data([buildplate_meta, purchases_meta], [buildplate, purchases])
 
+    return buildplate, purchases
+
 
 def add_ams(
     ams: pd.DataFrame,
@@ -304,7 +324,7 @@ def add_ams(
     purchases: pd.DataFrame,
     purchases_meta: dict[str, Any],
     purchase_id: int,
-) -> None:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Add a newly purchased AMS and record the purchase.
 
     Prompts for AMS details (model, seller, dates, cost), appends rows
@@ -338,6 +358,8 @@ def add_ams(
     )
     csv_utils.write_data([ams_meta, purchases_meta], [ams, purchases])
 
+    return ams, purchases
+
 
 def add_filament(
     filament: pd.DataFrame,
@@ -345,7 +367,7 @@ def add_filament(
     purchases: pd.DataFrame,
     purchases_meta: dict[str, Any],
     purchase_id: int,
-) -> None:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Add newly purchased filament and record the purchase.
 
     Prompts for filament details (company, colour, material, diameter,
@@ -409,6 +431,8 @@ def add_filament(
     )
     csv_utils.write_data([filament_meta, purchases_meta], [filament, purchases])
 
+    return filament, purchases
+
 
 def add_dryer(
     dryers: pd.DataFrame,
@@ -416,7 +440,7 @@ def add_dryer(
     purchases: pd.DataFrame,
     purchases_meta: dict[str, Any],
     purchase_id: int,
-) -> None:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Add a newly purchased filament dryer and record the purchase.
 
     Prompts for dryer details (company, model, capacity, temperature
@@ -468,6 +492,8 @@ def add_dryer(
     )
     csv_utils.write_data([dryers_meta, purchases_meta], [dryers, purchases])
 
+    return dryers, purchases
+
 
 def add_spool(
     spools: pd.DataFrame,
@@ -475,7 +501,7 @@ def add_spool(
     purchases: pd.DataFrame,
     purchases_meta: dict[str, Any],
     purchase_id: int,
-) -> None:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Add a newly purchased reusable spool and record the purchase.
 
     Prompts for spool type and purchase details (dates, cost), appends
@@ -515,6 +541,8 @@ def add_spool(
     )
     csv_utils.write_data([spool_meta, purchases_meta], [spools, purchases])
 
+    return spools, purchases
+
 
 def add_parts(
     parts: pd.DataFrame,
@@ -522,7 +550,7 @@ def add_parts(
     purchases: pd.DataFrame,
     purchases_meta: dict[str, Any],
     purchase_id: int,
-) -> None:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Add newly purchased parts and record the purchase.
 
     Prompts for part details (type, spec, amount, dates, cost, seller),
@@ -569,3 +597,5 @@ def add_parts(
         purchases,
     )
     csv_utils.write_data([parts_meta, purchases_meta], [parts, purchases])
+
+    return parts, purchases
