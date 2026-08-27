@@ -11,3 +11,4 @@ print_id,print_index,print_name,print_date_and_time,print_timezone,print_length,
 9,0,test-failure,2026-08-21 20:57,Canada/Mountain,1 2 3 4,0 0 7 11,1,0,0,0,0,5,,False,,,False,9
 10,1,test-repair-print,2026-08-21 21:58,Canada/Mountain,1 2 3 4,0 0 7 11,1,0,0,0,0,5,,True,,,True,
 11,0,test-clone-print,2026-08-24 17:35,Canada/Mountain,1 2 3 4,0 0 7 12,1,0,0,0,0,6,,True,,,False,
+12,1,test-time,2026-08-27 16:16,Canada/Mountain,0 1 32 0,0 0 7 12,0,0,0,0,0,0,,True,,,False,

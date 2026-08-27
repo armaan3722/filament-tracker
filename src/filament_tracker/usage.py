@@ -262,9 +262,9 @@ def add_filament_usage(
     date_and_time = input()
     print("Enter the timezone, press enter for current system timezone")
     user_timezone = input()
-    print("Enter the length of print")
+    print("Enter the length of just the print (d h m s)")
     length = input()
-    print("Enter the time taken to prepare print")
+    print("Enter the time taken to prepare print (d h m s)")
     prep_time = input()
     print("Enter the amount of filament changes")
     filament_changes = int(input())
@@ -412,8 +412,8 @@ def add_filament_usage(
         + int(array_prep_time[3])
     )
 
-    printer_seconds += print_job_seconds - print_job_prep_seconds
-    printer_operation_seconds += print_job_seconds
+    printer_seconds += print_job_seconds
+    printer_operation_seconds += print_job_seconds + print_job_prep_seconds
 
     printer = csv_utils.change_cell(
         printer, "printer_id", printer_id, "printer_seconds_used", printer_seconds
