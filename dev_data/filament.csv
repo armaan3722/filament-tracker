@@ -1,5 +1,5 @@
 filament_id,filament_company,filament_colour,filament_material,diameter,starting_amount,amount_left,state,date_last_dried
-0,Bambu,Orange,PLA basic,1.75,250.0,183.07,Active,02-15-2026
+0,Bambu,Orange,PLA basic,1.75,250.0,181.07,Active,02-15-2026
 1,Bambu,Green,PLA basic,1.75,250.0,181.96,Active,02-15-2026
 2,Bambu,White,SupPLA,1.75,250.0,250.0,Active,02-14-2026
 3,Bambu,Cobalt blue,PLA basic,1.75,1000.0,1000.0,Active,02-14-2026
@@ -11,5 +11,5 @@ filament_id,filament_company,filament_colour,filament_material,diameter,starting
 9,Bambu,Orange,PLA basic,1.75,1000.0,1000.0,Waiting,
 10,Bambu,Black,ABS,1.75,1000.0,1000.0,Waiting,
 11,Bambu,White,PETG HF,1.75,1000.0,1000.0,Waiting,
-12,Bambu,Red,PLA,1.75,1000,1000,Waiting,
-13,Bambu,Yellow,PLA,1.75,1000,1000,Waiting,
+12,Bambu,Red,PLA,1.75,1000.0,1000.0,Waiting,
+13,Bambu,Yellow,PLA,1.75,1000.0,1000.0,Waiting,
