@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.3] - 2026-08-27
+
+### Fixed
+- Correctly tracks printer seconds used now
+
 ## [0.5.2] - 2026-08-25
 
 ### Fixed
